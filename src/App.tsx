@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,11 +18,61 @@ import { TechMarquee } from "./components/TechMarquee";
 import { ModeSwitcher } from "./components/ModeSwitcher";
 import { ViewProvider, useView } from "./context/ViewContext";
 
-// İkizlerin oturduğu o efsane fotoğrafın yolunu buraya ekle kralım (Bunu WebP yapmayı unutma!)
 import twinPic from "./assets/twins.jpg";
 import { heroContent } from "./assets/heroData";
 import { projectsData } from "./data/projectsData";
 import { aboutData } from "./data/aboutData";
+
+// --- DİNAMİK SEKME BAŞLIĞI BİLEŞENİ ---
+const DynamicTitle = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const isMas = pathname === "/mas";
+    const isDas = pathname === "/das";
+
+    // Normal durum başlıkları
+    let originalTitle = "Twin_Core | Dijital Mimari";
+    if (isMas) originalTitle = "MAS. | Frontend Developer";
+    if (isDas) originalTitle = "DAS. | UI/UX Tasarımcı";
+
+    document.title = originalTitle;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Sekmeden çıkılınca
+        if (isMas) {
+          document.title = "Tasarımı DAS'a mı bıraktın? 🎨";
+        } else if (isDas) {
+          document.title = "MAS kodu mu bozdu? 💻";
+        } else {
+          document.title = "Sistem Uyku Modunda 💤";
+        }
+      } else {
+        // Sekmeye geri dönünce
+        if (isMas) {
+          document.title = "MAS Kontrolü Devraldı ⚡";
+        } else if (isDas) {
+          document.title = "DAS Pikselleri Hizalıyor 🪄";
+        } else {
+          document.title = "Bağlantı Kuruldu 🚀";
+        }
+
+        // 2 saniye sonra orijinal başlığa dön
+        setTimeout(() => {
+          document.title = originalTitle;
+        }, 2000);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [pathname]);
+
+  return null; // Görsel bir şey render etmez, sadece arka planda çalışır
+};
 
 // --- LANDING PAGE ÖZEL NAVBAR ---
 const LandingNavbar = () => {
@@ -47,37 +98,29 @@ const LandingPage = () => {
 
   return (
     <div className="relative min-h-screen bg-[#0A0A0F] text-white overflow-hidden flex flex-col font-sans selection:bg-amber-500/30">
-      {/* --- 1. PERFORMANSLI ARKA PLAN (CSS Filter yerine Overlay tekniği ve GPU) --- */}
+      {/* --- 1. PERFORMANSLI ARKA PLAN --- */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-black">
         <motion.img
           src={twinPic}
           alt="DAS ve MAS"
-          // blur, grayscale ve saturate kaldırıldı, opacity ile oynuyoruz. GPU dostu!
           className={`absolute inset-0 w-full h-full object-cover object-[center_bottom] transition-opacity duration-1000 transform-gpu will-change-[opacity]
             ${viewMode === "zen" ? "opacity-20" : "opacity-85"}
           `}
         />
-        {/* Zen modunda siyah/gri tonlama efekti vermek için üzerine binen katman */}
         <div
           className={`absolute inset-0 transition-colors duration-1000 ${viewMode === "zen" ? "bg-[#0A0A0F]/60" : "bg-transparent"}`}
         />
-
-        {/* Üst Kısım Gradienti: Yazıların okunabilirliğini artırır */}
         <div className="absolute top-0 inset-x-0 h-[55%] bg-gradient-to-b from-[#0A0A0F] via-[#0A0A0F]/80 to-transparent transform-gpu" />
-
-        {/* Alt Kısım Gradienti: Sitenin bitişini yumuşatır */}
         <div className="absolute bottom-0 inset-x-0 h-1/5 bg-gradient-to-t from-[#0A0A0F] to-transparent transform-gpu" />
       </div>
 
-      {/* --- 2. NAVBAR --- */}
       <div className="relative z-50">
         <LandingNavbar />
       </div>
 
-      {/* --- 3. ANA İÇERİK (PERFORMANS ODAKLI) --- */}
+      {/* --- 3. ANA İÇERİK --- */}
       <div className="relative z-30 flex-1 flex flex-col justify-start items-center w-full pt-28 md:pt-32 px-6 text-center">
         <AnimatePresence mode="wait">
-          {/* VİZYON MODU YAZISI */}
           {viewMode === "vizyon" && (
             <motion.div
               key="vizyon"
@@ -107,7 +150,6 @@ const LandingPage = () => {
             </motion.div>
           )}
 
-          {/* BENTO MODU YAZISI */}
           {viewMode === "bento" && (
             <motion.div
               key="bento"
@@ -132,7 +174,6 @@ const LandingPage = () => {
             </motion.div>
           )}
 
-          {/* ZEN MODU YAZISI */}
           {viewMode === "zen" && (
             <motion.div
               key="zen"
@@ -160,7 +201,6 @@ const LandingPage = () => {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="flex flex-wrap justify-center gap-4 md:gap-8 mt-6 md:mt-8 z-30 transform-gpu"
         >
-          {/* DAS Portfolio (SOLDA) */}
           <button
             onClick={() => {
               setViewMode("vizyon");
@@ -180,7 +220,6 @@ const LandingPage = () => {
             DAS Portfolio
           </button>
 
-          {/* MAS Portfolio (SAĞDA) */}
           <button
             onClick={() => {
               setViewMode("bento");
@@ -202,7 +241,6 @@ const LandingPage = () => {
         </motion.div>
       </div>
 
-      {/* --- 4. GLOBAL KONTROL MERKEZİ --- */}
       <div className="relative z-50">
         <ModeSwitcher />
       </div>
@@ -229,7 +267,6 @@ const PortfolioLayout = () => {
 
       <ModeSwitcher />
 
-      {/* KRİTİK DEĞİŞİKLİK: Bu kocaman blur daireler mobilde cihazı felç eder. hidden md:block ekledik! */}
       <div className="fixed inset-0 pointer-events-none z-0 hidden md:block">
         <div className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] bg-amber-500/[0.02] blur-[120px] rounded-full transform-gpu" />
         <div className="absolute bottom-[20%] left-[-10%] w-[40vw] h-[40vw] bg-cyan-500/[0.02] blur-[120px] rounded-full transform-gpu" />
@@ -243,11 +280,10 @@ function App() {
   return (
     <ViewProvider>
       <Router>
+        {/* Router'ın içi, useLocation'ı çağırabilmemiz için güvenli bölge */}
+        <DynamicTitle />
         <Routes>
-          {/* Ana Giriş Kapısı */}
           <Route path="/" element={<LandingPage />} />
-
-          {/* Dinamik Profil Rotası */}
           <Route path="/:profileId" element={<PortfolioLayout />} />
         </Routes>
       </Router>

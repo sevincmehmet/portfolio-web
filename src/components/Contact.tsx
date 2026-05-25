@@ -84,7 +84,7 @@ export const Contact = () => {
   return (
     <section
       id="iletisim"
-      className="relative min-h-screen bg-[#0A0A0F] flex items-center justify-center px-6 py-32 overflow-hidden selection:bg-amber-500/30 transform-gpu"
+      className="relative min-h-screen bg-[#0A0A0F] flex items-center justify-center px-4 md:px-6 py-24 md:py-32 overflow-hidden selection:bg-amber-500/30 transform-gpu"
     >
       <AnimatePresence mode="wait">
         {/* =========================================
@@ -96,28 +96,44 @@ export const Contact = () => {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.02 }}
-            className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center gap-20 relative z-10 transform-gpu"
+            className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20 relative z-10 transform-gpu"
           >
             <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
-              <h2 className="text-7xl md:text-8xl font-semibold tracking-tighter text-white leading-[0.9] mb-10">
-                Fikirleri <br />
+              <h2 className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tighter text-white leading-[1] md:leading-[0.9] mb-8 md:mb-10">
+                İlham Veren <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200">
-                  Gerçeğe
+                  Fikirleri
                 </span>{" "}
                 <br />
-                Dönüştürelim.
+                Paylaşalım.
               </h2>
               <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-amber-500 hover:border-amber-500 transition-colors cursor-pointer">
+                <a
+                  target="_blank"
+                  href={
+                    isMas
+                      ? "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254"
+                      : "https://linkedin.com/in/dursun-ali-sevinç-18a466280"
+                  }
+                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-amber-500 hover:border-amber-500 transition-colors cursor-pointer"
+                >
                   <LinkedInIcon />
-                </div>
-                <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-colors cursor-pointer">
+                </a>
+                <a
+                  target="_blank"
+                  href={
+                    isMas
+                      ? "https://github.com/sevincmehmet"
+                      : "https://github.com/dursunalisevinc"
+                  }
+                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-colors cursor-pointer"
+                >
                   <GithubIcon />
-                </div>
+                </a>
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 space-y-6">
+            <div className="w-full md:w-1/2 space-y-4 md:space-y-6">
               {[
                 {
                   label: "E-posta Gönder",
@@ -139,16 +155,16 @@ export const Contact = () => {
                     x: 10,
                     backgroundColor: "rgba(255,255,255,0.04)",
                   }}
-                  className="flex items-center gap-8 p-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/5 rounded-[2.5rem] group transition-all transform-gpu"
+                  className="flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-8 p-6 md:p-8 bg-[#111] md:bg-white/[0.02] md:backdrop-blur-3xl border border-white/5 rounded-3xl md:rounded-[2.5rem] group transition-all transform-gpu text-center sm:text-left"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-white/5 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500 shrink-0">
                     {item.icon}
                   </div>
-                  <div>
-                    <p className="text-[0.6rem] font-black tracking-[0.4em] text-white/20 uppercase mb-1">
+                  <div className="flex-1 w-full overflow-hidden">
+                    <p className="text-[0.6rem] font-black tracking-[0.4em] text-white/30 uppercase mb-1">
                       {item.label}
                     </p>
-                    <p className="text-xl md:text-2xl font-light text-white tracking-tight">
+                    <p className="text-lg md:text-2xl font-light text-white tracking-tight truncate">
                       {item.val}
                     </p>
                   </div>
@@ -164,14 +180,13 @@ export const Contact = () => {
         {viewMode === "bento" && (
           <motion.div
             key="b-contact"
-            // KRİTİK: filter blur silindi!
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
-            className="max-w-[75rem] w-full mx-auto grid grid-cols-1 md:grid-cols-12 auto-rows-[minmax(200px,auto)] gap-6 relative z-10 transform-gpu"
+            className="max-w-[75rem] w-full mx-auto grid grid-cols-1 md:grid-cols-12 auto-rows-auto gap-4 md:gap-6 relative z-10 transform-gpu"
           >
             {/* ANA CTA */}
-            <div className="col-span-1 md:col-span-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 md:p-16 flex flex-col justify-center relative group overflow-hidden transform-gpu">
+            <div className="col-span-1 md:col-span-8 bg-[#111] md:bg-white/[0.02] md:backdrop-blur-3xl border border-white/[0.05] rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-16 flex flex-col justify-center relative group overflow-hidden transform-gpu">
               <div
                 className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none hidden md:block"
                 style={{
@@ -180,15 +195,15 @@ export const Contact = () => {
                   backgroundSize: "24px 24px",
                 }}
               />
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-10 tracking-tighter leading-tight">
-                Bir Sonraki <br />{" "}
-                <span className="text-amber-500">Başyapıtı</span> <br />{" "}
-                Birlikte Kuralım.
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-8 md:mb-10 tracking-tighter leading-tight text-center md:text-left">
+                Dijital Dünyada <br className="hidden md:block" />{" "}
+                <span className="text-amber-500">Deneyimlerimizi</span>{" "}
+                <br className="hidden md:block" /> Paylaşalım.
               </h2>
-              <div className="flex flex-wrap items-center gap-6 relative z-10">
+              <div className="flex justify-center md:justify-start relative z-10">
                 <a
                   href={`mailto:${email}`}
-                  className="px-10 py-4 bg-white text-black font-black rounded-full hover:scale-105 transition-all flex items-center gap-3 shadow-lg md:shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+                  className="px-8 py-3 md:px-10 md:py-4 bg-white text-black text-sm md:text-base font-black rounded-full hover:scale-105 transition-all flex items-center gap-2 md:gap-3 shadow-lg md:shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
                 >
                   <MailIcon /> Mesaj Gönder
                 </a>
@@ -196,35 +211,45 @@ export const Contact = () => {
             </div>
 
             {/* TELEFON KUTUSU */}
-            <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between group hover:border-amber-500/30 transition-all duration-500 transform-gpu">
-              <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
+            <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col items-center md:items-start justify-between group hover:border-amber-500/30 transition-all duration-500 transform-gpu text-center md:text-left gap-4 md:gap-0">
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
                 <PhoneIcon />
               </div>
               <div>
-                <p className="text-gray-500 text-[0.6rem] font-black uppercase tracking-widest mb-2">
+                <p className="text-gray-500 text-[0.6rem] font-black uppercase tracking-widest mb-1 md:mb-2">
                   Doğrudan Hat
                 </p>
-                <p className="text-white font-bold text-lg md:text-xl tracking-tight">
+                <p className="text-white font-bold text-base md:text-xl tracking-tight">
                   {isMas ? tel : drTel}
                 </p>
               </div>
             </div>
 
             {/* SOSYAL MEDYA */}
-            <div className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between group transform-gpu">
-              <p className="text-white font-black tracking-[0.3em] uppercase text-[0.65rem] opacity-30">
+            <div className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col items-center md:items-start justify-between group transform-gpu gap-4 md:gap-0">
+              <p className="text-white font-black tracking-[0.3em] uppercase text-[0.65rem] opacity-30 text-center md:text-left">
                 Bağlantılar
               </p>
               <div className="flex gap-4">
                 <a
-                  href="#"
-                  className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-500"
+                  target="_blank"
+                  href={
+                    isMas
+                      ? "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254"
+                      : "https://linkedin.com/in/dursun-ali-sevinç-18a466280"
+                  }
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-500"
                 >
                   <LinkedInIcon />
                 </a>
                 <a
-                  href="#"
-                  className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-white/10 transition-all duration-500"
+                  target="_blank"
+                  href={
+                    isMas
+                      ? "https://github.com/sevincmehmet"
+                      : "https://github.com/dursunalisevinc"
+                  }
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-white/10 transition-all duration-500"
                 >
                   <GithubIcon />
                 </a>
@@ -232,8 +257,8 @@ export const Contact = () => {
             </div>
 
             {/* KAHVE DURUMU */}
-            <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 rounded-[2.5rem] p-10 flex items-center justify-between group overflow-hidden relative transform-gpu">
-              <div className="flex items-center gap-8 relative z-10">
+            <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-center md:justify-between group overflow-hidden relative transform-gpu text-center md:text-left gap-6 md:gap-0">
+              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 relative z-10">
                 <motion.div
                   animate={{ y: [-5, 5, -5] }}
                   transition={{
@@ -241,22 +266,21 @@ export const Contact = () => {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  // Sürekli zıplayan emoji için GPU
-                  className="text-6xl filter drop-shadow-2xl transform-gpu will-change-transform"
+                  className="text-5xl md:text-6xl filter drop-shadow-2xl transform-gpu will-change-transform"
                 >
                   ☕
                 </motion.div>
                 <div>
-                  <h4 className="text-white font-bold text-2xl mb-1 tracking-tight">
+                  <h4 className="text-white font-bold text-xl md:text-2xl mb-2 md:mb-1 tracking-tight">
                     Kahve Saati?
                   </h4>
-                  <p className="text-gray-500 font-light italic max-w-sm">
+                  <p className="text-gray-400 md:text-gray-500 text-sm md:text-base font-light italic max-w-sm">
                     Sivas'ta olsan da olmasan da, dijital bir kahveye her zaman
                     varım.
                   </p>
                 </div>
               </div>
-              <div className="hidden md:block text-amber-500/[0.03] text-[10rem] font-black select-none pointer-events-none absolute -right-4 -bottom-10">
+              <div className="hidden md:block text-amber-500/[0.03] text-[8rem] lg:text-[10rem] font-black select-none pointer-events-none absolute -right-4 -bottom-10">
                 COFFEE
               </div>
             </div>
@@ -277,34 +301,35 @@ export const Contact = () => {
             <motion.div
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="mb-16 flex justify-center text-white/5 transform-gpu will-change-transform"
+              className="mb-10 md:mb-16 flex justify-center text-white/5 transform-gpu will-change-transform"
             >
               <svg
-                width="80"
-                height="80"
+                width="60"
+                height="60"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="0.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="md:w-20 md:h-20"
               >
                 <path d="M12 2v20M2 12h20M12 2l10 10-10 10L2 12z" />
               </svg>
             </motion.div>
-            <div className="space-y-12">
-              <div className="group cursor-pointer">
-                <p className="text-[0.6rem] font-black tracking-[0.8em] text-white/10 group-hover:text-amber-500 transition-colors uppercase mb-4">
+            <div className="space-y-8 md:space-y-12">
+              <div className="group cursor-pointer px-4">
+                <p className="text-[0.55rem] md:text-[0.6rem] font-black tracking-[0.5em] md:tracking-[0.8em] text-white/20 group-hover:text-amber-500 transition-colors uppercase mb-3 md:mb-4">
                   Sessizlikte Buluşalım
                 </p>
                 <a
                   href={`mailto:${isMas ? email : drMail}`}
-                  className="text-3xl md:text-6xl font-thin text-white/40 hover:text-white transition-all duration-700 tracking-tighter"
+                  className="block text-xl sm:text-2xl md:text-5xl lg:text-6xl font-thin text-white/60 hover:text-white transition-all duration-700 tracking-tighter truncate"
                 >
                   {isMas ? email : drMail}
                 </a>
               </div>
-              <p className="text-lg md:text-xl text-white/10 font-thin tracking-[0.4em] italic">
+              <p className="text-base md:text-xl text-white/30 font-thin tracking-[0.2em] md:tracking-[0.4em] italic">
                 {isMas ? tel : drTel}
               </p>
             </div>

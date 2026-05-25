@@ -1,9 +1,31 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useView } from "../context/ViewContext";
+import { useLocation } from "react-router-dom";
 
 export const Footer = () => {
   const { viewMode } = useView();
+  const { pathname } = useLocation();
   const currentYear = 2026;
+
+  // Dinamik profil kontrolü
+  const isMas = pathname === "/mas";
+
+  const profileData = {
+    mas: {
+      shortName: "MAS.",
+      fullName: "Mehmet Ali Sevinç",
+      role: "Dijital Mimar & Frontend Geliştirici",
+      brand: "MAS. 2026",
+    },
+    das: {
+      shortName: "DAS.",
+      fullName: "Dursun Ali Sevinç",
+      role: "Dijital Mimar & UI/UX Tasarımcı",
+      brand: "DAS. 2026",
+    },
+  };
+
+  const currentProfile = isMas ? profileData.mas : profileData.das;
 
   const transition = { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const };
 
@@ -37,33 +59,43 @@ export const Footer = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={transition}
-            className="max-w-7xl mx-auto px-6 py-20 relative z-10 transform-gpu"
+            className="max-w-7xl mx-auto px-6 py-12 md:py-20 relative z-10 transform-gpu"
           >
-            <div className="flex flex-col md:flex-row justify-between items-end gap-12">
-              <div className="space-y-6">
-                <h3 className="text-6xl md:text-8xl font-black text-white/5 select-none tracking-tighter">
-                  MAS.
+            <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-12 text-center md:text-left">
+              <div className="space-y-4 md:space-y-6 flex flex-col items-center md:items-start">
+                <h3 className="text-5xl md:text-8xl font-black text-white/5 select-none tracking-tighter">
+                  {currentProfile.shortName}
                 </h3>
-                <div className="space-y-2">
+                <div className="space-y-1 md:space-y-2">
                   <p className="text-white font-medium tracking-tight">
-                    Mehmet Ali Sevinç
+                    {currentProfile.fullName}
                   </p>
-                  <p className="text-gray-500 text-sm font-light">
-                    Dijital Mimar & Frontend Geliştirici
+                  <p className="text-gray-500 text-xs md:text-sm font-light">
+                    {currentProfile.role}
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-col md:items-end gap-6">
-                <div className="flex gap-8 text-xs font-bold tracking-[0.3em] uppercase text-white/40">
+              <div className="flex flex-col items-center md:items-end gap-5 md:gap-6">
+                <div className="flex gap-6 md:gap-8 text-[0.65rem] md:text-xs font-bold tracking-[0.3em] uppercase text-white/40">
                   <a
-                    href="#"
+                    target="_blank"
+                    href={
+                      isMas
+                        ? "https://github.com/sevincmehmet"
+                        : "https://github.com/dursunalisevinc"
+                    }
                     className="hover:text-amber-500 transition-colors"
                   >
                     GitHub
                   </a>
                   <a
-                    href="#"
+                    target="_blank"
+                    href={
+                      isMas
+                        ? "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254"
+                        : "https://linkedin.com/in/dursun-ali-sevinç-18a466280"
+                    }
                     className="hover:text-amber-500 transition-colors"
                   >
                     LinkedIn
@@ -75,8 +107,8 @@ export const Footer = () => {
                     X
                   </a>
                 </div>
-                <div className="h-[1px] w-32 bg-gradient-to-r from-transparent to-amber-500/50"></div>
-                <p className="text-[0.6rem] font-black tracking-[0.4em] text-gray-600 uppercase">
+                <div className="h-[1px] w-24 md:w-32 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent md:to-amber-500/50 md:from-transparent"></div>
+                <p className="text-[0.55rem] md:text-[0.6rem] font-black tracking-[0.4em] text-gray-600 uppercase">
                   Sivas, TR — {currentYear}
                 </p>
               </div>
@@ -94,34 +126,52 @@ export const Footer = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={transition}
-            className="max-w-[75rem] mx-auto px-6 py-12 relative z-10 transform-gpu"
+            className="max-w-[75rem] mx-auto px-4 md:px-6 py-10 md:py-12 relative z-10 transform-gpu"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Marka Kutusu */}
-              <div className="p-8 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2rem] md:backdrop-blur-xl flex flex-col justify-between transform-gpu">
-                <span className="text-amber-500 font-black tracking-widest text-xs uppercase">
+              <div className="p-6 md:p-8 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[1.5rem] md:rounded-[2rem] md:backdrop-blur-xl flex flex-row md:flex-col items-center md:items-start justify-between transform-gpu">
+                <span className="text-amber-500 font-black tracking-widest text-[0.65rem] md:text-xs uppercase">
                   Marka
                 </span>
-                <h4 className="text-white font-bold text-xl tracking-tighter">
-                  MAS. 2026
+                <h4 className="text-white font-bold text-lg md:text-xl tracking-tighter">
+                  {currentProfile.brand}
                 </h4>
               </div>
 
               {/* Lokasyon Kutusu */}
-              <div className="p-8 bg-[#111111]/40 border border-white/5 rounded-[2rem] flex flex-col justify-between group hover:border-amber-500/20 transition-colors transform-gpu">
+              <div className="p-6 md:p-8 bg-[#111111]/40 border border-white/5 rounded-[1.5rem] md:rounded-[2rem] flex flex-row md:flex-col items-center md:items-start justify-between group hover:border-amber-500/20 transition-colors transform-gpu">
                 <span className="text-gray-500 font-bold tracking-widest text-[0.6rem] uppercase">
                   Lokasyon
                 </span>
-                <p className="text-white text-sm font-medium">Sivas, Türkiye</p>
+                <p className="text-white text-xs md:text-sm font-medium">
+                  Sivas, Türkiye
+                </p>
               </div>
 
               {/* Linkler Kutusu */}
-              <div className="p-8 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2rem] flex flex-col justify-between transform-gpu">
+              <div className="p-6 md:p-8 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[1.5rem] md:rounded-[2rem] flex flex-col md:flex-col items-center md:items-start justify-between gap-4 md:gap-0 transform-gpu">
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:text-amber-500 transition-colors cursor-pointer">
+                  <a
+                    target="_blank"
+                    href={
+                      isMas
+                        ? "https://github.com/sevincmehmet"
+                        : "https://github.com/dursunalisevinc"
+                    }
+                    className="w-10 h-10 md:w-8 md:h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:text-amber-500 transition-colors cursor-pointer"
+                  >
                     <GithubIcon />
-                  </div>
-                  <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:text-amber-500 transition-colors cursor-pointer">
+                  </a>
+                  <a
+                    target="_blank"
+                    href={
+                      isMas
+                        ? "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254"
+                        : "https://linkedin.com/in/dursun-ali-sevinç-18a466280"
+                    }
+                    className="w-10 h-10 md:w-8 md:h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:text-amber-500 transition-colors cursor-pointer"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
@@ -137,9 +187,9 @@ export const Footer = () => {
                       <rect width="4" height="12" x="2" y="9" />
                       <circle cx="4" cy="4" r="2" />
                     </svg>
-                  </div>
+                  </a>
                 </div>
-                <p className="text-[0.6rem] font-bold text-gray-600 uppercase tracking-[0.2em]">
+                <p className="mt-2 text-[0.6rem] font-bold text-gray-600 uppercase tracking-[0.2em] text-center md:text-left">
                   Tüm Hakları Saklıdır
                 </p>
               </div>
@@ -157,9 +207,9 @@ export const Footer = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={transition}
-            className="max-w-4xl mx-auto px-6 py-16 text-center relative z-10 transform-gpu"
+            className="max-w-4xl mx-auto px-6 py-12 md:py-16 text-center relative z-10 transform-gpu"
           >
-            <div className="space-y-10">
+            <div className="space-y-8 md:space-y-10">
               <div className="flex justify-center">
                 <motion.div
                   animate={{ rotate: 360 }}
@@ -168,34 +218,33 @@ export const Footer = () => {
                     repeat: Infinity,
                     ease: "linear",
                   }}
-                  // Dönen yuvarlak için donanım ivmesi
-                  className="w-12 h-12 border border-white/5 rounded-full flex items-center justify-center transform-gpu will-change-transform"
+                  className="w-10 h-10 md:w-12 md:h-12 border border-white/5 rounded-full flex items-center justify-center transform-gpu will-change-transform"
                 >
                   <div className="w-1 h-1 bg-amber-500 rounded-full"></div>
                 </motion.div>
               </div>
 
-              <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
-                <p className="text-[0.65rem] font-medium tracking-[0.6em] text-white/20 uppercase">
-                  Mehmet Ali Sevinç
+              <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16">
+                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/20 uppercase">
+                  {currentProfile.fullName}
                 </p>
-                <p className="text-[0.65rem] font-medium tracking-[0.6em] text-white/20 uppercase">
+                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/20 uppercase">
                   {currentYear}
                 </p>
-                <p className="text-[0.65rem] font-medium tracking-[0.6em] text-white/20 uppercase">
+                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/20 uppercase">
                   Sivas
                 </p>
               </div>
 
-              <div className="flex justify-center pt-4">
-                <div className="h-[0.5px] w-24 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+              <div className="flex justify-center pt-2 md:pt-4">
+                <div className="h-[0.5px] w-16 md:w-24 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* KRİTİK: Arka plandaki dev blur efekti mobilde gizlendi, masaüstünde aktif */}
+      {/* Arka Plan Dekoratif Işık (Mobilde kapalı) */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-amber-500/[0.02] blur-[100px] rounded-full pointer-events-none hidden md:block transform-gpu"></div>
     </footer>
   );

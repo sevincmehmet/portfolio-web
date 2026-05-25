@@ -28,7 +28,7 @@ export const SectionDivider = () => {
         <div className="flex items-center gap-4 opacity-20">
           <div className="w-1 h-1 bg-white rounded-full" />
           <span className="text-[0.6rem] font-black tracking-[0.5em] text-white uppercase select-none">
-            39.9° N // 37.0° E
+            UI // UX
           </span>
           <div className="w-1 h-1 bg-white rounded-full" />
         </div>
