@@ -1,9 +1,9 @@
-import profilePicVizion from "../assets/me-vizion.png";
-import drProfilePicVizion from "../assets/dr-vizion.png";
-import profilePicBento from "../assets/me-bento.jpeg";
-import drProfilePicBento from "../assets/dr-bento.png";
-import profilePicZen from "../assets/me-zen.png";
-import drProfilePicZen from "../assets/dr-zen.png";
+import profilePicVizion from "../assets/me-vizion.jpg";
+import profilePicBento from "../assets/me-bento.jpg";
+import profilePicZen from "../assets/me-zen.jpg";
+import drProfilePicVizion from "../assets/dr-vizion.jpg";
+import drProfilePicBento from "../assets/dr-bento.jpg";
+import drProfilePicZen from "../assets/dr-zen.jpg";
 
 export const heroContent = {
   mas: {

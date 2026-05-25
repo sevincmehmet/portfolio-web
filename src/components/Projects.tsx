@@ -29,7 +29,7 @@ export const Projects = ({ data = projectsData["mas"] }: ProjectsProps) => {
   return (
     <section
       id="projeler"
-      className="relative min-h-screen bg-[#0A0A0F] py-32 px-6 overflow-hidden"
+      className="relative min-h-screen bg-[#0A0A0F] py-32 px-6 overflow-hidden transform-gpu"
     >
       <div className="max-w-7xl mx-auto">
         {/* BÖLÜM BAŞLIĞI */}
@@ -37,7 +37,7 @@ export const Projects = ({ data = projectsData["mas"] }: ProjectsProps) => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-20 text-center md:text-left"
+          className="mb-20 text-center md:text-left transform-gpu"
         >
           <h2
             className={`text-5xl md:text-7xl font-bold tracking-tighter text-white ${
@@ -67,15 +67,17 @@ export const Projects = ({ data = projectsData["mas"] }: ProjectsProps) => {
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
+                  // Kaydırırken takılmamaları için transform-gpu
                   className={`flex flex-col ${
                     i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  } items-center gap-16 group`}
+                  } items-center gap-16 group transform-gpu`}
                 >
                   {/* Görsel Alanı (Glassmorphism) */}
                   <a
                     href={project.link}
                     target="_blank"
-                    className="w-full md:w-3/5 aspect-video bg-white/[0.02] border border-white/10 rounded-[3rem] relative overflow-hidden group-hover:border-amber-500/30 transition-all duration-700 shadow-2xl cursor-pointer block"
+                    // shadow-2xl mobilde çok yorar, md:shadow-2xl yapıldı
+                    className="w-full md:w-3/5 aspect-video bg-white/[0.02] border border-white/10 rounded-[3rem] relative overflow-hidden group-hover:border-amber-500/30 transition-all duration-700 shadow-lg md:shadow-2xl cursor-pointer block transform-gpu"
                   >
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${project.color} to-transparent opacity-30 group-hover:opacity-50 transition-opacity`}
@@ -127,7 +129,8 @@ export const Projects = ({ data = projectsData["mas"] }: ProjectsProps) => {
                   href={project.link}
                   target="_blank"
                   key={project.id}
-                  className={`${getBentoColSpan(i)} bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between group hover:bg-white/[0.04] transition-all relative overflow-hidden cursor-pointer block`}
+                  // Grid itemları için donanım hızlandırma
+                  className={`${getBentoColSpan(i)} bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between group hover:bg-white/[0.04] transition-all relative overflow-hidden cursor-pointer block transform-gpu`}
                 >
                   <div className="relative z-10">
                     <h3 className="text-2xl font-bold text-white mb-2">
@@ -173,7 +176,7 @@ export const Projects = ({ data = projectsData["mas"] }: ProjectsProps) => {
                   href={project.link}
                   target="_blank"
                   key={project.id}
-                  className="group border-b border-white/5 py-12 flex items-center justify-between hover:px-8 transition-all duration-700 cursor-pointer block"
+                  className="group border-b border-white/5 py-12 flex items-center justify-between hover:px-8 transition-all duration-700 cursor-pointer block transform-gpu"
                 >
                   <div className="space-y-2">
                     <h3 className="text-3xl md:text-5xl font-thin text-white/40 group-hover:text-white transition-colors">

@@ -13,11 +13,11 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
   return (
     <section
       id="hakkimda"
-      className="relative min-h-screen bg-[#0A0A0F] flex items-center justify-center px-6 py-32 overflow-hidden"
+      className="relative min-h-screen bg-[#0A0A0F] flex items-center justify-center px-6 py-32 overflow-hidden transform-gpu"
     >
       <AnimatePresence mode="wait">
         {/* =========================================
-             TASARIM 1: VİZYON (SAĞ-SOL YER DEĞİŞTİ)
+             TASARIM 1: VİZYON
              ========================================= */}
         {viewMode === "vizyon" && (
           <motion.div
@@ -25,7 +25,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="max-w-7xl w-full mx-auto flex flex-col md:flex-row-reverse items-center gap-16 lg:gap-24 relative z-10"
+            className="max-w-7xl w-full mx-auto flex flex-col md:flex-row-reverse items-center gap-16 lg:gap-24 relative z-10 transform-gpu"
           >
             {/* SOL TARAF (METİN) */}
             <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
@@ -57,7 +57,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
             </div>
 
             {/* SAĞ TARAF (GÖRSEL) */}
-            <div className="w-full md:w-1/2 relative flex justify-center">
+            <div className="w-full md:w-1/2 relative flex justify-center transform-gpu">
               <div className="relative w-full aspect-square max-w-md">
                 <motion.div
                   animate={{ rotate: -360 }}
@@ -66,14 +66,15 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                     repeat: Infinity,
                     ease: "linear",
                   }}
-                  className="absolute inset-0 border border-white/[0.05] rounded-full"
+                  // Sürekli dönen animasyon GPU'ya atandı
+                  className="absolute inset-0 border border-white/[0.05] rounded-full transform-gpu will-change-transform"
                 />
-                <div className="absolute inset-8 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-full flex items-center justify-center overflow-hidden group">
+                <div className="absolute inset-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/10 rounded-full flex items-center justify-center overflow-hidden group transform-gpu">
                   <div className="text-center p-12">
                     <motion.div
                       animate={{ y: [-10, 10, -10] }}
                       transition={{ duration: 4, repeat: Infinity }}
-                      className="text-6xl mb-6"
+                      className="text-6xl mb-6 transform-gpu will-change-transform"
                     >
                       🌱
                     </motion.div>
@@ -94,13 +95,14 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
         {viewMode === "bento" && (
           <motion.div
             key="b-about"
-            initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
-            className="max-w-[75rem] w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10"
+            // KRİTİK: filter: blur silindi
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            className="max-w-[75rem] w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10 transform-gpu"
           >
-            {/* İŞ DENEYİMİ (8 Kolon) */}
-            <div className="col-span-1 md:col-span-8 bg-white/[0.02] backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 flex flex-col group hover:border-white/10 transition-all duration-700">
+            {/* İŞ DENEYİMİ */}
+            <div className="col-span-1 md:col-span-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 flex flex-col group hover:border-white/10 transition-all duration-700 transform-gpu">
               <h3 className="text-amber-500 font-bold tracking-[0.2em] text-[0.65rem] uppercase mb-8">
                 {data.bento.experience.title}
               </h3>
@@ -111,7 +113,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                     className="relative pl-6 border-l border-white/10"
                   >
                     <div
-                      className={`absolute left-[-5px] top-1.5 w-2 h-2 rounded-full ${company.current ? "bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.8)] animate-pulse" : "bg-white/20"}`}
+                      className={`absolute left-[-5px] top-1.5 w-2 h-2 rounded-full ${company.current ? "bg-amber-500 shadow-none md:shadow-[0_0_10px_rgba(245,158,11,0.8)] animate-pulse" : "bg-white/20"}`}
                     ></div>
                     <div className="flex flex-wrap items-center gap-4 mb-2">
                       <h4 className="text-white text-xl font-bold">
@@ -154,8 +156,8 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
               </div>
             </div>
 
-            {/* KARAKALEM (4 Kolon) */}
-            <div className="col-span-1 md:col-span-4 bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-center gap-4 hover:bg-white/[0.04] transition-all">
+            {/* KARAKALEM */}
+            <div className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-center gap-4 hover:bg-white/[0.04] transition-all transform-gpu">
               <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-2xl">
                 {data.bento.uiux.icon}
               </div>
@@ -167,9 +169,10 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
               </p>
             </div>
 
-            {/* GÖNÜLLÜLÜK (8 Kolon) */}
-            <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 rounded-[2.5rem] p-10 group relative overflow-hidden">
-              <div className="absolute right-[-5%] top-[-10%] w-64 h-64 bg-cyan-500/5 rounded-full blur-[60px] pointer-events-none"></div>
+            {/* GÖNÜLLÜLÜK */}
+            <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-[#111] md:from-white/[0.03] to-transparent border border-white/5 rounded-[2.5rem] p-10 group relative overflow-hidden transform-gpu">
+              {/* Ağır bulanık div mobilde gizlendi */}
+              <div className="absolute right-[-5%] top-[-10%] w-64 h-64 bg-cyan-500/5 rounded-full blur-[60px] pointer-events-none hidden md:block"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <div>
                   <h3 className="text-white text-2xl font-bold tracking-tight">
@@ -198,8 +201,8 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
               </div>
             </div>
 
-            {/* LOKASYON KART (4 Kolon) */}
-            <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2.5rem] p-10 flex items-center justify-between">
+            {/* LOKASYON KART */}
+            <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2.5rem] p-10 flex items-center justify-between transform-gpu">
               <div>
                 <h3 className="text-white font-bold text-xl tracking-tighter">
                   {data.bento.location.city}
@@ -208,7 +211,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                   {data.bento.location.label}
                 </p>
               </div>
-              <div className="w-3 h-3 rounded-full bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.5)] animate-pulse"></div>
+              <div className="w-3 h-3 rounded-full bg-cyan-500 shadow-none md:shadow-[0_0_15px_rgba(6,182,212,0.5)] animate-pulse"></div>
             </div>
           </motion.div>
         )}
@@ -222,7 +225,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="max-w-4xl w-full mx-auto text-center z-10"
+            className="max-w-4xl w-full mx-auto text-center z-10 transform-gpu"
           >
             <h2 className="text-[12vw] font-extralight tracking-[-0.05em] text-white/5 mb-16 select-none uppercase">
               {data.zen.bgText}

@@ -84,11 +84,11 @@ export const Contact = () => {
   return (
     <section
       id="iletisim"
-      className="relative min-h-screen bg-[#0A0A0F] flex items-center justify-center px-6 py-32 overflow-hidden selection:bg-amber-500/30"
+      className="relative min-h-screen bg-[#0A0A0F] flex items-center justify-center px-6 py-32 overflow-hidden selection:bg-amber-500/30 transform-gpu"
     >
       <AnimatePresence mode="wait">
         {/* =========================================
-             TASARIM 1: VİZYON (BİREBİR AYNI KALDI)
+             TASARIM 1: VİZYON 
              ========================================= */}
         {viewMode === "vizyon" && (
           <motion.div
@@ -96,7 +96,7 @@ export const Contact = () => {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.02 }}
-            className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center gap-20 relative z-10"
+            className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center gap-20 relative z-10 transform-gpu"
           >
             <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
               <h2 className="text-7xl md:text-8xl font-semibold tracking-tighter text-white leading-[0.9] mb-10">
@@ -139,7 +139,7 @@ export const Contact = () => {
                     x: 10,
                     backgroundColor: "rgba(255,255,255,0.04)",
                   }}
-                  className="flex items-center gap-8 p-8 bg-white/[0.02] backdrop-blur-3xl border border-white/5 rounded-[2.5rem] group transition-all"
+                  className="flex items-center gap-8 p-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/5 rounded-[2.5rem] group transition-all transform-gpu"
                 >
                   <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
                     {item.icon}
@@ -159,20 +159,21 @@ export const Contact = () => {
         )}
 
         {/* =========================================
-             TASARIM 2: BENTO (YENİLENMİŞ 8-4-4-8 DİZİLİMİ)
+             TASARIM 2: BENTO
              ========================================= */}
         {viewMode === "bento" && (
           <motion.div
             key="b-contact"
-            initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
-            className="max-w-[75rem] w-full mx-auto grid grid-cols-1 md:grid-cols-12 auto-rows-[minmax(200px,auto)] gap-6 relative z-10"
+            // KRİTİK: filter blur silindi!
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            className="max-w-[75rem] w-full mx-auto grid grid-cols-1 md:grid-cols-12 auto-rows-[minmax(200px,auto)] gap-6 relative z-10 transform-gpu"
           >
-            {/* ANA CTA (8 Kolon) */}
-            <div className="col-span-1 md:col-span-8 bg-white/[0.02] backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 md:p-16 flex flex-col justify-center relative group overflow-hidden">
+            {/* ANA CTA */}
+            <div className="col-span-1 md:col-span-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 md:p-16 flex flex-col justify-center relative group overflow-hidden transform-gpu">
               <div
-                className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none"
+                className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none hidden md:block"
                 style={{
                   backgroundImage:
                     "radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)",
@@ -187,15 +188,15 @@ export const Contact = () => {
               <div className="flex flex-wrap items-center gap-6 relative z-10">
                 <a
                   href={`mailto:${email}`}
-                  className="px-10 py-4 bg-white text-black font-black rounded-full hover:scale-105 transition-all flex items-center gap-3 shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+                  className="px-10 py-4 bg-white text-black font-black rounded-full hover:scale-105 transition-all flex items-center gap-3 shadow-lg md:shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
                 >
                   <MailIcon /> Mesaj Gönder
                 </a>
               </div>
             </div>
 
-            {/* TELEFON KUTUSU (4 Kolon) */}
-            <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between group hover:border-amber-500/30 transition-all duration-500">
+            {/* TELEFON KUTUSU */}
+            <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between group hover:border-amber-500/30 transition-all duration-500 transform-gpu">
               <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
                 <PhoneIcon />
               </div>
@@ -209,8 +210,8 @@ export const Contact = () => {
               </div>
             </div>
 
-            {/* SOSYAL MEDYA (4 Kolon) */}
-            <div className="col-span-1 md:col-span-4 bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between group">
+            {/* SOSYAL MEDYA */}
+            <div className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between group transform-gpu">
               <p className="text-white font-black tracking-[0.3em] uppercase text-[0.65rem] opacity-30">
                 Bağlantılar
               </p>
@@ -230,8 +231,8 @@ export const Contact = () => {
               </div>
             </div>
 
-            {/* KAHVE DURUMU (8 Kolon) */}
-            <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 rounded-[2.5rem] p-10 flex items-center justify-between group overflow-hidden relative">
+            {/* KAHVE DURUMU */}
+            <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 rounded-[2.5rem] p-10 flex items-center justify-between group overflow-hidden relative transform-gpu">
               <div className="flex items-center gap-8 relative z-10">
                 <motion.div
                   animate={{ y: [-5, 5, -5] }}
@@ -240,7 +241,8 @@ export const Contact = () => {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="text-6xl filter drop-shadow-2xl"
+                  // Sürekli zıplayan emoji için GPU
+                  className="text-6xl filter drop-shadow-2xl transform-gpu will-change-transform"
                 >
                   ☕
                 </motion.div>
@@ -262,7 +264,7 @@ export const Contact = () => {
         )}
 
         {/* =========================================
-             TASARIM 3: ZEN (BİREBİR AYNI KALDI)
+             TASARIM 3: ZEN 
              ========================================= */}
         {viewMode === "zen" && (
           <motion.div
@@ -270,12 +272,12 @@ export const Contact = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="max-w-4xl w-full mx-auto text-center"
+            className="max-w-4xl w-full mx-auto text-center transform-gpu"
           >
             <motion.div
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="mb-16 flex justify-center text-white/5"
+              className="mb-16 flex justify-center text-white/5 transform-gpu will-change-transform"
             >
               <svg
                 width="80"

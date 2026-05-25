@@ -12,12 +12,13 @@ export const SectionDivider = () => {
           initial={{ width: 0, opacity: 0 }}
           whileInView={{ width: "100%", opacity: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="h-[1px] bg-gradient-to-r from-transparent via-amber-500/50 to-transparent relative"
+          className="h-[1px] bg-gradient-to-r from-transparent via-amber-500/50 to-transparent relative transform-gpu"
         >
           <motion.div
             animate={{ x: ["-100%", "100%"] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20"
+            // Sürekli akan gradyan için will-change eklendi
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 transform-gpu will-change-transform"
           />
         </motion.div>
       )}
@@ -35,7 +36,7 @@ export const SectionDivider = () => {
 
       {/* ZEN: Sadece bir tüy kadar hafif geçiş */}
       {viewMode === "zen" && (
-        <div className="w-1 h-1 bg-white/5 rounded-full animate-pulse" />
+        <div className="w-1 h-1 bg-white/5 rounded-full animate-pulse transform-gpu" />
       )}
     </div>
   );

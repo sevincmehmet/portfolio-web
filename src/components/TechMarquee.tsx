@@ -16,7 +16,8 @@ export const TechMarquee = () => {
       <motion.div
         animate={{ x: [0, -1000] }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        className="flex gap-20 items-center px-10"
+        // KRİTİK: Sonsuz animasyonlar için donanım hızlandırma şart
+        className="flex gap-20 items-center px-10 transform-gpu will-change-transform"
       >
         {[...tech, ...tech].map((item, i) => (
           <span
