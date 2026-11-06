@@ -1,13 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
-
-type ViewMode = "vizyon" | "bento" | "zen";
-
-interface ViewContextType {
-  viewMode: ViewMode;
-  setViewMode: (mode: ViewMode) => void;
-}
-
-const ViewContext = createContext<ViewContextType | undefined>(undefined);
+import React, { useState } from "react";
+import { ViewContext, type ViewMode } from "./viewContextBase";
 
 export const ViewProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -18,10 +10,4 @@ export const ViewProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </ViewContext.Provider>
   );
-};
-
-export const useView = () => {
-  const context = useContext(ViewContext);
-  if (!context) throw new Error("useView Provider içinde kullanılmalı kral!");
-  return context;
 };

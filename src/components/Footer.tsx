@@ -1,14 +1,32 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useView } from "../context/ViewContext";
-import { useLocation } from "react-router-dom";
+import { useView } from "../context/useView";
+import { useParams } from "react-router-dom";
+import { profiles } from "../data/profiles";
+
+const GithubIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+);
 
 export const Footer = () => {
   const { viewMode } = useView();
-  const { pathname } = useLocation();
+  const { profileId } = useParams();
   const currentYear = 2026;
 
   // Dinamik profil kontrolü
-  const isMas = pathname === "/mas";
+  const isMas = profileId === "mas";
 
   const profileData = {
     mas: {
@@ -26,25 +44,9 @@ export const Footer = () => {
   };
 
   const currentProfile = isMas ? profileData.mas : profileData.das;
+  const links = profiles[isMas ? "mas" : "das"];
 
   const transition = { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const };
-
-  const GithubIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-      <path d="M9 18c-4.51 2-5-2-7-2" />
-    </svg>
-  );
 
   return (
     <footer className="relative bg-[#0A0A0F] border-t border-white/5 overflow-hidden selection:bg-amber-500/30 transform-gpu">
@@ -70,45 +72,37 @@ export const Footer = () => {
                   <p className="text-white font-medium tracking-tight">
                     {currentProfile.fullName}
                   </p>
-                  <p className="text-gray-500 text-xs md:text-sm font-light">
+                  <p className="text-gray-400 text-xs md:text-sm font-light">
                     {currentProfile.role}
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-col items-center md:items-end gap-5 md:gap-6">
-                <div className="flex gap-6 md:gap-8 text-[0.65rem] md:text-xs font-bold tracking-[0.3em] uppercase text-white/40">
+                <div className="flex gap-6 md:gap-8 text-[0.7rem] md:text-xs font-bold tracking-[0.3em] uppercase text-white/65 [&>a]:py-2">
                   <a
                     target="_blank"
-                    href={
-                      isMas
-                        ? "https://github.com/sevincmehmet"
-                        : "https://github.com/dursunalisevinc"
-                    }
+                    rel="noopener noreferrer"
+                    lang="en"
+                    aria-label="GitHub"
+                    href={links.github}
                     className="hover:text-amber-500 transition-colors"
                   >
                     GitHub
                   </a>
                   <a
                     target="_blank"
-                    href={
-                      isMas
-                        ? "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254"
-                        : "https://linkedin.com/in/dursun-ali-sevinç-18a466280"
-                    }
+                    rel="noopener noreferrer"
+                    lang="en"
+                    aria-label="LinkedIn"
+                    href={links.linkedin}
                     className="hover:text-amber-500 transition-colors"
                   >
                     LinkedIn
                   </a>
-                  <a
-                    href="#"
-                    className="hover:text-amber-500 transition-colors"
-                  >
-                    X
-                  </a>
                 </div>
                 <div className="h-[1px] w-24 md:w-32 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent md:to-amber-500/50 md:from-transparent"></div>
-                <p className="text-[0.55rem] md:text-[0.6rem] font-black tracking-[0.4em] text-gray-600 uppercase">
+                <p className="text-[0.6rem] md:text-[0.65rem] font-black tracking-[0.4em] text-gray-500 uppercase">
                   Sivas, TR — {currentYear}
                 </p>
               </div>
@@ -141,7 +135,7 @@ export const Footer = () => {
 
               {/* Lokasyon Kutusu */}
               <div className="p-6 md:p-8 bg-[#111111]/40 border border-white/5 rounded-[1.5rem] md:rounded-[2rem] flex flex-row md:flex-col items-center md:items-start justify-between group hover:border-amber-500/20 transition-colors transform-gpu">
-                <span className="text-gray-500 font-bold tracking-widest text-[0.6rem] uppercase">
+                <span className="text-gray-400 font-bold tracking-widest text-[0.65rem] uppercase">
                   Lokasyon
                 </span>
                 <p className="text-white text-xs md:text-sm font-medium">
@@ -154,23 +148,21 @@ export const Footer = () => {
                 <div className="flex gap-4">
                   <a
                     target="_blank"
-                    href={
-                      isMas
-                        ? "https://github.com/sevincmehmet"
-                        : "https://github.com/dursunalisevinc"
-                    }
-                    className="w-10 h-10 md:w-8 md:h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:text-amber-500 transition-colors cursor-pointer"
+                    rel="noopener noreferrer"
+                    lang="en"
+                    aria-label="GitHub"
+                    href={links.github}
+                    className="w-11 h-11 md:w-10 md:h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/70 hover:text-amber-500 transition-colors cursor-pointer"
                   >
                     <GithubIcon />
                   </a>
                   <a
                     target="_blank"
-                    href={
-                      isMas
-                        ? "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254"
-                        : "https://linkedin.com/in/dursun-ali-sevinç-18a466280"
-                    }
-                    className="w-10 h-10 md:w-8 md:h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:text-amber-500 transition-colors cursor-pointer"
+                    rel="noopener noreferrer"
+                    lang="en"
+                    aria-label="LinkedIn"
+                    href={links.linkedin}
+                    className="w-11 h-11 md:w-10 md:h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/70 hover:text-amber-500 transition-colors cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +181,7 @@ export const Footer = () => {
                     </svg>
                   </a>
                 </div>
-                <p className="mt-2 text-[0.6rem] font-bold text-gray-600 uppercase tracking-[0.2em] text-center md:text-left">
+                <p className="mt-2 text-[0.6rem] font-bold text-gray-500 uppercase tracking-[0.2em] text-center md:text-left">
                   Tüm Hakları Saklıdır
                 </p>
               </div>
@@ -225,13 +217,13 @@ export const Footer = () => {
               </div>
 
               <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16">
-                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/20 uppercase">
+                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/45 uppercase">
                   {currentProfile.fullName}
                 </p>
-                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/20 uppercase">
+                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/45 uppercase">
                   {currentYear}
                 </p>
-                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/20 uppercase">
+                <p className="text-[0.6rem] md:text-[0.65rem] font-medium tracking-[0.5em] md:tracking-[0.6em] text-white/45 uppercase">
                   Sivas
                 </p>
               </div>

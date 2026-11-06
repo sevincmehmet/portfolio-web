@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 
 import { aboutData } from "../data/aboutData";
-import { useView } from "../context/ViewContext";
+import { useView } from "../context/useView";
 
 interface AboutProps {
   data?: typeof aboutData.mas;
@@ -38,7 +38,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                   {data.vizyon.title2}
                 </span>
               </h2>
-              <p className="text-gray-400 text-xl font-light leading-relaxed border-l-2 border-amber-500/50 pl-8 max-w-xl">
+              <p className="text-gray-400 text-lg md:text-xl font-light leading-relaxed border-l-2 border-amber-500/50 pl-5 md:pl-8 max-w-xl text-left">
                 {data.vizyon.description}
               </p>
 
@@ -48,7 +48,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                     <span className="text-white font-bold text-2xl">
                       {stat.value}
                     </span>
-                    <span className="text-gray-600 text-[0.65rem] uppercase tracking-widest mt-1">
+                    <span className="text-gray-400 text-[0.65rem] uppercase tracking-widest mt-1">
                       {stat.label}
                     </span>
                   </div>
@@ -123,7 +123,8 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                         href={company.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white/30 hover:text-cyan-400 transition-colors"
+                        aria-label={`${company.name} LinkedIn sayfası`}
+                        className="p-2 -m-2 text-white/60 hover:text-cyan-400 transition-colors"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -207,7 +208,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                 <h3 className="text-white font-bold text-xl tracking-tighter">
                   {data.bento.location.city}
                 </h3>
-                <p className="text-gray-600 text-[0.6rem] uppercase tracking-widest mt-1">
+                <p className="text-gray-400 text-[0.65rem] uppercase tracking-widest mt-1">
                   {data.bento.location.label}
                 </p>
               </div>
@@ -241,7 +242,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
               <div className="flex justify-center">
                 <div className="h-[1px] w-48 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-30"></div>
               </div>
-              <div className="flex justify-center gap-8 text-[0.6rem] font-black tracking-[0.5em] text-white/20 uppercase">
+              <div className="flex justify-center gap-8 text-[0.65rem] font-black tracking-[0.5em] text-white/45 uppercase">
                 {data.zen.tags.map((tag, i) => (
                   <span key={i}>{tag}</span>
                 ))}

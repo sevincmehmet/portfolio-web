@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useView } from "../context/ViewContext";
+import { useView } from "../context/useView";
 
 export const SectionDivider = () => {
   const { viewMode } = useView();

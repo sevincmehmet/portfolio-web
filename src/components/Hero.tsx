@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useView } from "../context/ViewContext";
+import { useView } from "../context/useView";
 import { heroContent } from "../assets/heroData";
+import { useParams } from "react-router-dom";
 
 interface HeroProps {
   data?: typeof heroContent.mas;
@@ -8,6 +9,9 @@ interface HeroProps {
 
 export default function Hero({ data = heroContent["mas"] }: HeroProps) {
   const { viewMode } = useView();
+  const { profileId } = useParams();
+  const ownerName =
+    profileId === "das" ? "Dursun Ali Sevinç" : "Mehmet Ali Sevinç";
 
   return (
     <section className="relative min-h-screen bg-[#0A0A0F] flex flex-col items-center justify-center px-4 md:px-8 py-24 overflow-hidden selection:bg-amber-500/30 selection:text-white font-sans">
@@ -79,16 +83,16 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                 </div>
 
                 {/* Butonlar */}
-                <div className="flex items-center gap-6">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
                   <a
                     href="#projeler"
-                    className="px-8 py-4 rounded-full bg-[#F8F9FA] text-[#0A0A0F] text-sm font-semibold tracking-wide hover:bg-amber-500 hover:text-white transition-all duration-300 shadow-none md:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                    className="px-8 py-4 rounded-full bg-[#F8F9FA] text-[#0A0A0F] text-sm font-semibold tracking-wide whitespace-nowrap hover:bg-amber-500 hover:text-white transition-all duration-300 shadow-none md:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                   >
                     {data.vizyon.ctaText}
                   </a>
                   <a
                     href="#iletisim"
-                    className="group flex items-center gap-2 text-xs font-bold text-white/50 hover:text-amber-500 uppercase tracking-[0.2em] transition-colors"
+                    className="group flex items-center gap-2 py-2 whitespace-nowrap text-xs font-bold text-white/65 hover:text-amber-500 uppercase tracking-[0.2em] transition-colors"
                   >
                     Kahve Ismarla ☕
                     <svg
@@ -153,7 +157,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
               >
                 <img
                   src={data.vizyon.image}
-                  alt="Mehmet Ali Sevinç"
+                  alt={ownerName}
                   // Maskelemeler performansı biraz etkiler, sorun olursa burayı düzeltebiliriz
                   className="w-full h-full rounded-full object-cover object-top filter contrast-[1.1] saturate-[0.9]"
                   style={{
@@ -243,7 +247,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
               <div className="relative w-full h-full bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-2xl border border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-none md:shadow-[0_0_40px_rgba(0,0,0,0.5)] z-10">
                 <img
                   src={data.bento.image}
-                  alt="Mehmet Ali"
+                  alt={ownerName}
                   className="w-full h-full object-cover object-center transform group-hover:scale-110 transition-transform duration-1000 ease-out will-change-transform"
                 />
                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/50 to-transparent"></div>
@@ -375,7 +379,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                   >
                     <a
                       href="#projeler"
-                      className="text-xs tracking-[0.6em] text-white/30 hover:text-amber-400 transition-all duration-500 uppercase relative group"
+                      className="text-xs tracking-[0.6em] text-white/60 hover:text-amber-400 transition-all duration-500 uppercase relative group"
                     >
                       {data.zen.ctaText}
                       <span className="absolute left-0 -bottom-2 w-0 h-[1px] bg-amber-400 transition-all duration-500 group-hover:w-full"></span>
@@ -400,7 +404,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                   <div className="absolute inset-0 bg-white/[0.02] md:backdrop-blur-[4px] border border-white/10 rounded-[2.5rem] shadow-xl md:shadow-[0_0_60px_rgba(0,0,0,0.6)] z-20"></div>
                   <img
                     src={data.zen.image}
-                    alt="Mehmet Ali"
+                    alt={ownerName}
                     className="w-full h-full object-cover rounded-[2.5rem] grayscale contrast-125 brightness-75 opacity-70 transition-all duration-700 group-hover:opacity-100 group-hover:scale-[1.03]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-amber-400/20 via-transparent to-transparent rounded-[2.5rem] z-30 opacity-60 group-hover:opacity-100 transition"></div>

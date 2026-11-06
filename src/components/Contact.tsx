@@ -1,85 +1,81 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useView } from "../context/ViewContext";
-import { useLocation } from "react-router-dom";
+import { useView } from "../context/useView";
+import { useParams } from "react-router-dom";
+import { profiles, telHref } from "../data/profiles";
+
+// --- PREMİUM SVG İKONLAR ---
+const MailIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
+const PhoneIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+);
+
+const LinkedInIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
+const GithubIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+);
 
 export const Contact = () => {
   const { viewMode } = useView();
-  const { pathname } = useLocation();
-  const isMas = pathname === "/mas";
-
-  const email = "sevincmehmetali716@gmail.com";
-  const drMail = "sevincdursunali61@gmail.com";
-  const tel = "0531 221 82 61";
-  const drTel = "0535 329 67 13";
-
-  // --- PREMİUM SVG İKONLAR ---
-  const MailIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-
-  const PhoneIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  );
-
-  const LinkedInIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect width="4" height="12" x="2" y="9" />
-      <circle cx="4" cy="4" r="2" />
-    </svg>
-  );
-
-  const GithubIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-      <path d="M9 18c-4.51 2-5-2-7-2" />
-    </svg>
-  );
+  const { profileId } = useParams();
+  const profile = profiles[profileId === "das" ? "das" : "mas"];
 
   return (
     <section
@@ -110,23 +106,19 @@ export const Contact = () => {
               <div className="flex gap-4">
                 <a
                   target="_blank"
-                  href={
-                    isMas
-                      ? "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254"
-                      : "https://linkedin.com/in/dursun-ali-sevinç-18a466280"
-                  }
-                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-amber-500 hover:border-amber-500 transition-colors cursor-pointer"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  href={profile.linkedin}
+                  className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-amber-500 hover:border-amber-500 transition-colors cursor-pointer"
                 >
                   <LinkedInIcon />
                 </a>
                 <a
                   target="_blank"
-                  href={
-                    isMas
-                      ? "https://github.com/sevincmehmet"
-                      : "https://github.com/dursunalisevinc"
-                  }
-                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-colors cursor-pointer"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  href={profile.github}
+                  className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors cursor-pointer"
                 >
                   <GithubIcon />
                 </a>
@@ -137,15 +129,15 @@ export const Contact = () => {
               {[
                 {
                   label: "E-posta Gönder",
-                  val: isMas ? email : drMail,
+                  val: profile.email,
                   icon: <MailIcon />,
-                  href: `mailto:${isMas ? email : drMail}`,
+                  href: `mailto:${profile.email}`,
                 },
                 {
                   label: "Doğrudan Ara",
-                  val: isMas ? tel : drTel,
+                  val: profile.phone,
                   icon: <PhoneIcon />,
-                  href: `tel:${isMas ? tel.replace(/\s/g, "") : drTel.replace(/\s/g, "")}`,
+                  href: telHref(profile.phone),
                 },
               ].map((item, i) => (
                 <motion.a
@@ -161,7 +153,7 @@ export const Contact = () => {
                     {item.icon}
                   </div>
                   <div className="flex-1 w-full overflow-hidden">
-                    <p className="text-[0.6rem] font-black tracking-[0.4em] text-white/30 uppercase mb-1">
+                    <p className="text-[0.65rem] font-black tracking-[0.4em] text-white/55 uppercase mb-1">
                       {item.label}
                     </p>
                     <p className="text-lg md:text-2xl font-light text-white tracking-tight truncate">
@@ -202,7 +194,7 @@ export const Contact = () => {
               </h2>
               <div className="flex justify-center md:justify-start relative z-10">
                 <a
-                  href={`mailto:${email}`}
+                  href={`mailto:${profile.email}`}
                   className="px-8 py-3 md:px-10 md:py-4 bg-white text-black text-sm md:text-base font-black rounded-full hover:scale-105 transition-all flex items-center gap-2 md:gap-3 shadow-lg md:shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
                 >
                   <MailIcon /> Mesaj Gönder
@@ -216,40 +208,39 @@ export const Contact = () => {
                 <PhoneIcon />
               </div>
               <div>
-                <p className="text-gray-500 text-[0.6rem] font-black uppercase tracking-widest mb-1 md:mb-2">
+                <p className="text-gray-400 text-[0.65rem] font-black uppercase tracking-widest mb-1 md:mb-2">
                   Doğrudan Hat
                 </p>
-                <p className="text-white font-bold text-base md:text-xl tracking-tight">
-                  {isMas ? tel : drTel}
-                </p>
+                <a
+                  href={telHref(profile.phone)}
+                  className="text-white font-bold text-base md:text-xl tracking-tight hover:text-amber-400 transition-colors"
+                >
+                  {profile.phone}
+                </a>
               </div>
             </div>
 
             {/* SOSYAL MEDYA */}
             <div className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col items-center md:items-start justify-between group transform-gpu gap-4 md:gap-0">
-              <p className="text-white font-black tracking-[0.3em] uppercase text-[0.65rem] opacity-30 text-center md:text-left">
+              <p className="text-white font-black tracking-[0.3em] uppercase text-[0.65rem] opacity-60 text-center md:text-left">
                 Bağlantılar
               </p>
               <div className="flex gap-4">
                 <a
                   target="_blank"
-                  href={
-                    isMas
-                      ? "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254"
-                      : "https://linkedin.com/in/dursun-ali-sevinç-18a466280"
-                  }
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  href={profile.linkedin}
                   className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-black transition-all duration-500"
                 >
                   <LinkedInIcon />
                 </a>
                 <a
                   target="_blank"
-                  href={
-                    isMas
-                      ? "https://github.com/sevincmehmet"
-                      : "https://github.com/dursunalisevinc"
-                  }
-                  className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-white/10 transition-all duration-500"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  href={profile.github}
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:bg-white/10 hover:text-white transition-all duration-500"
                 >
                   <GithubIcon />
                 </a>
@@ -318,20 +309,23 @@ export const Contact = () => {
               </svg>
             </motion.div>
             <div className="space-y-8 md:space-y-12">
-              <div className="group cursor-pointer px-4">
-                <p className="text-[0.55rem] md:text-[0.6rem] font-black tracking-[0.5em] md:tracking-[0.8em] text-white/20 group-hover:text-amber-500 transition-colors uppercase mb-3 md:mb-4">
+              <div className="group px-4">
+                <p className="text-[0.55rem] md:text-[0.6rem] font-black tracking-[0.5em] md:tracking-[0.8em] text-white/45 group-hover:text-amber-500 transition-colors uppercase mb-3 md:mb-4">
                   Sessizlikte Buluşalım
                 </p>
                 <a
-                  href={`mailto:${isMas ? email : drMail}`}
-                  className="block text-xl sm:text-2xl md:text-5xl lg:text-6xl font-thin text-white/60 hover:text-white transition-all duration-700 tracking-tighter truncate"
+                  href={`mailto:${profile.email}`}
+                  className="block text-xl sm:text-2xl md:text-5xl lg:text-6xl font-thin text-white/75 hover:text-white transition-all duration-700 tracking-tighter truncate"
                 >
-                  {isMas ? email : drMail}
+                  {profile.email}
                 </a>
               </div>
-              <p className="text-base md:text-xl text-white/30 font-thin tracking-[0.2em] md:tracking-[0.4em] italic">
-                {isMas ? tel : drTel}
-              </p>
+              <a
+                href={telHref(profile.phone)}
+                className="inline-block text-base md:text-xl text-white/55 hover:text-white transition-colors font-thin tracking-[0.2em] md:tracking-[0.4em] italic"
+              >
+                {profile.phone}
+              </a>
             </div>
           </motion.div>
         )}

@@ -1,55 +1,85 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useView } from "../context/ViewContext";
-import { useLocation } from "react-router-dom";
+import { useView } from "../context/useView";
+import { Link, useLocation, useParams } from "react-router-dom";
+
+const MenuIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="4" x2="20" y1="12" y2="12" />
+    <line x1="4" x2="20" y1="6" y2="6" />
+    <line x1="4" x2="20" y1="18" y2="18" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+);
+
+// Profil ana sayfasında düz hash linki, alt sayfalarda router Link'i
+const SectionLink = ({
+  hash,
+  profileId,
+  isProfileHome,
+  className,
+  onClick,
+  children,
+}: {
+  hash: string;
+  profileId: string;
+  isProfileHome: boolean;
+  className: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+}) =>
+  isProfileHome ? (
+    <a href={hash} className={className} onClick={onClick}>
+      {children}
+    </a>
+  ) : (
+    <Link to={`/${profileId}${hash}`} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  );
 
 export default function Navbar() {
   const { viewMode } = useView();
   const { pathname } = useLocation();
+  const { profileId = "mas" } = useParams();
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const isMas = pathname === "/mas";
+  const isMas = profileId === "mas";
+  // Profil ana sayfasında değilsek (ör. proje detay) bölüm linkleri ana sayfaya gider
+  const isProfileHome = pathname === `/${profileId}`;
 
   const navLinks = [
-    { name: "Projeler", href: "#projeler" },
-    { name: "Hakkımda", href: "#hakkimda" },
-    { name: "İletişim", href: "#iletisim" },
+    { name: "Projeler", hash: "#projeler" },
+    ...(isMas ? [{ name: "AI", hash: "#ai-projeler" }] : []),
+    { name: "Hakkımda", hash: "#hakkimda" },
+    { name: "İletişim", hash: "#iletisim" },
   ];
-
-  const MenuIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="4" x2="20" y1="12" y2="12" />
-      <line x1="4" x2="20" y1="6" y2="6" />
-      <line x1="4" x2="20" y1="18" y2="18" />
-    </svg>
-  );
-
-  const CloseIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
-    </svg>
-  );
 
   const getNavBg = () => {
     if (viewMode === "zen") return "rgba(0,0,0,0)";
@@ -75,12 +105,17 @@ export default function Navbar() {
             borderRadius: viewMode === "bento" ? "20px" : "9999px",
           }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-center gap-2 md:gap-4 px-5 md:px-8 py-3 border shadow-2xl pointer-events-auto transition-colors duration-700 w-full transform-gpu"
+          className="relative flex items-center gap-2 md:gap-4 px-4 md:px-8 py-1.5 md:py-3 border shadow-2xl pointer-events-auto transition-colors duration-700 w-full transform-gpu"
         >
           {/* --- LOGO ALANI --- */}
-          <a
-            href="#"
-            className="relative group flex items-center gap-3 px-2 mr-auto md:mr-6"
+          <Link
+            to={`/${profileId}`}
+            onClick={() => {
+              if (isProfileHome)
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            aria-label={`${isMas ? "Mehmet Ali Sevinç" : "Dursun Ali Sevinç"} — ana sayfa`}
+            className="relative group flex items-center gap-3 px-2 py-2 mr-auto md:mr-6"
           >
             <motion.span
               animate={{
@@ -88,17 +123,23 @@ export default function Navbar() {
                   viewMode === "zen" ? "rgba(255,255,255,0.1)" : "#f59e0b",
                 scale: viewMode === "vizyon" ? [1, 1.2, 1] : 1,
               }}
-              transition={
-                viewMode === "vizyon" ? { duration: 2, repeat: Infinity } : {}
-              }
+              // Yalnızca ölçek nabız atsın; renk tekrar eden döngüye girmesin
+              initial={false}
+              transition={{
+                backgroundColor: { duration: 0.6 },
+                scale:
+                  viewMode === "vizyon"
+                    ? { duration: 2, repeat: Infinity }
+                    : { duration: 0.6 },
+              }}
               className="w-2.5 h-2.5 rounded-full shadow-none md:shadow-[0_0_12px_rgba(245,158,11,0.4)] transform-gpu"
             />
             <span
-              className={`font-bold text-sm tracking-tighter transition-colors duration-700 ${viewMode === "zen" ? "text-white/20 tracking-[0.4em]" : "text-white"}`}
+              className={`font-bold text-sm tracking-tighter transition-colors duration-700 ${viewMode === "zen" ? "text-white/60 tracking-[0.4em]" : "text-white"}`}
             >
               {isMas ? "MAS." : "DAS."}
             </span>
-          </a>
+          </Link>
 
           {/* --- NAV LİNKLERİ --- */}
           <ul className="hidden md:flex items-center">
@@ -109,12 +150,14 @@ export default function Navbar() {
                 onMouseEnter={() => setHoveredLink(link.name)}
                 onMouseLeave={() => setHoveredLink(null)}
               >
-                <a
-                  href={link.href}
-                  className={`relative z-10 px-4 py-2 text-[0.65rem] font-black tracking-[0.2em] uppercase transition-colors duration-500 ${viewMode === "zen" ? "text-white/10 hover:text-white" : "text-[#9CA3AF] hover:text-white"}`}
+                <SectionLink
+                  hash={link.hash}
+                  profileId={profileId}
+                  isProfileHome={isProfileHome}
+                  className={`relative z-10 px-4 py-2 text-[0.65rem] font-black tracking-[0.2em] uppercase transition-colors duration-500 ${viewMode === "zen" ? "text-white/45 hover:text-white" : "text-[#9CA3AF] hover:text-white"}`}
                 >
                   {link.name}
-                </a>
+                </SectionLink>
                 <AnimatePresence>
                   {hoveredLink === link.name && viewMode !== "zen" && (
                     <motion.div
@@ -131,7 +174,7 @@ export default function Navbar() {
           </ul>
 
           {/* --- MOBİL MENÜ BUTONU --- */}
-          <div className="md:hidden flex items-center gap-1 border-l border-white/10 pl-4 transition-colors duration-700 ml-4">
+          <div className="md:hidden flex items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-3">
             <motion.button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               animate={{
@@ -141,8 +184,10 @@ export default function Navbar() {
                     ? "rgba(0,0,0,0)"
                     : "rgba(255,255,255,0.05)",
               }}
-              className={`relative p-2 flex items-center justify-center transition-colors duration-500 outline-none group transform-gpu ${viewMode === "zen" ? "text-white/20 hover:text-white" : "text-white/40 hover:text-amber-400"}`}
-              aria-label="Toggle Menu"
+              className={`relative w-11 h-11 flex items-center justify-center transition-colors duration-500 group transform-gpu ${viewMode === "zen" ? "text-white/60 hover:text-white" : "text-white/70 hover:text-amber-400"}`}
+              aria-label={isMobileOpen ? "Menüyü kapat" : "Menüyü aç"}
+              aria-expanded={isMobileOpen}
+              aria-controls="mobile-nav"
             >
               <motion.div
                 initial={false}
@@ -160,6 +205,7 @@ export default function Navbar() {
         <AnimatePresence>
           {isMobileOpen && (
             <motion.div
+              id="mobile-nav"
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -175,13 +221,15 @@ export default function Navbar() {
                     transition={{ delay: i * 0.1 }}
                     className="transform-gpu"
                   >
-                    <a
-                      href={link.href}
+                    <SectionLink
+                      hash={link.hash}
+                      profileId={profileId}
+                      isProfileHome={isProfileHome}
                       onClick={() => setIsMobileOpen(false)}
                       className={`block py-3 text-xs font-black tracking-[0.2em] uppercase border-b border-white/5 text-white/70 hover:text-amber-500 transition-colors duration-300 ${i === navLinks.length - 1 ? "border-transparent" : ""}`}
                     >
                       {link.name}
-                    </a>
+                    </SectionLink>
                   </motion.li>
                 ))}
               </ul>

@@ -5,8 +5,10 @@ import {
   Route,
   useNavigate,
   useLocation,
+  useParams,
+  matchPath,
 } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { About } from "./components/About";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
@@ -16,11 +18,14 @@ import { Projects } from "./components/Projects";
 import { SectionDivider } from "./components/SectionDivider";
 import { TechMarquee } from "./components/TechMarquee";
 import { ModeSwitcher } from "./components/ModeSwitcher";
-import { ViewProvider, useView } from "./context/ViewContext";
+import { AiProjects } from "./components/AiProjects";
+import { ProjectDetail } from "./components/ProjectDetail";
+import { ViewProvider } from "./context/ViewContext";
+import { useView } from "./context/useView";
 
 import twinPic from "./assets/twins.jpg";
 import { heroContent } from "./assets/heroData";
-import { projectsData } from "./data/projectsData";
+import { projectsData, getProject, isProfileId } from "./data/projectsData";
 import { aboutData } from "./data/aboutData";
 
 // --- DİNAMİK SEKME BAŞLIĞI BİLEŞENİ ---
@@ -28,13 +33,26 @@ const DynamicTitle = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const isMas = pathname === "/mas";
-    const isDas = pathname === "/das";
+    // "/mas" ve "/mas/..." alt yolları mas profiline aittir
+    const profileSegment = pathname.split("/")[1];
+    const isMas = profileSegment === "mas";
+    const isDas = profileSegment === "das";
 
     // Normal durum başlıkları
     let originalTitle = "Twin_Core | Dijital Mimari";
     if (isMas) originalTitle = "MAS. | Frontend Developer";
     if (isDas) originalTitle = "DAS. | UI/UX Tasarımcı";
+
+    // Proje detay sayfası: "<Proje> | MAS."
+    const detailMatch = matchPath("/:profileId/proje/:slug", pathname);
+    if (detailMatch && isProfileId(detailMatch.params.profileId)) {
+      const project = getProject(
+        detailMatch.params.profileId,
+        detailMatch.params.slug,
+      );
+      if (project)
+        originalTitle = `${project.title} | ${isMas ? "MAS." : "DAS."}`;
+    }
 
     document.title = originalTitle;
 
@@ -79,7 +97,10 @@ const LandingNavbar = () => {
   return (
     <nav className="absolute top-0 w-full z-50 flex justify-center pt-8 px-4 pointer-events-none">
       <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 flex gap-8 items-center pointer-events-auto shadow-2xl transform-gpu">
-        <span className="font-bold text-sm tracking-widest text-amber-500 uppercase">
+        <span
+          lang="en"
+          className="font-bold text-sm tracking-widest text-amber-500 uppercase"
+        >
           Twin_Core
         </span>
         <div className="w-[1px] h-4 bg-white/20"></div>
@@ -249,17 +270,42 @@ const LandingPage = () => {
 };
 
 const PortfolioLayout = () => {
-  const { pathname } = useLocation();
-  const isMas = pathname === "/mas";
+  const { profileId } = useParams();
+  const { hash } = useLocation();
+  const isMas = profileId === "mas";
+  const profile = isMas ? "mas" : "das";
+
+  // Hash ile gelindiğinde (ör. detay sayfasından "/mas#projeler") ilgili bölüme kaydır;
+  // hash yoksa sayfanın en üstünden başla
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      return;
+    }
+    const id = decodeURIComponent(hash.slice(1));
+    const timer = window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }, 120);
+    return () => window.clearTimeout(timer);
+  }, [hash, profile]);
 
   return (
     <div className="bg-[#0A0A0F] text-white selection:bg-amber-500/30 pb-32">
       <Navbar />
-      <Hero data={isMas ? heroContent["mas"] : heroContent["das"]} />
+      <Hero data={heroContent[profile]} />
       <TechMarquee />
-      <Projects data={isMas ? projectsData["mas"] : projectsData["das"]} />
+      <Projects data={projectsData[profile]} profileId={profile} />
       <SectionDivider />
-      <About data={isMas ? aboutData["mas"] : aboutData["das"]} />
+      {isMas && (
+        <>
+          <AiProjects
+            data={projectsData.mas.filter((p) => p.aiBuilt)}
+            profileId="mas"
+          />
+          <SectionDivider />
+        </>
+      )}
+      <About data={aboutData[profile]} />
       <SectionDivider />
       <Contact />
       <SectionDivider />
@@ -279,14 +325,18 @@ const PortfolioLayout = () => {
 function App() {
   return (
     <ViewProvider>
-      <Router>
-        {/* Router'ın içi, useLocation'ı çağırabilmemiz için güvenli bölge */}
-        <DynamicTitle />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/:profileId" element={<PortfolioLayout />} />
-        </Routes>
-      </Router>
+      {/* İşletim sisteminde "hareketi azalt" açıksa Framer Motion animasyonları sadeleşir */}
+      <MotionConfig reducedMotion="user">
+        <Router>
+          {/* Router'ın içi, useLocation'ı çağırabilmemiz için güvenli bölge */}
+          <DynamicTitle />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/:profileId" element={<PortfolioLayout />} />
+            <Route path="/:profileId/proje/:slug" element={<ProjectDetail />} />
+          </Routes>
+        </Router>
+      </MotionConfig>
     </ViewProvider>
   );
 }

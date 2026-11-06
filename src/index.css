@@ -39,5 +39,31 @@ html {
 
 /* Navbar fixed (sabit) olduğu için bölümlerin en üstü Navbar'ın altında kalmasın diye */
 [id] {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 112px;
+}
+
+body {
+  background-color: #0a0a0f;
+}
+
+/* Klavye ile gezinmede görünür odak halkası (fare tıklamasında görünmez) */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Hareket azaltma tercihi: CSS animasyonları ve yumuşak kaydırma kapalı.
+   Framer Motion tarafı App içindeki MotionConfig ile yönetiliyor. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

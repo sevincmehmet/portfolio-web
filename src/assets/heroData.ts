@@ -12,7 +12,7 @@ export const heroContent = {
       title1: "Kusursuz Arayüzler.",
       title2: "Temiz Mimari.",
       description:
-        "4.5 yıllık Frontend uzmanlığımla; React, Next.js ve TypeScript ekosisteminde ölçeklenebilir ve akıcı dijital deneyimler geliştiriyorum. Piksellerde Apple-tarzı minimalizmi kovalarken, .NET mimarileriyle de full-stack vizyonumu genişletiyorum.",
+        "React, Next.js ve TypeScript ekosisteminde ölçeklenebilir ve akıcı dijital deneyimler geliştiriyorum. Piksellerde Apple-tarzı minimalizmi kovalarken, .NET mimarileriyle de full-stack vizyonumu genişletiyorum.",
       skills: [
         "Next.js & TypeScript",
         "Frontend Mimarisi",
@@ -27,7 +27,7 @@ export const heroContent = {
       title1: "Minimal Tasarım.",
       title2: "Derin Mühendislik.",
       description:
-        "4.5 yılı aşkın süredir modern web, mobil og masaüstü ekosisteminin merkezindeyim. Geliştirdiğim her arayüzde minimum bilişsel yük, maksimum performans ve kusursuz UI/UX entegrasyonu sunmayı hedefliyorum.",
+        "Modern web, mobil ve masaüstü ekosisteminde ürünler geliştiriyorum. Geliştirdiğim her arayüzde minimum bilişsel yük, maksimum performans ve kusursuz UI/UX entegrasyonu sunmayı hedefliyorum.",
       ctaText: "Deneyimleri İncele",
       avatarInitials: "MAS.",
       avatarRole: "FRONTEND DEVELOPER",
@@ -41,7 +41,7 @@ export const heroContent = {
     zen: {
       titleMain: "Saf.",
       titleSub: "Odak.",
-      descRegular: "4.5 yıllık arayüz disiplinini temiz kodla birleştir,",
+      descRegular: "Arayüz disiplinini temiz kodla birleştir,",
       descHighlight: " geriye sadece kusursuz bir deneyim kalsın.",
       ctaText: "Sessizliği Keşfet",
       bgText: "CLEAN CODE",
