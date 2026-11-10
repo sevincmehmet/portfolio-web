@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
+# Twin_Core — Portfolyo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+İki kişilik portfolyo sitesi: **Mehmet Ali Sevinç** (Frontend Developer) ve **Dursun Ali Sevinç**. Her profil kendi adresinde, aynı kod tabanından.
 
-Currently, two official plugins are available:
+**Canlı:** https://twin-core.netlify.app/mas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Öne çıkanlar
 
-## React Compiler
+- **Üç görünüm modu:** Aynı içerik üç farklı tasarım diliyle gösteriliyor: *Vizyon* (glassmorphism), *Bento* (ızgara kartlar) ve *Zen* (minimal tipografi). Mod değiştirince bölümler framer-motion ile geçiş yapıyor.
+- **Profil bazlı yönlendirme:** `/:profileId` ve `/:profileId/proje/:slug`. Her profilin içeriği tipli veri dosyalarından geliyor (`src/data/`), bileşenler profile göre veri alıyor.
+- **Proje detay sayfaları:** Ekran görüntüsü galerisi, özellikler, teknolojiler ve bağlantılar. Projeler "Yapay zeka ile geliştirildi" ya da "Elle + AI" olarak etiketleniyor.
+- **"Yapay Zeka ile Geliştirilenler" bölümü:** Claude Code ile nasıl çalıştığımı (planla → parçala → ajanlara yazdır → test et) ve bu süreçte geliştirdiğim projeleri anlatıyor.
+- **Performans:** Animasyonlar GPU dostu (blur filtreleri kaldırıldı), arka plan ışıkları sadece masaüstünde, görseller WebP.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Teknolojiler
 
-## Expanding the ESLint configuration
+React 19 · TypeScript · Vite · Tailwind CSS 4 · framer-motion · React Router 7 · Netlify
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Çalıştırma
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Yapı
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/      Hero, About, Projects, AiProjects, ProjectDetail, ModeSwitcher...
+├── context/         Görünüm modu (vizyon / bento / zen)
+├── data/            Profil, hakkımda, proje ve görsel verileri (tipli)
+└── assets/          Profil fotoğrafları ve hero metinleri
+public/projects/     Proje ekran görüntüleri (WebP)
 ```

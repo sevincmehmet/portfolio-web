@@ -38,7 +38,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
       subtitle: "Çok Şirketli Personel & Finans Yönetimi",
       desc: "Claude Code ile uçtan uca geliştirilmiş masaüstü ERP. Personel, vardiya, puantaj, izin, Türk bordrosu, cari hesaplar ve gelir-gider; çok şirketli yapı ve şirket bazlı veri izolasyonu ile tek uygulamada.",
       longDesc:
-        "Birden fazla şirketi tek bir uygulamadan yöneten, Electron tabanlı bir masaüstü ERP. Uygulamayı Claude Code ile uçtan uca geliştirdim. İK tarafında personel, vardiya planlama, puantaj ve izin yönetimini; finans tarafında Türk bordro hesaplamasını, cari hesapları ve gelir-gideri kapsıyor. Her şirketin verisi birbirinden izole tutuluyor (testlerle doğrulanmış multi-tenant yapı), istenirse tüm şirketler konsolide görünümde izlenebiliyor. Backend .NET Clean Architecture ile yazıldı; çok kullanıcılı sürüm için Docker ve Caddy ile hazır bir sunucu kurulumu, demo için ise sunucusuz, tek tık kurulumlu bir paket var. Demo talep üzerine paylaşılıyor.",
+        "Birden fazla şirketi tek bir uygulamadan yöneten, Electron tabanlı bir masaüstü ERP. Uygulamayı Claude Code ile uçtan uca geliştirdim. İK tarafında personel, vardiya planlama, puantaj ve izin yönetimini; finans tarafında Türk bordro hesaplamasını, cari hesapları ve gelir-gideri kapsıyor. Her şirketin verisi birbirinden izole tutuluyor (testlerle doğrulanmış multi-tenant yapı), istenirse tüm şirketler konsolide görünümde izlenebiliyor. Backend .NET Clean Architecture ile yazıldı; çok kullanıcılı sürüm için Docker ve Caddy ile hazır bir sunucu kurulumu, demo için ise sunucusuz, tek tık kurulumlu bir paket var. Windows demo kurulumu GitHub Releases sayfasında.",
       features: [
         "Personel (İK), vardiya planlama, puantaj ve izin yönetimi",
         "Kıst gün dahil Türk bordro hesaplaması",
@@ -61,7 +61,10 @@ export const projectsData: Record<ProfileId, Project[]> = {
         "SQL Server / SQLite",
         "Docker",
       ],
-      links: [],
+      links: [
+        { label: "GitHub", url: "https://github.com/sevincmehmet/mini-erp" },
+        { label: "Windows Demo", url: "https://github.com/sevincmehmet/mini-erp/releases/tag/v0.1.0-demo" },
+      ],
       color: "from-amber-500/20",
       aiBuilt: true,
     },
@@ -81,9 +84,30 @@ export const projectsData: Record<ProfileId, Project[]> = {
         "Terminal'de açık Claude oturumlarını konuşma geçmişiyle birlikte kaldığı yerden Pano'ya taşıma",
       ],
       tech: ["Electron", "Node.js", "node-pty", "xterm.js", "Claude Code Hooks"],
-      links: [],
+      links: [{ label: "GitHub", url: "https://github.com/sevincmehmet/pano" }],
       color: "from-violet-500/20",
       role: "Tek geliştirici — kişisel kullanım aracı",
+      aiBuilt: true,
+    },
+    {
+      id: 13,
+      slug: "org-tree-asistani",
+      title: "Org Tree Asistanı",
+      subtitle: "Google ADK ile iki ajanlı organizasyon asistanı",
+      desc: "Google ADK ve Gemini ile geliştirilmiş iki ajanlı (Yönetici ve Çalışan Asistanı) organizasyon asistanı. Yetki kuralı prompt'ta değil kodda; yazma işlemleri insan onayı bekliyor, her araç çağrısı canlı ağaçta görünüyor.",
+      longDesc:
+        "Detaysoft'ta hiyerarşiye göre yetkilendirilen org tree arayüzleri geliştirmiştim; bu projede aynı problemi yapay zeka ajanlarıyla çözdüm. Yönetici Asistanı kişi buluyor, raporlama zincirini gösteriyor, ekip taşıyor ve gelen talepleri onaylıyor; Çalışan Asistanı talebi taslaklayıp içerideki bir triyaj ajanıyla doğru yöneticiye yönlendiriyor. Yetki kontrolü before_tool_callback'te: model ne kadar ikna edilirse edilsin kapsam dışı araç çalışmıyor. Gerçek modelle çalışan bir güvenlik eval'i yazdım; ilk turda model isim sızdırmadı ama gizlediğim bir sayıyı uydurdu, araç cevabını düzelterek giderdim. React arayüzü her araç çağrısına canlı tepki veriyor; backend'siz mock modu ve 8 derslik bir öğrenme paneli var.",
+      features: [
+        "İki ajan + araç içinde çalışan triyaj ajanı (agent → agent, en az yetki)",
+        "before_tool_callback ile kodda hiyerarşik yetki kontrolü: arayüz gizler, kod engeller",
+        "require_confirmation ile insan onayı ve işlem kaydından geri alma",
+        "Gerçek Gemini modeline karşı saldırı/sızıntı eval'i + LLM'siz araç testleri",
+        "Araç çağrılarına canlı tepki veren React + d3 ağaç arayüzü, backend'siz mock modu",
+      ],
+      tech: ["Google ADK", "Gemini", "Python", "React 19", "TypeScript", "Tailwind"],
+      links: [{ label: "GitHub", url: "https://github.com/sevincmehmet/org-tree-asistani" }],
+      color: "from-emerald-500/20",
+      role: "Tek geliştirici",
       aiBuilt: true,
     },
     {
@@ -189,7 +213,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
       links: [
         {
           label: "GitHub",
-          url: "https://github.com/sevincmehmet/ECommarceDotNet",
+          url: "https://github.com/sevincmehmet/ECommerceDotNet",
         },
         {
           label: "LinkedIn Yazısı",

@@ -4,9 +4,9 @@ export const aboutData = {
       title1: "Mühendislik.",
       title2: "Estetik ve İnsan.",
       description:
-        "Yapay zekanın kod yazmadığı dönemlerde; React, React Native ve Electron ile web'den masaüstüne kadar uçtan uca sistemler kurarak sektöre adım attım. Bugün Artersoft'ta Next.js, TypeScript ve Zustand/Redux ile modern arayüzler inşa ediyor, aynı zamanda .NET ile backend mimarilerine uzanıyorum. Bir mühendis sadece çalışır kod yazmamalı; UI/UX'te kusursuzluğu hedeflemeli ve Toplum Gönüllüleri'ndeki gibi gerçek hayatlara dokunmalı.",
+        "Yapay zekanın kod yazmadığı dönemlerde; React, React Native ve Electron ile web'den masaüstüne kadar uçtan uca sistemler kurarak sektöre adım attım. Artersoft'ta Next.js, TypeScript ve Zustand/Redux ile modern arayüzler geliştirdim. Bugün arkadaşlarımla geliştirdiğimiz Jollin üzerinde çalışıyor; .NET ile backend'e, Google ADK ve Claude Code ile yapay zeka ajanlarına uzanıyorum. Bir mühendis sadece çalışır kod yazmamalı; UI/UX'te kusursuzluğu hedeflemeli ve Toplum Gönüllüleri'ndeki gibi gerçek hayatlara dokunmalı.",
       stats: [
-        { value: "4.5 Yıl", label: "Sektör Deneyimi" },
+        { value: "4+ Yıl", label: "Sektör Deneyimi" },
         { value: "Sivas", label: "Üretim Üssü" },
       ],
     },
@@ -16,12 +16,12 @@ export const aboutData = {
         companies: [
           {
             name: "Artersoft",
-            date: "Ocak 2026 - Halen",
+            date: "Ocak 2026 - Temmuz 2026",
             role: "Frontend Developer",
             link: "https://www.linkedin.com/company/artersoft/",
-            current: true,
+            current: false,
             details:
-              "Modern web ekosisteminde ölçeklenebilir, estetik ve performans odaklı frontend mimarileri geliştiriyorum. Kompleks projelerin arayüzlerini 'pixel-perfect' bir hassasiyetle inşa ediyorum.",
+              "Next.js, TypeScript ve Zustand/Redux ile ölçeklenebilir, performans odaklı arayüzler geliştirdim. Kompleks projelerin arayüzlerini 'pixel-perfect' bir hassasiyetle inşa ettim.",
           },
           {
             name: "Detaysoft",
