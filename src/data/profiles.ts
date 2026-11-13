@@ -6,6 +6,8 @@ export interface ProfileInfo {
   shortName: string;
   fullName: string;
   role: string;
+  /** Rolün altındaki destek satırı */
+  tagline?: string;
   email: string;
   phone: string;
   linkedin: string;
@@ -22,7 +24,8 @@ export const profiles: Record<ProfileId, ProfileInfo> = {
   mas: {
     shortName: "MAS.",
     fullName: "Mehmet Ali Sevinç",
-    role: "Frontend Developer · AI destekli ürün geliştirme",
+    role: "Frontend & Product Engineer",
+    tagline: "UI/UX · Kurumsal paneller · AI agent'lar",
     email: "sevincmehmetali716@gmail.com",
     phone: "0531 221 82 61",
     linkedin: "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254",

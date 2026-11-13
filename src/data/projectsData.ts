@@ -43,6 +43,13 @@ export interface Project {
   aiAgent?: boolean;
   /** Şirket içi proje — canlı link / ekran görüntüsü yok */
   internal?: boolean;
+  /**
+   * Çalışırken yapılan iş: "Deneyim" bölümünde şirketin altında listelenir,
+   * proje listelerinde ayrıca tekrar edilmez (öne çıkan değilse)
+   */
+  company?: string;
+  /** Canlıda gezilebilen iş: "Canlıdaki Projeler" bölümünde gösterilir */
+  live?: { url: string; host: string; image: string };
 }
 
 export type ProfileId = "mas" | "das";
@@ -52,6 +59,37 @@ export const projectsData: Record<ProfileId, Project[]> = {
     // ------------------------------------------------------------------
     // ÖNE ÇIKAN 3 İŞ
     // ------------------------------------------------------------------
+    {
+      id: 1,
+      slug: "jollin",
+      title: "Jollin",
+      subtitle: "Etkinlik ve deneyim platformu: web ve organizatör paneli",
+      kind: "Ürün · ekip projesi",
+      tier: "featured",
+      live: {
+        url: "https://jollin.com.tr/",
+        host: "jollin.com.tr",
+        image: "/projects/canli/jollin.webp",
+      },
+      problem:
+        "Etkinlik, deneyim ve kulüpler farklı yerlere dağılmış durumda; kullanıcı keşfedip bilet alacağı tek bir yer, organizatör de etkinliğini yöneteceği bir panel istiyor.",
+      desc: "Arkadaşlarımla geliştirdiğimiz platformda web frontend'inin ve organizatör panelinin büyük kısmını geliştirdim: etkinlik keşfi, biletleme ve sepet akışları, ana sayfa animasyonları. Elle başladık, bugün Claude Code ile AI destekli sürdürüyorum.",
+      longDesc:
+        "Jollin; etkinlik, deneyim, eğlence ve kulüpleri tek çatı altında toplayan bir keşif ve biletleme platformu. Arkadaşlarımla birlikte geliştirdiğimiz bir ekip projesi; ben web frontend'inin ve organizatör panelinin büyük kısmını geliştirdim. Web uygulaması yapay zeka kodlama araçları yaygınlaşmadan önce elle yazılmaya başlandı; bugün geliştirmeye Claude Code ile yapay zeka destekli olarak devam ediyorum. Next.js tarafında etkinlik keşfi, dinamik biletleme ve sepet akışlarını geliştirdim, yapay zeka entegrasyonlarının arayüz tarafını yaptım. Ana sayfadaki animasyonları Figma ve Jitter ile tasarlayıp arayüze entegre ettim.",
+      features: [
+        "Etkinlik, deneyim ve kulüp keşfi; şehre göre listeleme",
+        "Dinamik biletleme akışı ve sepet yönetimi",
+        "Organizatör paneli (React + Vite)",
+        "Yapay zeka entegrasyonlarının arayüz tarafı",
+        "Figma ve Jitter ile tasarlanan ana sayfa animasyonları",
+      ],
+      tech: ["Next.js", "React", "TypeScript", "Tailwind", "Vite", "Claude Code"],
+      links: [{ label: "Canlı Site", url: "https://jollin.com.tr/" }],
+      color: "from-orange-500/20",
+      role: "Frontend geliştirici · ekip projesi",
+      aiBuilt: true,
+      handBuilt: true,
+    },
     {
       id: 9,
       slug: "mini-erp",
@@ -135,7 +173,8 @@ export const projectsData: Record<ProfileId, Project[]> = {
       title: "Kurumsal Personel Yönetim Sistemi",
       subtitle: "Organizasyon ağacı, raporlama ve yetkiye göre değişen arayüz",
       kind: "Kurumsal · İK",
-      tier: "featured",
+      tier: "main",
+      company: "detaysoft",
       problem:
         "İç içe departmanları ve yönetici–çalışan ilişkileri olan kurumsal bir yapıda, her yöneticinin yalnızca kendi ekibinin verisini görmesi, düzenlemesi ve raporlayabilmesi gerekiyordu.",
       desc: "Organizasyon ağacını, personel detay ve departman atama ekranlarını, şirket ve personel bazlı filtrelenen raporlama ekranlarını ve hiyerarşiye göre değişen arayüzü geliştirdim (frontend).",
@@ -191,6 +230,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
       subtitle: "SignalR ile mesajlaşma, ihale sayfaları ve veri yoğun paneller",
       kind: "Kurumsal · Gerçek zamanlı",
       tier: "main",
+      company: "detaysoft",
       problem:
         "Veri yoğun yönetim ekranlarında kullanıcıların sayfayı yenilemeden anlık mesajları ve güncellemeleri görmesi gerekiyordu.",
       desc: "Microsoft SignalR ile gerçek zamanlı mesajlaşma altyapısının arayüzünü, dinamik ihale sayfalarını, Entegra süreç ekranlarını ve veri yoğun yönetim panellerini geliştirdim.",
@@ -210,38 +250,13 @@ export const projectsData: Record<ProfileId, Project[]> = {
       internal: true,
     },
     {
-      id: 1,
-      slug: "jollin",
-      title: "Jollin",
-      subtitle: "Etkinlik ve deneyim platformu: web ve organizatör paneli",
-      kind: "Ürün · ekip projesi",
-      tier: "main",
-      problem:
-        "Etkinlik, deneyim ve kulüpler farklı yerlere dağılmış durumda; kullanıcı keşfedip bilet alacağı tek bir yer, organizatör de etkinliğini yöneteceği bir panel istiyor.",
-      desc: "Arkadaşlarımla geliştirdiğimiz platformda web frontend'inin ve organizatör panelinin büyük kısmını geliştirdim: etkinlik keşfi, biletleme ve sepet akışları, ana sayfa animasyonları. Elle başladık, bugün Claude Code ile AI destekli sürdürüyorum.",
-      longDesc:
-        "Jollin; etkinlik, deneyim, eğlence ve kulüpleri tek çatı altında toplayan bir keşif ve biletleme platformu. Arkadaşlarımla birlikte geliştirdiğimiz bir ekip projesi; ben web frontend'inin ve organizatör panelinin büyük kısmını geliştirdim. Web uygulaması yapay zeka kodlama araçları yaygınlaşmadan önce elle yazılmaya başlandı; bugün geliştirmeye Claude Code ile yapay zeka destekli olarak devam ediyorum. Next.js tarafında etkinlik keşfi, dinamik biletleme ve sepet akışlarını geliştirdim, yapay zeka entegrasyonlarının arayüz tarafını yaptım. Ana sayfadaki animasyonları Figma ve Jitter ile tasarlayıp arayüze entegre ettim.",
-      features: [
-        "Etkinlik, deneyim ve kulüp keşfi; şehre göre listeleme",
-        "Dinamik biletleme akışı ve sepet yönetimi",
-        "Organizatör paneli (React + Vite)",
-        "Yapay zeka entegrasyonlarının arayüz tarafı",
-        "Figma ve Jitter ile tasarlanan ana sayfa animasyonları",
-      ],
-      tech: ["Next.js", "React", "TypeScript", "Tailwind", "Vite", "Claude Code"],
-      links: [{ label: "Canlı Site", url: "https://jollin.com.tr/j/" }],
-      color: "from-orange-500/20",
-      role: "Frontend geliştirici · ekip projesi",
-      aiBuilt: true,
-      handBuilt: true,
-    },
-    {
       id: 3,
       slug: "filo-yonetim",
       title: "Kurumsal Filo Yönetim Platformu",
       subtitle: "Yapay zekayla üretilmiş monolitik kodun yeniden yapılandırılması",
       kind: "Kurumsal · Refactoring",
       tier: "main",
+      company: "artersoft",
       problem:
         "25–30 sayfalık bir filo yönetim platformunda, yapay zekayla üretilmiş ve sayfa başına 1700 satıra ulaşan monolitik kod bakımı ve yeni özellik eklemeyi zorlaştırıyordu.",
       desc: "Kodu feature-based mimariye göre baştan yazdım, sidebar'ı kalıcı (persistent) layout'a taşıyarak gereksiz render'ları giderdim ve Google Maps üzerindeki seyahat oynatımı ile canlı takipteki senkronizasyon hatalarını çözdüm.",
@@ -267,6 +282,12 @@ export const projectsData: Record<ProfileId, Project[]> = {
       subtitle: "Müşteri, admin ve bayi panelli e-ticaret",
       kind: "E-ticaret · freelance",
       tier: "main",
+      company: "sarissa",
+      live: {
+        url: "https://www.sarissabisiklet.com/",
+        host: "sarissabisiklet.com",
+        image: "/projects/canli/sarissa.webp",
+      },
       problem:
         "Bir bisiklet markası hem son kullanıcıya hem bayilerine satış yapıyor; ödeme almak, bayiye özel fiyat vermek ve stokları pazaryerleriyle senkron tutmak istiyordu.",
       desc: "Müşteri, admin ve bayi olmak üzere 3 ayrı panele sahip e-ticaret sitesini geliştirdim: iyzico ödeme, Entegra ile Hepsiburada gibi pazaryerleriyle çift yönlü stok senkronizasyonu ve bayiye özel dinamik fiyatlandırma.",
@@ -349,7 +370,8 @@ export const projectsData: Record<ProfileId, Project[]> = {
       title: "Masaüstü Kriptografi Uygulaması",
       subtitle: "Electron ile kurumsal masaüstü uygulaması",
       kind: "Kurumsal · Masaüstü",
-      tier: "archive",
+      tier: "main",
+      company: "detaysoft",
       problem:
         "Kurumsal kullanıcıların verilerini masaüstünde şifreleyip koruyabileceği bir uygulamaya ihtiyaç vardı.",
       desc: "Electron, React ve Node.js ile şifreleme ve veri koruma katmanları içeren kurumsal bir masaüstü uygulamasında arayüz tarafını geliştirdim.",

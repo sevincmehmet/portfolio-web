@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useView } from "../context/useView";
 import type { Project, ProfileId } from "../data/projectsData";
 import { coverOf } from "../data/projectMeta";
 import { MetaTags } from "./ProjectBits";
+import { SectionHeader } from "./SectionHeader";
 
 interface AiProjectsProps {
   data: Project[];
@@ -113,35 +113,16 @@ export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
   return (
     <section
       id="ai-projeler"
-      className="relative bg-[#0A0A0F] py-24 md:py-32 px-4 sm:px-6 overflow-hidden transform-gpu"
+      className="relative bg-[#0A0A0F] py-16 md:py-24 px-4 sm:px-6 overflow-hidden transform-gpu"
     >
-      <div className="max-w-7xl mx-auto">
-        {/* BÖLÜM BAŞLIĞI */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12 md:mb-16 text-center md:text-left transform-gpu"
-        >
-          <h2
-            className={`text-4xl sm:text-5xl md:text-7xl tracking-tighter text-white ${
-              viewMode === "zen" ? "font-thin opacity-60" : "font-bold"
-            }`}
-          >
-            AI ile{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-cyan-400 italic">
-              Nasıl Çalışıyorum.
-            </span>
-          </h2>
-          <p
-            className={`mt-6 max-w-3xl mx-auto md:mx-0 text-base md:text-lg font-light leading-relaxed ${viewMode === "zen" ? "text-white/60" : "text-gray-400"}`}
-          >
-            AI'ı iki yerde kullanıyorum: geliştirirken (Claude Code ile) ve
-            ürünün içinde (ajanlar). İkisinde de kural aynı: işi küçük parçalara
-            böl, her parçanın yetkisini sınırla, sonucu test et, kritik kararı
-            insana bırak.
-          </p>
-        </motion.div>
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader
+          index="04"
+          eyebrow="AI"
+          title="AI ile"
+          accent="nasıl çalışıyorum."
+          intro="AI'ı iki yerde kullanıyorum: geliştirirken (Claude Code ile) ve ürünün içinde (ajanlar). İkisinde de kural aynı: işi küçük parçalara böl, her parçanın yetkisini sınırla, sonucu test et, kritik kararı insana bırak. Ürün tarafının en net örneği yukarıdaki Org Tree Asistanı."
+        />
 
         {/* İKİ ŞERİT: GELİŞTİRİRKEN / ÜRÜNDE */}
         <div className="mb-12 md:mb-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
@@ -166,7 +147,7 @@ export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
         </div>
 
         {/* PROJE KARTLARI */}
-        <p className={groupLabel}>Bu yaklaşımın görüldüğü projeler</p>
+        <p className={groupLabel}>Bu çalışma şeklinden çıkan araçlar</p>
         {/* 3'ün katıysa geniş ekranda üçlü grid; tabletteki tek kalan kart tam satır */}
         <div
           className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 ${threeCol ? "lg:grid-cols-3" : ""}`}

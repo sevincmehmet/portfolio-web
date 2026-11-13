@@ -19,6 +19,9 @@ import { SectionDivider } from "./components/SectionDivider";
 import { TechMarquee } from "./components/TechMarquee";
 import { ModeSwitcher } from "./components/ModeSwitcher";
 import { AiProjects } from "./components/AiProjects";
+import { LiveProjects } from "./components/LiveProjects";
+import { Experience } from "./components/Experience";
+import { ArchiveProjects } from "./components/ArchiveProjects";
 import { ViewProvider } from "./context/ViewContext";
 import { useView } from "./context/useView";
 
@@ -31,7 +34,12 @@ const ProjectDetail = lazy(() =>
 
 import twinPic from "./assets/twins.jpg";
 import { heroContent } from "./assets/heroData";
-import { projectsData, getProject, isProfileId } from "./data/projectsData";
+import {
+  projectsData,
+  getProject,
+  isProfileId,
+  tierOf,
+} from "./data/projectsData";
 import { aboutData } from "./data/aboutData";
 
 // --- DİNAMİK SEKME BAŞLIĞI BİLEŞENİ ---
@@ -47,8 +55,7 @@ const DynamicTitle = () => {
     // Normal durum başlıkları
     let originalTitle = "Twin_Core | Dijital Mimari";
     if (isMas)
-      originalTitle =
-        "Mehmet Ali Sevinç | Frontend Developer · AI destekli ürün geliştirme";
+      originalTitle = "Mehmet Ali Sevinç | Frontend & Product Engineer";
     if (isDas) originalTitle = "DAS. | UI/UX Tasarımcı";
 
     // Proje detay sayfası: "<Proje> | MAS."
@@ -71,7 +78,7 @@ const DynamicTitle = () => {
     if (meta) {
       if (!meta.dataset.default) meta.dataset.default = meta.content;
       meta.content = isMas
-        ? "Mehmet Ali Sevinç: React, Next.js ve TypeScript ile kurumsal paneller geliştiren, Claude Code ile uçtan uca ürün çıkaran Frontend Developer. Mini-ERP, Org Tree Asistanı ve personel yönetim sistemi projeleri."
+        ? "Mehmet Ali Sevinç, Frontend & Product Engineer: UI/UX, kurumsal paneller ve AI agent'lar. React, Next.js ve TypeScript ile kurumsal paneller geliştiriyor, Claude Code ile uçtan uca ürün çıkarıyor. Jollin, Mini-ERP ve Org Tree Asistanı projeleri."
         : meta.dataset.default;
     }
 
@@ -293,6 +300,8 @@ const PortfolioLayout = () => {
   const { hash } = useLocation();
   const isMas = profileId === "mas";
   const profile = isMas ? "mas" : "das";
+  const mas = projectsData.mas;
+  const { viewMode } = useView();
 
   // Hash ile gelindiğinde (ör. detay sayfasından "/mas#projeler") ilgili bölüme kaydır;
   // hash yoksa sayfanın en üstünden başla
@@ -313,19 +322,38 @@ const PortfolioLayout = () => {
       <Navbar />
       <Hero data={heroContent[profile]} />
       <TechMarquee />
-      <Projects data={projectsData[profile]} profileId={profile} />
-      <SectionDivider />
-      {isMas && (
+      {isMas ? (
         <>
+          {/* MAS: öne çıkanlar → canlıdakiler → kariyer → AI → arşiv */}
+          <Projects
+            data={mas.filter((p) => tierOf(p) === "featured")}
+            profileId="mas"
+          />
+          <SectionDivider />
+          <LiveProjects data={mas.filter((p) => p.live)} profileId="mas" />
+          <SectionDivider />
+          <Experience profileId="mas" />
+          <SectionDivider />
           <AiProjects
-            data={projectsData.mas.filter((p) => p.aiAgent)}
+            data={mas.filter((p) => p.aiAgent && tierOf(p) !== "featured")}
+            profileId="mas"
+          />
+          <SectionDivider />
+          <ArchiveProjects
+            data={mas.filter((p) => tierOf(p) === "archive" && !p.company)}
             profileId="mas"
           />
           <SectionDivider />
         </>
+      ) : (
+        <>
+          <Projects data={projectsData[profile]} profileId={profile} />
+          <SectionDivider />
+        </>
       )}
       <About data={aboutData[profile]} />
-      <SectionDivider />
+      {/* MAS Vizyon'da Hakkımda gösterilmiyor; çift ayraç olmasın */}
+      {!(isMas && viewMode === "vizyon") && <SectionDivider />}
       <Contact />
       <SectionDivider />
       <Footer />

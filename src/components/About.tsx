@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { aboutData, type AboutContent } from "../data/aboutData";
 import { useView } from "../context/useView";
+import { useParams } from "react-router-dom";
+import { experienceData } from "../data/experienceData";
 
 interface AboutProps {
   data?: AboutContent;
@@ -22,6 +24,11 @@ const Quote = ({ quote, highlight }: { quote: string; highlight?: string }) => {
 
 export const About = ({ data = aboutData["mas"] }: AboutProps) => {
   const { viewMode } = useView();
+  const { profileId } = useParams();
+  // Kariyer Geçmişi bölümü olan profilde Vizyon'daki "Hakkımda" alanı
+  // gösterilmez: o modda yerini şirket bazlı Kariyer Geçmişi alır
+  const hasCareer = !!experienceData[profileId === "das" ? "das" : "mas"];
+  if (hasCareer && viewMode === "vizyon") return null;
 
   return (
     <section
@@ -119,6 +126,14 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
               <h3 className="text-amber-500 font-bold tracking-[0.2em] text-[0.65rem] uppercase mb-8">
                 {data.bento.experience.title}
               </h3>
+              {data.bento.experience.companies.length === 0 && (
+                <a
+                  href="#kariyer"
+                  className="mb-2 inline-flex items-center gap-2 text-sm text-white/75 hover:text-amber-400 transition-colors"
+                >
+                  Şirketler ve orada yaptıklarım: Kariyer Geçmişi ↑
+                </a>
+              )}
               <div className="space-y-8">
                 {data.bento.experience.companies.map((company, i) => (
                   <div

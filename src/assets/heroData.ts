@@ -8,7 +8,7 @@ import drProfilePicZen from "../assets/dr-zen.jpg";
 export const heroContent = {
   mas: {
     vizyon: {
-      badge: "Mehmet Ali Sevinç · Frontend Developer",
+      badge: "Mehmet Ali Sevinç",
       title1: "Ürün düşünen,",
       title2: "AI'ı işe oturtan geliştirici.",
       description:
@@ -24,14 +24,14 @@ export const heroContent = {
       image: profilePicVizion,
     },
     bento: {
-      badge: "Frontend Developer · AI destekli geliştirme",
+      badge: "Frontend & Product Engineer",
       title1: "Kurumsal paneller.",
       title2: "Uçtan uca ürünler.",
       description:
         "Personel, organizasyon ve yetki verisiyle çalışan veri yoğun arayüzler geliştiriyorum. Claude Code ile Mini-ERP gibi ürünleri uçtan uca çıkarıyor, AI'ı küçük ve insan onaylı ajanlarla işe bağlıyorum.",
       ctaText: "Projeleri Gör",
       avatarInitials: "Mehmet Ali Sevinç",
-      avatarRole: "FRONTEND DEVELOPER",
+      avatarRole: "FRONTEND & PRODUCT ENGINEER",
       skills: [
         "React & Next.js · TypeScript",
         "Tailwind, Radix UI & MUI",
@@ -45,7 +45,7 @@ export const heroContent = {
       titleMain: "Saf.",
       titleSub: "Odak.",
       descRegular:
-        "Mehmet Ali Sevinç. Kurumsal paneller ve AI destekli ürünler geliştiren frontend geliştirici;",
+        "Mehmet Ali Sevinç. Frontend & Product Engineer: kurumsal paneller, UI/UX ve AI agent'lar;",
       descHighlight: " işi küçük parçalara böler, uçtan uca bitirir.",
       ctaText: "Projeler",
       bgText: "CLEAN CODE",

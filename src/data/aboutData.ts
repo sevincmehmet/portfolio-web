@@ -50,7 +50,7 @@ export const aboutData: Record<"mas" | "das", AboutContent> = {
       title1: "Mühendislik.",
       title2: "Ürün ve İnsan.",
       description:
-        "Bilgisayar Mühendisliği okurken tam zamanlı çalışmaya başladım. Detaysoft'ta kurumsal personel yönetimi, organizasyon ağacı, yetkiye göre değişen ekranlar ve SignalR ile gerçek zamanlı paneller geliştirdim. Artersoft'ta yapay zekayla üretilmiş monolitik bir platformu yeniden yapılandırdım ve arayüz tasarımını üstlendim. Bugün Claude Code ile uçtan uca ürün geliştiriyorum; AI Product Engineer yönüne geçmek için ai-lab'de Python, LLM API ve eval çalışıyorum. Ekip çalışmasını Toplum Gönüllüleri'nde sahada öğrendim.",
+        "Frontend & Product Engineer olarak arayüzü, ürünü ve işi birlikte düşünürüm. Bilgisayar Mühendisliği okurken tam zamanlı çalışmaya başladım. Detaysoft'ta kurumsal personel yönetimi, organizasyon ağacı, yetkiye göre değişen ekranlar ve SignalR ile gerçek zamanlı paneller geliştirdim. Artersoft'ta yapay zekayla üretilmiş monolitik bir platformu yeniden yapılandırdım ve arayüz tasarımını üstlendim. Bugün Claude Code ile uçtan uca ürün geliştiriyorum; AI Product Engineer yönüne geçmek için ai-lab'de Python, LLM API ve eval çalışıyorum. Ekip çalışmasını Toplum Gönüllüleri'nde sahada öğrendim.",
       stats: [
         { value: "3,5+ yıl", label: "Profesyonel deneyim" },
         { value: "2026", label: "Bilgisayar Müh. mezunu" },
@@ -59,35 +59,9 @@ export const aboutData: Record<"mas" | "das", AboutContent> = {
     },
     bento: {
       experience: {
-        title: "Kariyer Geçmişi",
-        companies: [
-          {
-            name: "Artersoft",
-            date: "Şubat 2026 – Temmuz 2026",
-            role: "Frontend Developer & UI/UX Designer",
-            link: "https://www.linkedin.com/company/artersoft/",
-            current: false,
-            details:
-              "Next.js, TypeScript ve Zustand/Redux ile web arayüzleri geliştirdim, arayüzlerin UI/UX tasarımını üstlendim. 25–30 sayfalık bir filo yönetim platformunda yapay zekayla üretilmiş, sayfa başına 1700 satıra ulaşan kodu feature-based mimariye taşıdım; Google Maps üzerindeki senkronizasyon hatalarını çözdüm.",
-          },
-          {
-            name: "Detaysoft",
-            date: "Kasım 2022 – Aralık 2025",
-            role: "Frontend Developer",
-            link: "https://www.linkedin.com/company/detaysoft/",
-            current: false,
-            details:
-              "Kurumsal personel yönetim sisteminde organizasyon ağacı, departman atama, yetkiye göre değişen ekranlar ve veri yoğun raporlama; SignalR ile gerçek zamanlı mesajlaşma ve ihale sayfaları; Electron ile masaüstü, React Native (Expo) ile mobil uygulamalar geliştirdim. Bu sırada Bilgisayar Mühendisliği eğitimime devam ettim.",
-          },
-          {
-            name: "Sarissa Bisiklet",
-            date: "Freelance",
-            role: "Frontend Developer",
-            current: false,
-            details:
-              "Müşteri, admin ve bayi panelli e-ticaret sitesi: iyzico ödeme, Entegra ile pazaryeri stok senkronizasyonu ve bayiye özel fiyatlandırma.",
-          },
-        ],
+        title: "Eğitim ve Kariyer",
+        // Şirketler ve orada yapılanlar "Kariyer Geçmişi" bölümünde
+        companies: [],
         education:
           "Bilgisayar Mühendisliği (Lisans) · Sivas Cumhuriyet Üniversitesi · 2021–2026, mezun",
       },

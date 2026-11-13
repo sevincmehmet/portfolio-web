@@ -76,12 +76,19 @@ export default function Navbar() {
   // Profil ana sayfasında değilsek (ör. proje detay) bölüm linkleri ana sayfaya gider
   const isProfileHome = pathname === `/${profileId}`;
 
-  const navLinks = [
-    { name: "Projeler", hash: "#projeler" },
-    ...(isMas ? [{ name: "AI", hash: "#ai-projeler" }] : []),
-    { name: "Hakkımda", hash: "#hakkimda" },
-    { name: "İletişim", hash: "#iletisim" },
-  ];
+  const navLinks = isMas
+    ? [
+        { name: "Projeler", hash: "#projeler" },
+        { name: "Canlıdakiler", hash: "#canli" },
+        { name: "Kariyer Geçmişi", hash: "#kariyer" },
+        { name: "AI", hash: "#ai-projeler" },
+        { name: "İletişim", hash: "#iletisim" },
+      ]
+    : [
+        { name: "Projeler", hash: "#projeler" },
+        { name: "Hakkımda", hash: "#hakkimda" },
+        { name: "İletişim", hash: "#iletisim" },
+      ];
 
   const getNavBg = () => {
     if (viewMode === "zen") return "rgba(0,0,0,0)";
@@ -144,7 +151,7 @@ export default function Navbar() {
           </Link>
 
           {/* --- NAV LİNKLERİ --- */}
-          <ul className="hidden md:flex items-center">
+          <ul className="hidden lg:flex items-center">
             {navLinks.map((link) => (
               <li
                 key={link.name}
@@ -156,7 +163,7 @@ export default function Navbar() {
                   hash={link.hash}
                   profileId={profileId}
                   isProfileHome={isProfileHome}
-                  className={`relative z-10 px-4 py-2 text-[0.65rem] font-black tracking-[0.2em] uppercase transition-colors duration-500 ${viewMode === "zen" ? "text-white/45 hover:text-white" : "text-[#9CA3AF] hover:text-white"}`}
+                  className={`relative z-10 px-3 xl:px-4 py-2 whitespace-nowrap text-[0.65rem] font-black tracking-[0.2em] uppercase transition-colors duration-500 ${viewMode === "zen" ? "text-white/45 hover:text-white" : "text-[#9CA3AF] hover:text-white"}`}
                 >
                   {link.name}
                 </SectionLink>
@@ -189,7 +196,7 @@ export default function Navbar() {
           )}
 
           {/* --- MOBİL MENÜ BUTONU --- */}
-          <div className="md:hidden flex items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-2">
+          <div className="lg:hidden flex items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-2">
             <motion.button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               animate={{
@@ -225,7 +232,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className={`md:hidden absolute top-[calc(100%+16px)] left-0 w-full pointer-events-auto border overflow-hidden backdrop-blur-xl shadow-2xl transition-colors duration-700 bg-[#111111]/95 border-white/10 transform-gpu ${viewMode === "bento" ? "rounded-2xl" : "rounded-3xl"}`}
+              className={`lg:hidden absolute top-[calc(100%+16px)] left-0 w-full pointer-events-auto border overflow-hidden backdrop-blur-xl shadow-2xl transition-colors duration-700 bg-[#111111]/95 border-white/10 transform-gpu ${viewMode === "bento" ? "rounded-2xl" : "rounded-3xl"}`}
             >
               <ul className="flex flex-col py-4 px-6 gap-2">
                 {navLinks.map((link, i) => (

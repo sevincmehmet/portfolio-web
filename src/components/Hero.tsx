@@ -75,11 +75,31 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 className="transform-gpu"
               >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 w-fit mb-6 md:mb-8 md:backdrop-blur-md">
-                  <span className="text-[0.65rem] font-bold text-amber-400 tracking-[0.12em] sm:tracking-[0.2em] uppercase">
-                    {data.vizyon.badge}
-                  </span>
-                </div>
+                {owner.tagline ? (
+                  // Kimlik: ad, rol ve destek satırı ilk bakışta okunsun
+                  <div className="mb-6 md:mb-8 flex items-center gap-4">
+                    <span
+                      aria-hidden
+                      className="hidden sm:block w-10 h-px bg-gradient-to-r from-amber-500 to-transparent"
+                    />
+                    <div>
+                      <p className="text-base md:text-lg font-semibold text-white tracking-tight">
+                        {data.vizyon.badge}
+                        <span className="text-white/35 font-light"> · </span>
+                        <span className="text-amber-400">{owner.role}</span>
+                      </p>
+                      <p className="mt-1 text-xs md:text-sm text-white/60 tracking-wide">
+                        {owner.tagline}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 w-fit mb-6 md:mb-8 md:backdrop-blur-md">
+                    <span className="text-[0.65rem] font-bold text-amber-400 tracking-[0.12em] sm:tracking-[0.2em] uppercase">
+                      {data.vizyon.badge}
+                    </span>
+                  </div>
+                )}
 
                 <h1 className="text-[2.75rem] sm:text-6xl lg:text-[4.25rem] xl:text-7xl font-semibold tracking-tighter text-[#F8F9FA] leading-[1.05] mb-6">
                   {data.vizyon.title1}
@@ -270,6 +290,11 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                     {data.bento.badge}
                   </span>
                 </div>
+                {owner.tagline && (
+                  <p className="-mt-5 mb-8 text-sm text-white/60 tracking-wide">
+                    {owner.tagline}
+                  </p>
+                )}
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tighter text-[#F8F9FA] leading-[1.1] mb-6">
                   {data.bento.title1}
                   <br />

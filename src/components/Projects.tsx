@@ -9,6 +9,7 @@ import {
 } from "../data/projectsData";
 import { coverOf } from "../data/projectMeta";
 import { AiBadge, EvidenceRow, MetaTags } from "./ProjectBits";
+import { SectionHeader } from "./SectionHeader";
 
 interface ProjectsProps {
   data?: Project[];
@@ -23,10 +24,8 @@ export const Projects = ({
 
   const projectHref = (slug: string) => `/${profileId}/proje/${slug}`;
 
-  // Öne çıkanlar ve diğer işler mod tasarımıyla; eski ve öğrenme projeleri
-  // altta kompakt listede
-  const main = data.filter((p) => tierOf(p) !== "archive");
-  const archive = data.filter((p) => tierOf(p) === "archive");
+  // Hangi projelerin geleceğine App karar verir (MAS: yalnızca öne çıkanlar)
+  const main = data;
   const structured = main.some((p) => p.problem);
 
   const transition = { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const };
@@ -72,31 +71,41 @@ export const Projects = ({
   return (
     <section
       id="projeler"
-      className="relative min-h-screen bg-[#0A0A0F] py-24 md:py-32 px-4 sm:px-6 overflow-hidden transform-gpu"
+      className="relative min-h-screen bg-[#0A0A0F] py-16 md:py-24 px-4 sm:px-6 overflow-hidden transform-gpu"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* BÖLÜM BAŞLIĞI */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12 md:mb-20 text-center md:text-left transform-gpu"
-        >
-          <h2
-            className={`text-5xl md:text-7xl font-bold tracking-tighter text-white ${
-              viewMode === "zen" ? "font-thin opacity-60" : ""
-            }`}
+        {structured ? (
+          <SectionHeader
+            index="01"
+            eyebrow="Projeler"
+            title="Öne Çıkan"
+            accent="İşler."
+            intro="Bir ürün, bir kurumsal araç, bir AI ajanı. Her birinde çözülen problem, benim yaptığım kısım, teknolojiler ve kanıt (kod, canlı site, ekran görüntüsü)."
+          />
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12 md:mb-20 text-center md:text-left transform-gpu"
           >
-            Seçili <span className="text-amber-500 italic">İşler.</span>
-          </h2>
-          {structured && (
-            <p className="mt-5 max-w-2xl mx-auto md:mx-0 text-base md:text-lg font-light leading-relaxed text-gray-400">
-              Önce kurumsal paneller ve AI ajanları. Her projede çözülen
-              problem, benim yaptığım kısım, kullanılan teknolojiler ve kanıtı
-              (kod, canlı site, ekran görüntüsü) var.
-            </p>
-          )}
-        </motion.div>
+            <h2
+              className={`text-5xl md:text-7xl font-bold tracking-tighter text-white ${
+                viewMode === "zen" ? "font-thin opacity-60" : ""
+              }`}
+            >
+              Seçili <span className="text-amber-500 italic">İşler.</span>
+            </h2>
+            {structured && (
+              <p className="mt-5 max-w-2xl mx-auto md:mx-0 text-base md:text-lg font-light leading-relaxed text-gray-400">
+                Önce kurumsal paneller ve AI ajanları. Her projede çözülen
+                problem, benim yaptığım kısım, kullanılan teknolojiler ve kanıtı
+                (kod, canlı site, ekran görüntüsü) var.
+              </p>
+            )}
+          </motion.div>
+        )}
 
         <AnimatePresence mode="wait">
           {/* =========================================
@@ -358,63 +367,6 @@ export const Projects = ({
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* =========================================
-             ARŞİV: ESKİ VE ÖĞRENME PROJELERİ (tüm modlarda kompakt)
-             ========================================= */}
-        {archive.length > 0 && (
-          <div
-            className={`mt-24 md:mt-32 ${viewMode === "zen" ? "max-w-5xl mx-auto" : ""}`}
-          >
-            <h3
-              className={`text-2xl md:text-3xl tracking-tight ${viewMode === "zen" ? "font-thin text-white/70" : "font-bold text-white"}`}
-            >
-              Diğer ve öğrenme projeleri
-            </h3>
-            <p className="mt-2 text-sm text-white/60 font-light">
-              Daha eski işler ve bir konuyu öğrenmek için yaptığım projeler.
-            </p>
-            <ul
-              className={`mt-8 grid grid-cols-1 md:grid-cols-2 ${viewMode === "zen" ? "gap-x-10" : "gap-3 md:gap-4"}`}
-            >
-              {archive.map((project) => (
-                <li key={project.slug}>
-                  <Link
-                    to={projectHref(project.slug)}
-                    className={`group h-full flex flex-col gap-2 transition-colors ${
-                      viewMode === "zen"
-                        ? "py-6 border-b border-white/5"
-                        : viewMode === "bento"
-                          ? "p-5 md:p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/15"
-                          : "p-5 md:p-6 rounded-[1.5rem] bg-white/[0.02] border border-white/10 hover:border-amber-500/30"
-                    }`}
-                  >
-                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                      <span
-                        className={`text-lg group-hover:text-amber-400 transition-colors ${viewMode === "zen" ? "font-light text-white/75" : "font-semibold text-white"}`}
-                      >
-                        {project.title}
-                      </span>
-                      {project.kind && (
-                        <span className="text-[0.6rem] font-bold tracking-[0.15em] uppercase text-white/55">
-                          {project.kind}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm text-gray-400 font-light leading-relaxed line-clamp-2">
-                      {project.desc}
-                    </p>
-                    <EvidenceRow
-                      project={project}
-                      linked={false}
-                      className="mt-auto pt-1"
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </section>
   );
