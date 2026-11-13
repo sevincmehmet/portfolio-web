@@ -28,7 +28,7 @@ export const heroContent = {
       title1: "Kurumsal paneller.",
       title2: "Uçtan uca ürünler.",
       description:
-        "Personel, organizasyon ve yetki verisiyle çalışan veri yoğun arayüzler geliştiriyorum. Claude Code ile Mini-ERP gibi ürünleri uçtan uca çıkarıyor, AI'ı küçük ve insan onaylı ajanlarla işe bağlıyorum.",
+        "Personel, organizasyon ve yetki verisiyle çalışan veri yoğun arayüzler geliştiriyorum. Mini-ERP gibi ürünleri Claude Code ajanlarıyla uçtan uca çıkarıyorum: ben planlıyor ve doğruluyorum, kodu ajanlar yazıyor.",
       ctaText: "Projeleri Gör",
       avatarInitials: "Mehmet Ali Sevinç",
       avatarRole: "FRONTEND & PRODUCT ENGINEER",
