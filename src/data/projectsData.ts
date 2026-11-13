@@ -112,9 +112,9 @@ export const projectsData: Record<ProfileId, Project[]> = {
       tier: "featured",
       problem:
         "Birden fazla şirketi olan işletmelerde personel, vardiya, puantaj, izin ve bordro çoğu zaman dağınık Excel dosyalarında tutuluyor; şirketler arası tutarlı ve denetlenebilir bir görünüm olmuyor.",
-      desc: "Personel, vardiya, puantaj, izin, Türk bordrosu, cari hesap ve gelir-gideri tek masaüstü uygulamada topladım. Ürünü ve kapsamı ben tasarladım; kodu (.NET backend dahil) Claude Code ajanlarına yazdırıp testlerle doğrulayarak birleştirdim. Kendi backend bilgim temel seviyede.",
+      desc: "Personel, vardiya, puantaj, izin, Türk bordrosu, cari hesap ve gelir-gideri tek masaüstü uygulamada topladım. Ürünü, ekranları ve kapsamı ben tasarladım; işi parçalara bölüp kodu (.NET backend dahil) Claude Code ajanlarına yazdırdım, her parçayı testlerle doğrulayıp birleştirdim.",
       longDesc:
-        "Birden fazla şirketi tek uygulamadan yöneten, Electron tabanlı bir masaüstü ERP. İK tarafında personel, vardiya planlama, puantaj ve izin yönetimini; finans tarafında kıst gün dahil Türk bordro hesaplamasını, cari hesapları ve gelir-gideri kapsıyor. Her şirketin verisi birbirinden izole (testlerle doğrulanmış multi-tenant yapı); istenirse tüm şirketler konsolide görünümde izlenebiliyor. Backend .NET Clean Architecture ile yazıldı; bu kısmı ben değil Claude Code ajanları yazdı, benim .NET bilgim temel seviyede. Çok kullanıcılı sürüm için Docker ve Caddy ile hazır bir sunucu kurulumu, demo için ise sunucusuz, tek tık kurulan bir paket var. Benim işim ürünü ve ekranları tasarlamak, geliştirmeyi planlayıp birbirinden bağımsız parçalara bölmek, her parçayı ayrı bir Claude Code ajanına yazdırmak, çıktıyı Vitest ve xUnit testleriyle doğrulayıp birleştirmekti.",
+        "Birden fazla şirketi tek uygulamadan yöneten, Electron tabanlı bir masaüstü ERP. İK tarafında personel, vardiya planlama, puantaj ve izin yönetimini; finans tarafında kıst gün dahil Türk bordro hesaplamasını, cari hesapları ve gelir-gideri kapsıyor. Her şirketin verisi birbirinden izole (testlerle doğrulanmış multi-tenant yapı); istenirse tüm şirketler konsolide görünümde izlenebiliyor. Backend .NET Clean Architecture ile, Claude Code ajanlarına yazdırıldı. Çok kullanıcılı sürüm için Docker ve Caddy ile hazır bir sunucu kurulumu, demo için ise sunucusuz, tek tık kurulan bir paket var. Benim işim ürünü ve ekranları tasarlamak, geliştirmeyi planlayıp birbirinden bağımsız parçalara bölmek, her parçayı ayrı bir Claude Code ajanına yazdırmak, çıktıyı Vitest ve xUnit testleriyle doğrulayıp birleştirmekti.",
       features: [
         "Personel (İK), vardiya planlama, puantaj ve izin yönetimi; izin talepleri için onay akışı",
         "Kıst gün dahil Türk bordro hesaplaması",
@@ -145,7 +145,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
         },
       ],
       color: "from-amber-500/20",
-      role: "Ürün ve planlama benden, kod Claude Code ajanlarından · kişisel proje",
+      role: "Ürün tasarımı, planlama ve doğrulama · kod Claude Code ajanlarıyla · kişisel proje",
       aiBuilt: true,
     },
     {
