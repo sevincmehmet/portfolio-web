@@ -19,6 +19,8 @@ export interface ExperienceEntry {
   company: string;
   role: string;
   period: string;
+  /** Toplam süre (kullanıcının verdiği): "3 yıl 3 ay" */
+  duration?: string;
   type: string;
   /** Şirketin LinkedIn sayfası ya da sitesi */
   link?: string;
@@ -33,6 +35,7 @@ export const experienceData: Partial<Record<ProfileId, ExperienceEntry[]>> = {
       company: "Artersoft",
       role: "Frontend Developer & UI/UX Designer",
       period: "Şubat 2026 – Temmuz 2026",
+      duration: "6 ay",
       type: "Tam zamanlı",
       link: "https://www.linkedin.com/company/artersoft/",
       summary:
@@ -50,7 +53,8 @@ export const experienceData: Partial<Record<ProfileId, ExperienceEntry[]>> = {
     {
       company: "Detaysoft",
       role: "Frontend Developer",
-      period: "Kasım 2022 – Aralık 2025",
+      period: "Kasım 2022 – Ocak 2026",
+      duration: "3 yıl 3 ay",
       type: "Tam zamanlı · eğitimle birlikte",
       link: "https://www.linkedin.com/company/detaysoft/",
       summary:

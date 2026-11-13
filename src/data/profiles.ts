@@ -9,7 +9,8 @@ export interface ProfileInfo {
   /** Rolün altındaki destek satırı */
   tagline?: string;
   email: string;
-  phone: string;
+  /** Yoksa iletişimde telefon gösterilmez */
+  phone?: string;
   linkedin: string;
   github: string;
   /** Varsa hero, navbar ve iletişimde "CV" bağlantısı gösterilir */
@@ -27,7 +28,6 @@ export const profiles: Record<ProfileId, ProfileInfo> = {
     role: "Frontend & Product Engineer",
     tagline: "UI/UX · Kurumsal paneller · AI agent'lar",
     email: "sevincmehmetali716@gmail.com",
-    phone: "0531 221 82 61",
     linkedin: "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254",
     github: "https://github.com/sevincmehmet",
     cvUrl: "/cv/Mehmet_Ali_Sevinc_CV.pdf",

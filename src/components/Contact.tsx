@@ -164,12 +164,16 @@ export const Contact = () => {
                   icon: <MailIcon />,
                   href: `mailto:${profile.email}`,
                 },
-                {
-                  label: "Doğrudan Ara",
-                  val: profile.phone,
-                  icon: <PhoneIcon />,
-                  href: telHref(profile.phone),
-                },
+                ...(profile.phone
+                  ? [
+                      {
+                        label: "Doğrudan Ara",
+                        val: profile.phone,
+                        icon: <PhoneIcon />,
+                        href: telHref(profile.phone),
+                      },
+                    ]
+                  : []),
               ].map((item, i) => (
                 <motion.a
                   key={i}
@@ -245,23 +249,34 @@ export const Contact = () => {
               </div>
             </div>
 
-            {/* TELEFON KUTUSU */}
-            <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col items-center md:items-start justify-between group hover:border-amber-500/30 transition-all duration-500 transform-gpu text-center md:text-left gap-4 md:gap-0">
-              <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
-                <PhoneIcon />
+            {/* TELEFON KUTUSU (yoksa konum ve çalışma tercihi) */}
+            {profile.phone ? (
+              <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col items-center md:items-start justify-between group hover:border-amber-500/30 transition-all duration-500 transform-gpu text-center md:text-left gap-4 md:gap-0">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/5 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
+                  <PhoneIcon />
+                </div>
+                <div>
+                  <p className="text-gray-400 text-[0.65rem] font-black uppercase tracking-widest mb-1 md:mb-2">
+                    Doğrudan Hat
+                  </p>
+                  <a
+                    href={telHref(profile.phone)}
+                    className="text-white font-bold text-base md:text-xl tracking-tight hover:text-amber-400 transition-colors"
+                  >
+                    {profile.phone}
+                  </a>
+                </div>
               </div>
-              <div>
-                <p className="text-gray-400 text-[0.65rem] font-black uppercase tracking-widest mb-1 md:mb-2">
-                  Doğrudan Hat
+            ) : (
+              <div className="col-span-1 md:col-span-4 bg-[#111111]/40 border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col items-center md:items-start justify-between transform-gpu text-center md:text-left gap-4 md:gap-0">
+                <p className="text-gray-400 text-[0.65rem] font-black uppercase tracking-widest">
+                  Konum ve çalışma
                 </p>
-                <a
-                  href={telHref(profile.phone)}
-                  className="text-white font-bold text-base md:text-xl tracking-tight hover:text-amber-400 transition-colors"
-                >
-                  {profile.phone}
-                </a>
+                <p className="text-white font-bold text-base md:text-lg tracking-tight">
+                  {profile.location}
+                </p>
               </div>
-            </div>
+            )}
 
             {/* SOSYAL MEDYA */}
             <div className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col items-center md:items-start justify-between group transform-gpu gap-4 md:gap-0">
@@ -384,12 +399,14 @@ export const Contact = () => {
                   {profile.email}
                 </a>
               </div>
-              <a
-                href={telHref(profile.phone)}
-                className="inline-block text-base md:text-xl text-white/55 hover:text-white transition-colors font-thin tracking-[0.2em] md:tracking-[0.4em] italic"
-              >
-                {profile.phone}
-              </a>
+              {profile.phone && (
+                <a
+                  href={telHref(profile.phone)}
+                  className="inline-block text-base md:text-xl text-white/55 hover:text-white transition-colors font-thin tracking-[0.2em] md:tracking-[0.4em] italic"
+                >
+                  {profile.phone}
+                </a>
+              )}
               {profile.cvUrl && (
                 <div>
                   <a

@@ -128,7 +128,15 @@ export const Experience = ({ profileId }: { profileId: ProfileId }) => {
               {/* Şirket kartı */}
               <div className="lg:sticky lg:top-32 self-start">
                 <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-white/55">
-                  {entry.period} · {entry.type}
+                  {entry.period}
+                  {entry.duration && (
+                    <span className="text-amber-400/90">
+                      {" "}
+                      · {entry.duration}
+                    </span>
+                  )}
+                  {" · "}
+                  {entry.type}
                 </p>
                 <h3
                   className={`mt-2 text-2xl md:text-3xl tracking-tight text-white ${viewMode === "zen" ? "font-extralight" : "font-bold"}`}

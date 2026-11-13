@@ -89,7 +89,14 @@ export const projectsData: Record<ProfileId, Project[]> = {
         "Yapay zeka entegrasyonlarının arayüz tarafı",
         "Figma ve Jitter ile tasarlanan ana sayfa animasyonları",
       ],
-      tech: ["Next.js", "React", "TypeScript", "Tailwind", "Vite", "Claude Code"],
+      tech: [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Tailwind",
+        "Vite",
+        "Claude Code",
+      ],
       links: [{ label: "Canlı Site", url: "https://jollin.com.tr/" }],
       color: "from-orange-500/20",
       role: "Frontend geliştirici · ekip projesi",
@@ -145,12 +152,13 @@ export const projectsData: Record<ProfileId, Project[]> = {
       id: 13,
       slug: "org-tree-asistani",
       title: "Org Tree Asistanı",
-      subtitle: "Yetkisi kodda, kritik işlemi insan onayında olan iki ajanlı asistan",
+      subtitle:
+        "Yetkisi kodda, kritik işlemi insan onayında olan iki ajanlı asistan",
       kind: "AI ajanı",
       tier: "featured",
       aiAgent: true,
       problem:
-        "Bir organizasyon asistanına \"şu kişiyi bul, ekibini taşı, talebi onayla\" dendiğinde modelin yetkisini aşmaması, gizli veriyi sızdırmaması ve kritik işlemleri sormadan yapmaması gerekiyor.",
+        'Bir organizasyon asistanına "şu kişiyi bul, ekibini taşı, talebi onayla" dendiğinde modelin yetkisini aşmaması, gizli veriyi sızdırmaması ve kritik işlemleri sormadan yapmaması gerekiyor.',
       desc: "İşi iki küçük ajana böldüm: Yönetici Asistanı ve Çalışan Asistanı. Her birinin belli araçları ve kapsamı var. Yetki kontrolü prompt'ta değil kodda; ekip taşıma ve talep gönderme gibi işlemler insan onayı olmadan çalışmıyor.",
       longDesc:
         "Detaysoft'ta hiyerarşiye göre yetkilendirilen org tree arayüzleri geliştirmiştim; bu projede aynı problemi yapay zeka ajanlarıyla ele aldım. Google ADK ile yazılmış iki ajan var: Yönetici Asistanı kişi buluyor, raporlama zincirini gösteriyor, ekip taşıyor ve gelen talepleri onaylıyor; Çalışan Asistanı talebi taslaklayıp araç içinde çalışan küçük bir triyaj ajanıyla doğru yöneticiye yönlendiriyor. Yetki kontrolü before_tool_callback'te: model ne kadar ikna edilirse edilsin kapsam dışı araç çalışmıyor. Yazma işlemleri require_confirmation ile insan onayı bekliyor ve işlem kaydından geri alınabiliyor. Gerçek modele karşı küçük bir güvenlik eval'i yazdım (9 saldırı/kontrol vakası): model isim sızdırmadı ama gizlenen bir sayıyı uydurdu; araç cevabını düzelterek giderdim. Eval küçük ve çok turlu konuşmalar henüz kapsam dışı. Örnek organizasyon tamamen uydurma 18 kişiden oluşuyor.",
@@ -159,10 +167,17 @@ export const projectsData: Record<ProfileId, Project[]> = {
         "before_tool_callback ile kodda hiyerarşik yetki kontrolü: arayüz gizler, kod engeller",
         "require_confirmation ile insan onayı; işlem kaydından geri alma",
         "Gerçek Gemini modeline karşı küçük saldırı/sızıntı eval'i + LLM'siz araç testleri",
-        "Araç çağrılarına canlı tepki veren React + d3-hierarchy ağaç arayüzü ve \"ajan nasıl düşündü\" zaman çizelgesi",
+        'Araç çağrılarına canlı tepki veren React + d3-hierarchy ağaç arayüzü ve "ajan nasıl düşündü" zaman çizelgesi',
         "Backend ve API anahtarı olmadan denenebilen mock modu; ADK kavramlarını anlatan 8 derslik öğrenme paneli",
       ],
-      tech: ["Google ADK", "Gemini", "Python", "React 19", "TypeScript", "Tailwind"],
+      tech: [
+        "Google ADK",
+        "Gemini",
+        "Python",
+        "React 19",
+        "TypeScript",
+        "Tailwind",
+      ],
       links: [
         {
           label: "GitHub",
@@ -196,7 +211,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
       links: [],
       color: "from-sky-500/20",
       role: "Frontend Developer · Detaysoft",
-      period: "2022 – 2025",
+      period: "2022 – 2026",
       internal: true,
     },
 
@@ -223,7 +238,13 @@ export const projectsData: Record<ProfileId, Project[]> = {
         "Claude Code hook'larıyla anlık durum takibi ve onay bekleyen ajan için masaüstü bildirimi",
         "Terminal'de açık Claude oturumlarını konuşma geçmişiyle birlikte kaldığı yerden Pano'ya taşıma",
       ],
-      tech: ["Electron", "Node.js", "node-pty", "xterm.js", "Claude Code Hooks"],
+      tech: [
+        "Electron",
+        "Node.js",
+        "node-pty",
+        "xterm.js",
+        "Claude Code Hooks",
+      ],
       links: [{ label: "GitHub", url: "https://github.com/sevincmehmet/pano" }],
       color: "from-violet-500/20",
       role: "Tek geliştirici · kişisel kullanım aracı",
@@ -233,7 +254,8 @@ export const projectsData: Record<ProfileId, Project[]> = {
       id: 5,
       slug: "realtime-paneller",
       title: "Gerçek Zamanlı Yönetim Panelleri",
-      subtitle: "SignalR ile mesajlaşma, ihale sayfaları ve veri yoğun paneller",
+      subtitle:
+        "SignalR ile mesajlaşma, ihale sayfaları ve veri yoğun paneller",
       kind: "Kurumsal · Gerçek zamanlı",
       tier: "main",
       company: "detaysoft",
@@ -252,14 +274,15 @@ export const projectsData: Record<ProfileId, Project[]> = {
       links: [],
       color: "from-teal-500/20",
       role: "Frontend Developer · Detaysoft",
-      period: "2022 – 2025",
+      period: "2022 – 2026",
       internal: true,
     },
     {
       id: 3,
       slug: "filo-yonetim",
       title: "Kurumsal Filo Yönetim Platformu",
-      subtitle: "Yapay zekayla üretilmiş monolitik kodun yeniden yapılandırılması",
+      subtitle:
+        "Yapay zekayla üretilmiş monolitik kodun yeniden yapılandırılması",
       kind: "Kurumsal · Refactoring",
       tier: "main",
       company: "artersoft",
@@ -332,7 +355,9 @@ export const projectsData: Record<ProfileId, Project[]> = {
         "Plan: LLM API ve tool use → streaming arayüz ve MCP → etkinlik asistanı → eval ile önce/sonra ölçümü",
       ],
       tech: ["Python", "uv", "pytest"],
-      links: [{ label: "GitHub", url: "https://github.com/sevincmehmet/ai-lab" }],
+      links: [
+        { label: "GitHub", url: "https://github.com/sevincmehmet/ai-lab" },
+      ],
       color: "from-lime-500/20",
       role: "Kişisel öğrenme projesi",
     },
@@ -464,7 +489,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
       features: [
         "core / infra / hooks / ui katmanlarına ayrılmış sohbet özelliği",
         "Repository arayüzü ve bağımlılığın hook içinde enjekte edilmesi",
-        "API çalışmazsa mesajı \"pending\" olarak yerelde saklama",
+        'API çalışmazsa mesajı "pending" olarak yerelde saklama',
       ],
       tech: ["React", "TypeScript", "Axios"],
       links: [
