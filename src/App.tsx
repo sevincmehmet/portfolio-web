@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,9 +19,15 @@ import { SectionDivider } from "./components/SectionDivider";
 import { TechMarquee } from "./components/TechMarquee";
 import { ModeSwitcher } from "./components/ModeSwitcher";
 import { AiProjects } from "./components/AiProjects";
-import { ProjectDetail } from "./components/ProjectDetail";
 import { ViewProvider } from "./context/ViewContext";
 import { useView } from "./context/useView";
+
+// Proje detay sayfası ayrı parça olarak yüklenir: ana sayfanın JS'i küçük kalsın
+const ProjectDetail = lazy(() =>
+  import("./components/ProjectDetail").then((m) => ({
+    default: m.ProjectDetail,
+  })),
+);
 
 import twinPic from "./assets/twins.jpg";
 import { heroContent } from "./assets/heroData";
@@ -346,7 +352,16 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/:profileId" element={<PortfolioLayout />} />
-            <Route path="/:profileId/proje/:slug" element={<ProjectDetail />} />
+            <Route
+              path="/:profileId/proje/:slug"
+              element={
+                <Suspense
+                  fallback={<div className="min-h-screen bg-[#0A0A0F]" />}
+                >
+                  <ProjectDetail />
+                </Suspense>
+              }
+            />
           </Routes>
         </Router>
       </MotionConfig>
