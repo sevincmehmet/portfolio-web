@@ -75,7 +75,8 @@ const GithubIcon = () => (
 export const Contact = () => {
   const { viewMode } = useView();
   const { profileId } = useParams();
-  const profile = profiles[profileId === "das" ? "das" : "mas"];
+  const isMas = profileId !== "das";
+  const profile = profiles[isMas ? "mas" : "das"];
 
   return (
     <section
@@ -95,15 +96,35 @@ export const Contact = () => {
             className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20 relative z-10 transform-gpu"
           >
             <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
-              <h2 className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tighter text-white leading-[1] md:leading-[0.9] mb-8 md:mb-10">
-                İlham Veren <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200">
-                  Fikirleri
-                </span>{" "}
-                <br />
-                Paylaşalım.
-              </h2>
-              <div className="flex gap-4">
+              {isMas ? (
+                <>
+                  <h2 className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tighter text-white leading-[1] md:leading-[0.9] mb-6 md:mb-8">
+                    Birlikte <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200">
+                      çalışalım.
+                    </span>
+                  </h2>
+                  <p className="text-gray-400 text-base md:text-lg font-light leading-relaxed max-w-md mb-4">
+                    Kurumsal panel, iç araç ya da AI destekli bir ürün mü
+                    kuruyorsunuz? En hızlı yol e-posta.
+                  </p>
+                  {profile.location && (
+                    <p className="text-white/60 text-xs font-bold tracking-[0.15em] uppercase mb-8 md:mb-10">
+                      {profile.location}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <h2 className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tighter text-white leading-[1] md:leading-[0.9] mb-8 md:mb-10">
+                  İlham Veren <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200">
+                    Fikirleri
+                  </span>{" "}
+                  <br />
+                  Paylaşalım.
+                </h2>
+              )}
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
@@ -122,6 +143,16 @@ export const Contact = () => {
                 >
                   <GithubIcon />
                 </a>
+                {profile.cvUrl && (
+                  <a
+                    href={profile.cvUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-11 px-5 rounded-full border border-amber-500/40 bg-amber-500/10 flex items-center text-amber-400 text-sm font-semibold hover:bg-amber-500 hover:text-black transition-colors"
+                  >
+                    CV (PDF)
+                  </a>
+                )}
               </div>
             </div>
 
@@ -187,11 +218,23 @@ export const Contact = () => {
                   backgroundSize: "24px 24px",
                 }}
               />
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-8 md:mb-10 tracking-tighter leading-tight text-center md:text-left">
-                Dijital Dünyada <br className="hidden md:block" />{" "}
-                <span className="text-amber-500">Deneyimlerimizi</span>{" "}
-                <br className="hidden md:block" /> Paylaşalım.
-              </h2>
+              {isMas ? (
+                <>
+                  <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 md:mb-6 tracking-tighter leading-tight text-center md:text-left">
+                    Birlikte <span className="text-amber-500">çalışalım.</span>
+                  </h2>
+                  <p className="text-gray-400 text-base font-light leading-relaxed max-w-lg mb-8 md:mb-10 text-center md:text-left mx-auto md:mx-0">
+                    Kurumsal panel, iç araç ya da AI destekli bir ürün mü
+                    kuruyorsunuz? En hızlı yol e-posta.
+                  </p>
+                </>
+              ) : (
+                <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-8 md:mb-10 tracking-tighter leading-tight text-center md:text-left">
+                  Dijital Dünyada <br className="hidden md:block" />{" "}
+                  <span className="text-amber-500">Deneyimlerimizi</span>{" "}
+                  <br className="hidden md:block" /> Paylaşalım.
+                </h2>
+              )}
               <div className="flex justify-center md:justify-start relative z-10">
                 <a
                   href={`mailto:${profile.email}`}
@@ -247,34 +290,55 @@ export const Contact = () => {
               </div>
             </div>
 
-            {/* KAHVE DURUMU */}
-            <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-center md:justify-between group overflow-hidden relative transform-gpu text-center md:text-left gap-6 md:gap-0">
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 relative z-10">
-                <motion.div
-                  animate={{ y: [-5, 5, -5] }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="text-5xl md:text-6xl filter drop-shadow-2xl transform-gpu will-change-transform"
-                >
-                  ☕
-                </motion.div>
+            {/* CV KARTI (CV'si olan profil) ya da KAHVE DURUMU */}
+            {profile.cvUrl ? (
+              <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-center md:justify-between overflow-hidden relative transform-gpu text-center md:text-left gap-6">
                 <div>
-                  <h4 className="text-white font-bold text-xl md:text-2xl mb-2 md:mb-1 tracking-tight">
-                    Kahve Saati?
-                  </h4>
-                  <p className="text-gray-400 md:text-gray-500 text-sm md:text-base font-light italic max-w-sm">
-                    Sivas'ta olsan da olmasan da, dijital bir kahveye her zaman
-                    varım.
+                  <h3 className="text-white font-bold text-xl md:text-2xl mb-2 tracking-tight">
+                    CV
+                  </h3>
+                  <p className="text-gray-400 text-sm md:text-base font-light max-w-sm">
+                    2 sayfa, PDF. {profile.location}
                   </p>
                 </div>
+                <a
+                  href={profile.cvUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-3 md:py-4 rounded-full bg-amber-500 text-black text-sm md:text-base font-black hover:bg-amber-400 transition-colors"
+                >
+                  CV'yi Aç
+                </a>
               </div>
-              <div className="hidden md:block text-amber-500/[0.03] text-[8rem] lg:text-[10rem] font-black select-none pointer-events-none absolute -right-4 -bottom-10">
-                COFFEE
+            ) : (
+              <div className="col-span-1 md:col-span-8 bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-center md:justify-between group overflow-hidden relative transform-gpu text-center md:text-left gap-6 md:gap-0">
+                <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 relative z-10">
+                  <motion.div
+                    animate={{ y: [-5, 5, -5] }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className="text-5xl md:text-6xl filter drop-shadow-2xl transform-gpu will-change-transform"
+                  >
+                    ☕
+                  </motion.div>
+                  <div>
+                    <h4 className="text-white font-bold text-xl md:text-2xl mb-2 md:mb-1 tracking-tight">
+                      Kahve Saati?
+                    </h4>
+                    <p className="text-gray-400 md:text-gray-500 text-sm md:text-base font-light italic max-w-sm">
+                      Sivas'ta olsan da olmasan da, dijital bir kahveye her
+                      zaman varım.
+                    </p>
+                  </div>
+                </div>
+                <div className="hidden md:block text-amber-500/[0.03] text-[8rem] lg:text-[10rem] font-black select-none pointer-events-none absolute -right-4 -bottom-10">
+                  COFFEE
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
         )}
 
@@ -326,6 +390,18 @@ export const Contact = () => {
               >
                 {profile.phone}
               </a>
+              {profile.cvUrl && (
+                <div>
+                  <a
+                    href={profile.cvUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-xs tracking-[0.5em] uppercase text-white/60 hover:text-amber-400 border-b border-white/15 hover:border-amber-400 pb-1 transition-colors"
+                  >
+                    CV (PDF)
+                  </a>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

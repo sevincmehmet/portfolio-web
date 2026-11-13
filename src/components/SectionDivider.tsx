@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 import { useView } from "../context/useView";
 
 export const SectionDivider = () => {
   const { viewMode } = useView();
+  const { profileId } = useParams();
 
   return (
     <div className="w-full h-24 flex items-center justify-center relative overflow-hidden bg-[#0A0A0F]">
@@ -28,7 +30,7 @@ export const SectionDivider = () => {
         <div className="flex items-center gap-4 opacity-20">
           <div className="w-1 h-1 bg-white rounded-full" />
           <span className="text-[0.6rem] font-black tracking-[0.5em] text-white uppercase select-none">
-            UI // UX
+            {profileId === "das" ? "UI // UX" : "KOD // ÜRÜN"}
           </span>
           <div className="w-1 h-1 bg-white rounded-full" />
         </div>

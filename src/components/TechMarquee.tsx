@@ -1,7 +1,19 @@
 import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 
 export const TechMarquee = () => {
-  const tech = [
+  const { profileId } = useParams();
+  const masTech = [
+    "REACT",
+    "NEXT.JS",
+    "TYPESCRIPT",
+    "CLAUDE CODE",
+    "ELECTRON",
+    "SIGNALR",
+    ".NET",
+    "GOOGLE ADK",
+  ];
+  const dasTech = [
     "REACT",
     "NEXT.JS",
     ".NET CORE",
@@ -10,9 +22,13 @@ export const TechMarquee = () => {
     "FRAMER MOTION",
     "SQL SERVER",
   ];
+  const tech = profileId === "das" ? dasTech : masTech;
 
   return (
-    <div className="py-10 bg-[#0A0A0F] border-y border-white/[0.03] overflow-hidden whitespace-nowrap flex">
+    <div
+      aria-hidden
+      className="py-10 bg-[#0A0A0F] border-y border-white/[0.03] overflow-hidden whitespace-nowrap flex"
+    >
       <motion.div
         animate={{ x: [0, -1000] }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}

@@ -10,6 +10,7 @@ import {
   getProject,
   isProfileId,
   projectsData,
+  tierOf,
   type Project,
   type ProfileId,
 } from "../data/projectsData";
@@ -291,7 +292,13 @@ export const ProjectDetail = () => {
     showAllFor === project.slug || images.length <= GALLERY_PREVIEW + 1
       ? images
       : images.slice(0, GALLERY_PREVIEW);
-  const list = projectsData[profileId];
+  // "Diğer projeler": öne çıkan ve ana işler arasından (arşivdeki bir projede
+  // tüm liste)
+  const all = projectsData[profileId];
+  const list =
+    tierOf(project) === "archive"
+      ? all
+      : all.filter((p) => tierOf(p) !== "archive");
   const currentIndex = list.findIndex((p) => p.slug === project.slug);
   const others = [1, 2, 3]
     .map((offset) => list[(currentIndex + offset) % list.length])
@@ -344,8 +351,25 @@ export const ProjectDetail = () => {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 md:mt-10 transform-gpu"
         >
-          {(project.aiBuilt || project.internal) && (
+          {(project.aiBuilt ||
+            project.internal ||
+            project.kind ||
+            project.status) && (
             <div className="flex flex-wrap gap-2 mb-6">
+              {project.kind && (
+                <span
+                  className={`${badgeBase} ${badgeShape} border border-white/10 bg-white/[0.03] text-white/75`}
+                >
+                  {project.kind}
+                </span>
+              )}
+              {project.status && (
+                <span
+                  className={`${badgeBase} ${badgeShape} border border-lime-400/30 bg-lime-400/10 text-lime-300`}
+                >
+                  {project.status}
+                </span>
+              )}
               {project.aiBuilt && (
                 <span
                   className={`${badgeBase} ${badgeShape} border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-cyan-500/10 text-amber-400`}
@@ -402,11 +426,25 @@ export const ProjectDetail = () => {
             </div>
           )}
 
-          <p
-            className={`mt-8 md:mt-10 text-base md:text-xl font-light leading-relaxed max-w-3xl ${mode === "vizyon" ? "text-gray-400 border-l-2 border-amber-500/50 pl-5 md:pl-8" : mode === "zen" ? "text-white/65" : "text-gray-400"}`}
-          >
-            {project.longDesc}
-          </p>
+          {project.problem && (
+            <div className="mt-8 md:mt-10 max-w-3xl">
+              <h2 className={labelClass[mode]}>Problem</h2>
+              <p className="mt-3 text-base md:text-lg font-light leading-relaxed text-white/80">
+                {project.problem}
+              </p>
+            </div>
+          )}
+
+          <div className="mt-8 md:mt-10 max-w-3xl">
+            {project.problem && (
+              <h2 className={`${labelClass[mode]} mb-3`}>Ne yaptım</h2>
+            )}
+            <p
+              className={`text-base md:text-xl font-light leading-relaxed ${mode === "vizyon" ? "text-gray-400 border-l-2 border-amber-500/50 pl-5 md:pl-8" : mode === "zen" ? "text-white/65" : "text-gray-400"}`}
+            >
+              {project.longDesc}
+            </p>
+          </div>
         </motion.header>
 
         {/* --- ÖZELLİKLER + TEKNOLOJİ / LİNKLER --- */}
@@ -461,7 +499,7 @@ export const ProjectDetail = () => {
               <div
                 className={`${cardClass[mode]} ${mode === "zen" ? "pt-8" : "p-6 md:p-8"}`}
               >
-                <h2 className={labelClass[mode]}>Bağlantılar</h2>
+                <h2 className={labelClass[mode]}>Kanıt ve bağlantılar</h2>
                 {project.links.length > 0 ? (
                   <div className="mt-5 flex flex-wrap gap-3">
                     {project.links.map((link) => (
@@ -570,6 +608,16 @@ export const ProjectDetail = () => {
             >
               E-posta Gönder
             </a>
+            {owner.cvUrl && (
+              <a
+                href={owner.cvUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-2 py-3 text-xs font-bold tracking-wider transition-colors ${mode === "zen" ? "ml-3 text-white/70 hover:text-white" : `px-5 ${mode === "bento" ? "rounded-xl" : "rounded-full"} border border-white/15 text-white/80 hover:border-amber-500/50 hover:text-white`}`}
+              >
+                CV (PDF)
+              </a>
+            )}
             <a
               href={owner.linkedin}
               target="_blank"

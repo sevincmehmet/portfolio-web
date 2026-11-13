@@ -40,7 +40,9 @@ const DynamicTitle = () => {
 
     // Normal durum başlıkları
     let originalTitle = "Twin_Core | Dijital Mimari";
-    if (isMas) originalTitle = "MAS. | Frontend Developer";
+    if (isMas)
+      originalTitle =
+        "Mehmet Ali Sevinç | Frontend Developer · AI destekli ürün geliştirme";
     if (isDas) originalTitle = "DAS. | UI/UX Tasarımcı";
 
     // Proje detay sayfası: "<Proje> | MAS."
@@ -51,10 +53,21 @@ const DynamicTitle = () => {
         detailMatch.params.slug,
       );
       if (project)
-        originalTitle = `${project.title} | ${isMas ? "MAS." : "DAS."}`;
+        originalTitle = `${project.title} | ${isMas ? "Mehmet Ali Sevinç" : "DAS."}`;
     }
 
     document.title = originalTitle;
+
+    // Arama motorları için profil sayfasında kişiye özel açıklama
+    const meta = document.querySelector<HTMLMetaElement>(
+      'meta[name="description"]',
+    );
+    if (meta) {
+      if (!meta.dataset.default) meta.dataset.default = meta.content;
+      meta.content = isMas
+        ? "Mehmet Ali Sevinç: React, Next.js ve TypeScript ile kurumsal paneller geliştiren, Claude Code ile uçtan uca ürün çıkaran Frontend Developer. Mini-ERP, Org Tree Asistanı ve personel yönetim sistemi projeleri."
+        : meta.dataset.default;
+    }
 
     const handleVisibilityChange = () => {
       if (document.hidden) {

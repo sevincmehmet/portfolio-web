@@ -1,11 +1,24 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-import { aboutData } from "../data/aboutData";
+import { aboutData, type AboutContent } from "../data/aboutData";
 import { useView } from "../context/useView";
 
 interface AboutProps {
-  data?: typeof aboutData.mas;
+  data?: AboutContent;
 }
+
+// Alıntıyı vurgulanacak kısımla birlikte yazar; vurgu yoksa alıntı olduğu gibi
+const Quote = ({ quote, highlight }: { quote: string; highlight?: string }) => {
+  const at = highlight ? quote.indexOf(highlight) : -1;
+  if (!highlight || at < 0) return <>“{quote}”</>;
+  return (
+    <>
+      “{quote.slice(0, at)}
+      <span className="text-amber-500 not-italic">{highlight}</span>
+      {quote.slice(at + highlight.length)}”
+    </>
+  );
+};
 
 export const About = ({ data = aboutData["mas"] }: AboutProps) => {
   const { viewMode } = useView();
@@ -42,7 +55,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                 {data.vizyon.description}
               </p>
 
-              <div className="mt-12 flex gap-12">
+              <div className="mt-12 flex flex-wrap justify-center md:justify-start gap-x-10 gap-y-6">
                 {data.vizyon.stats.map((stat, i) => (
                   <div key={i} className="flex flex-col">
                     <span className="text-white font-bold text-2xl">
@@ -119,30 +132,32 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                       <h4 className="text-white text-xl font-bold">
                         {company.name}
                       </h4>
-                      <a
-                        href={company.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${company.name} LinkedIn sayfası`}
-                        className="p-2 -m-2 text-white/60 hover:text-cyan-400 transition-colors"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                      {company.link && (
+                        <a
+                          href={company.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${company.name} LinkedIn sayfası`}
+                          className="p-2 -m-2 text-white/60 hover:text-cyan-400 transition-colors"
                         >
-                          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                          <rect x="2" y="9" width="4" height="12"></rect>
-                          <circle cx="4" cy="4" r="2"></circle>
-                        </svg>
-                      </a>
-                      <span className="text-gray-500 text-xs tracking-wider border border-white/10 px-2 py-1 rounded-md">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                          </svg>
+                        </a>
+                      )}
+                      <span className="text-gray-400 text-xs tracking-wider border border-white/10 px-2 py-1 rounded-md">
                         {company.date}
                       </span>
                     </div>
@@ -155,9 +170,17 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                   </div>
                 ))}
               </div>
+              {data.bento.experience.education && (
+                <p className="mt-8 pt-6 border-t border-white/5 text-sm text-gray-300 font-light">
+                  <span className="text-amber-500 font-bold tracking-[0.2em] text-[0.65rem] uppercase mr-3">
+                    Eğitim
+                  </span>
+                  {data.bento.experience.education}
+                </p>
+              )}
             </div>
 
-            {/* KARAKALEM */}
+            {/* KARAKALEM / ŞU AN */}
             <div className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-center gap-4 hover:bg-white/[0.04] transition-all transform-gpu">
               <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-2xl">
                 {data.bento.uiux.icon}
@@ -165,9 +188,19 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
               <h3 className="text-white font-bold tracking-tight">
                 {data.bento.uiux.title}
               </h3>
-              <p className="text-gray-500 text-sm font-light leading-relaxed">
+              <p className="text-gray-400 text-sm font-light leading-relaxed">
                 {data.bento.uiux.desc}
               </p>
+              {data.bento.uiux.link && (
+                <a
+                  href={data.bento.uiux.link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 py-1 text-xs font-bold text-lime-300 hover:text-lime-200 transition-colors"
+                >
+                  {data.bento.uiux.link.label} →
+                </a>
+              )}
             </div>
 
             {/* GÖNÜLLÜLÜK */}
@@ -233,11 +266,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
             </h2>
             <div className="space-y-12">
               <p className="text-2xl md:text-4xl text-gray-400 font-thin leading-relaxed tracking-wide italic px-4">
-                "{data.zen.quote.split("Gürültüyü kapat")[0]}
-                <span className="text-amber-500 not-italic">
-                  Gürültüyü kapat
-                </span>
-                , geriye sadece bıraktığın fayda kalsın."
+                <Quote quote={data.zen.quote} highlight={data.zen.highlight} />
               </p>
               <div className="flex justify-center">
                 <div className="h-[1px] w-48 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-30"></div>
