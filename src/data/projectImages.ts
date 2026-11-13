@@ -1,4 +1,3 @@
-// Bu dosya ekran görüntüsü hattı (Hat C) tarafından doldurulur.
 // Anahtar: proje slug'ı. Görseller public/projects/<slug>/ altında.
 export interface ProjectImage {
   src: string;
@@ -31,6 +30,11 @@ export const projectImages: Record<string, ProjectImage[]> = {
     { src: "/projects/sarissa-bisiklet/02-urun-listesi.webp", caption: "Filtreli ürün listesi" },
     { src: "/projects/sarissa-bisiklet/03-urun-detayi.webp", caption: "Ürün detay sayfası" },
     { src: "/projects/sarissa-bisiklet/04-mobil-urun-detayi.webp", caption: "Mobil ürün detayı" },
+  ],
+  "org-tree-asistani": [
+    { src: "/projects/org-tree-asistani/01-insan-onayi.webp", caption: "Ekip taşıma insan onayı bekliyor; ajanın araç çağrıları alttaki zaman çizelgesinde (mock modu)" },
+    { src: "/projects/org-tree-asistani/02-yetki-reddi.webp", caption: "Kapsam dışı istek kodda reddediliyor: before_tool_callback (mock modu)" },
+    { src: "/projects/org-tree-asistani/03-dersler-ve-agac.webp", caption: "Organizasyon ağacı ve ADK kavramlarını anlatan ders paneli (uydurma örnek veri)" },
   ],
   "pano": [
     { src: "/projects/pano/01-ajan-agaci.webp", caption: "Ajan hiyerarşi ağacı ve onay bekleyen ajan" },
