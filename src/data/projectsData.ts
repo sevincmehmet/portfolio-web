@@ -343,14 +343,15 @@ export const projectsData: Record<ProfileId, Project[]> = {
       kind: "AI · öğrenme",
       tier: "main",
       aiAgent: true,
-      status: "Devam ediyor · Hafta 1",
+      status: "Devam ediyor · Hafta 1, 2. gün",
       problem:
         "Frontend'den LLM tabanlı ürün geliştirmeye geçmek için Python, LLM API, tool use ve eval konularını sistemli ve ölçülebilir şekilde öğrenmem gerekiyor.",
-      desc: "12 haftalık bir planla, her haftayı ayrı klasörde ve testleriyle GitHub'a koyuyorum. Hedef: tool kullanan bir etkinlik asistanı yazıp eval ile ölçmek. Şu an Hafta 1'deyim: Python temelleri ve pytest.",
+      desc: "12 haftalık bir planla, her haftayı ayrı klasörde ve testleriyle GitHub'a koyuyorum. Hedef: tool kullanan bir etkinlik asistanı yazıp eval ile ölçmek. Hafta 1'in ilk iki günü bitti: koleksiyonlar, comprehension, type hint, dataclass, modüller ve pytest. Sırada hata yönetimi ve async.",
       longDesc:
-        "AI Product Engineer yönüne geçerken yaptığım bütün çalışmaları topladığım, haftalara göre klasörlenmiş public bir laboratuvar. Plan dört fazdan oluşuyor: temeller (Python, LLM API, tool use, streaming arayüz, MCP), etkinlik asistanı, eval ve ölçüm, paketleme. Python'u bu projede öğreniyorum; şu an Hafta 1'deyim. Sonraki haftalar tamamlandıkça bu sayfa güncellenecek.",
+        "AI Product Engineer yönüne geçerken yaptığım bütün çalışmaları topladığım, haftalara göre klasörlenmiş public bir laboratuvar. Plan dört fazdan oluşuyor: temeller (Python, LLM API, tool use, streaming arayüz, MCP), etkinlik asistanı, eval ve ölçüm, paketleme. Python'u bu projede öğreniyorum; şu an Hafta 1'deyim (Pazartesi ve Salı tamam, sırada Çarşamba: hata yönetimi ve async/httpx). Sonraki haftalar tamamlandıkça bu sayfa güncellenecek.",
       features: [
-        "Hafta 1 (devam ediyor): Python koleksiyonları, comprehension, type hint, dataclass, modüller ve pytest testleri",
+        "Hafta 1, Pazartesi–Salı (tamam): Python koleksiyonları, comprehension, *args/**kwargs, type hint, dataclass, modüller ve pytest testleri; JS → Python farkları notu",
+        "Hafta 1, sırada: hata yönetimi, context manager ve async/await (httpx), ardından Pydantic ve FastAPI",
         "Paket iskeleti: Event modeli, örnek etkinlik verisi ve arama fonksiyonları (src/ai_lab)",
         "Plan: LLM API ve tool use → streaming arayüz ve MCP → etkinlik asistanı → eval ile önce/sonra ölçümü",
       ],

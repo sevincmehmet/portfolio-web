@@ -35,7 +35,7 @@ export const profiles: Record<ProfileId, ProfileInfo> = {
     now: {
       text: "AI Product Engineer yönüne geçiyorum: 12 haftalık planla Python, LLM API, tool use ve eval çalışıyorum.",
       url: "https://github.com/sevincmehmet/ai-lab",
-      label: "ai-lab · Hafta 1, devam ediyor",
+      label: "ai-lab · Hafta 1, 2. gün tamam",
     },
   },
   das: {

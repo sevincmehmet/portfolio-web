@@ -81,7 +81,7 @@ export const aboutData: Record<"mas" | "das", AboutContent> = {
         desc: "12 haftalık bir planla Python, LLM API, tool use ve eval çalışıyorum; her hafta ai-lab reposuna ekleniyor. Python'u bu süreçte öğreniyorum.",
         icon: "🧪",
         link: {
-          label: "ai-lab · Hafta 1, devam ediyor",
+          label: "ai-lab · Hafta 1, 2. gün tamam",
           url: "https://github.com/sevincmehmet/ai-lab",
         },
       },
