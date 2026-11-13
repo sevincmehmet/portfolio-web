@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useView } from "../context/useView";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { profiles } from "../data/profiles";
 
 const MenuIcon = () => (
   <svg
@@ -71,6 +72,7 @@ export default function Navbar() {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const isMas = profileId === "mas";
+  const cvUrl = profiles[isMas ? "mas" : "das"].cvUrl;
   // Profil ana sayfasında değilsek (ör. proje detay) bölüm linkleri ana sayfaya gider
   const isProfileHome = pathname === `/${profileId}`;
 
@@ -173,8 +175,21 @@ export default function Navbar() {
             ))}
           </ul>
 
+          {/* --- CV (her ekranda görünür) --- */}
+          {cvUrl && (
+            <a
+              href={cvUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="CV'yi aç (PDF, yeni sekme)"
+              className={`ml-1 md:ml-2 px-3.5 md:px-4 py-2 text-[0.65rem] font-black tracking-[0.2em] uppercase transition-colors duration-500 ${viewMode === "zen" ? "text-white/70 hover:text-white border-b border-white/20 rounded-none" : viewMode === "bento" ? "rounded-xl bg-white/5 border border-white/10 text-white hover:border-amber-500/50" : "rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 hover:bg-amber-500 hover:text-black"}`}
+            >
+              CV
+            </a>
+          )}
+
           {/* --- MOBİL MENÜ BUTONU --- */}
-          <div className="md:hidden flex items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-3">
+          <div className="md:hidden flex items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-2">
             <motion.button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               animate={{

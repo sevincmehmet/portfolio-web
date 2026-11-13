@@ -10,17 +10,30 @@ export interface ProfileInfo {
   phone: string;
   linkedin: string;
   github: string;
+  /** Varsa hero, navbar ve iletişimde "CV" bağlantısı gösterilir */
+  cvUrl?: string;
+  /** Konum ve çalışma tercihi (CV ile aynı) */
+  location?: string;
+  /** Şu an üzerinde çalıştığı yön: kısa, kanıtlı */
+  now?: { text: string; url: string; label: string };
 }
 
 export const profiles: Record<ProfileId, ProfileInfo> = {
   mas: {
     shortName: "MAS.",
     fullName: "Mehmet Ali Sevinç",
-    role: "Frontend Developer",
+    role: "Frontend Developer · AI destekli ürün geliştirme",
     email: "sevincmehmetali716@gmail.com",
     phone: "0531 221 82 61",
     linkedin: "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254",
     github: "https://github.com/sevincmehmet",
+    cvUrl: "/cv/Mehmet_Ali_Sevinc_CV.pdf",
+    location: "Türkiye · uzaktan veya ofis, taşınmaya açık",
+    now: {
+      text: "AI Product Engineer yönüne geçiyorum: 12 haftalık planla Python, LLM API, tool use ve eval çalışıyorum.",
+      url: "https://github.com/sevincmehmet/ai-lab",
+      label: "ai-lab · Hafta 1, devam ediyor",
+    },
   },
   das: {
     shortName: "DAS.",

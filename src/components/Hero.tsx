@@ -1,17 +1,43 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useView } from "../context/useView";
 import { heroContent } from "../assets/heroData";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { profiles } from "../data/profiles";
+import { projectsData } from "../data/projectsData";
 
 interface HeroProps {
   data?: typeof heroContent.mas;
 }
 
+const ArrowIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={2.5}
+    stroke="currentColor"
+    aria-hidden
+    className={className}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+    />
+  </svg>
+);
+
 export default function Hero({ data = heroContent["mas"] }: HeroProps) {
   const { viewMode } = useView();
   const { profileId } = useParams();
-  const ownerName =
-    profileId === "das" ? "Dursun Ali Sevinç" : "Mehmet Ali Sevinç";
+  const profile = profileId === "das" ? "das" : "mas";
+  const owner = profiles[profile];
+  const ownerName = owner.fullName;
+  // İşe alımcı için hızlı bakış: CV'si olan profilde hero; kim, ne yapıyor,
+  // en iyi 3 iş ve CV / iletişim bilgisini ilk ekranda verir
+  const cvUrl = owner.cvUrl;
+  const featured = projectsData[profile].filter((p) => p.tier === "featured");
+  const projectHref = (slug: string) => `/${profile}/proje/${slug}`;
 
   return (
     <section className="relative min-h-screen bg-[#0A0A0F] flex flex-col items-center justify-center px-4 md:px-8 py-24 overflow-hidden selection:bg-amber-500/30 selection:text-white font-sans">
@@ -39,7 +65,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="max-w-[80rem] w-full mx-auto flex flex-col md:flex-row items-center relative z-10 pt-16 transform-gpu"
+            className="max-w-[80rem] w-full mx-auto flex flex-col md:flex-row items-center relative z-10 pt-6 md:pt-16 transform-gpu"
           >
             {/* SOL BÖLÜM */}
             <div className="w-full md:w-3/5 flex flex-col justify-center relative z-20">
@@ -49,13 +75,13 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 className="transform-gpu"
               >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 w-fit mb-8 md:backdrop-blur-md">
-                  <span className="text-[0.65rem] font-bold text-amber-500/80 tracking-[0.2em] uppercase">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 w-fit mb-6 md:mb-8 md:backdrop-blur-md">
+                  <span className="text-[0.65rem] font-bold text-amber-400 tracking-[0.12em] sm:tracking-[0.2em] uppercase">
                     {data.vizyon.badge}
                   </span>
                 </div>
 
-                <h1 className="text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tighter text-[#F8F9FA] leading-[1.05] mb-6">
+                <h1 className="text-[2.75rem] sm:text-6xl lg:text-[4.25rem] xl:text-7xl font-semibold tracking-tighter text-[#F8F9FA] leading-[1.05] mb-6">
                   {data.vizyon.title1}
                   <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-cyan-500">
@@ -63,59 +89,97 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                   </span>
                 </h1>
 
-                <p className="text-[#9CA3AF] text-lg md:text-xl font-light leading-relaxed max-w-lg mb-10">
+                <p className="text-[#9CA3AF] text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-xl mb-8 md:mb-10">
                   {data.vizyon.description}
                 </p>
 
+                {/* Butonlar: işe alımcı için önce projeler, CV ve iletişim */}
+                <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-4 mb-8 md:mb-10">
+                  <a
+                    href="#projeler"
+                    className="px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#F8F9FA] text-[#0A0A0F] text-sm font-semibold tracking-wide whitespace-nowrap hover:bg-amber-500 hover:text-black transition-all duration-300 shadow-none md:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                  >
+                    {data.vizyon.ctaText}
+                  </a>
+                  {cvUrl ? (
+                    <>
+                      <a
+                        href={cvUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3.5 sm:py-4 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-400 text-sm font-semibold tracking-wide whitespace-nowrap hover:bg-amber-500 hover:text-black transition-colors"
+                      >
+                        CV (PDF)
+                      </a>
+                      <a
+                        href="#iletisim"
+                        className="group flex items-center gap-2 py-2 whitespace-nowrap text-xs font-bold text-white/70 hover:text-amber-500 uppercase tracking-[0.2em] transition-colors"
+                      >
+                        İletişim
+                        <ArrowIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform transform-gpu" />
+                      </a>
+                    </>
+                  ) : (
+                    <a
+                      href="#iletisim"
+                      className="group flex items-center gap-2 py-2 whitespace-nowrap text-xs font-bold text-white/65 hover:text-amber-500 uppercase tracking-[0.2em] transition-colors"
+                    >
+                      Kahve Ismarla ☕
+                      <ArrowIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform transform-gpu" />
+                    </a>
+                  )}
+                </div>
+
+                {/* Öne çıkan 3 iş */}
+                {featured.length > 0 && (
+                  <div className="mb-8 md:mb-10">
+                    <p className="text-[0.65rem] font-bold text-white/60 tracking-[0.2em] uppercase mb-3">
+                      Öne çıkan işler
+                    </p>
+                    <ul className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-3">
+                      {featured.map((p) => (
+                        <li key={p.slug}>
+                          <Link
+                            to={projectHref(p.slug)}
+                            className="group flex items-center justify-between sm:justify-start gap-3 px-4 py-2.5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-amber-500/40 transition-colors"
+                          >
+                            <span className="min-w-0">
+                              <span className="block text-sm font-semibold text-white">
+                                {p.title}
+                              </span>
+                              {p.kind && (
+                                <span className="block text-[0.7rem] text-white/60">
+                                  {p.kind}
+                                </span>
+                              )}
+                            </span>
+                            <ArrowIcon className="w-3.5 h-3.5 shrink-0 text-white/50 group-hover:text-amber-500 transition-colors" />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 {/* Yetenekler */}
-                <div className="flex flex-wrap gap-3 mb-10">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {data.vizyon.skills.map((skill, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 + i * 0.1 }}
-                      className="px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.05] text-[#F8F9FA] text-xs font-medium tracking-wide cursor-default backdrop-blur-none md:backdrop-blur-sm transform-gpu"
+                      className="px-3 sm:px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.05] text-[#F8F9FA] text-xs font-medium tracking-wide cursor-default backdrop-blur-none md:backdrop-blur-sm transform-gpu"
                     >
                       {skill}
                     </motion.div>
                   ))}
                 </div>
-
-                {/* Butonlar */}
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
-                  <a
-                    href="#projeler"
-                    className="px-8 py-4 rounded-full bg-[#F8F9FA] text-[#0A0A0F] text-sm font-semibold tracking-wide whitespace-nowrap hover:bg-amber-500 hover:text-white transition-all duration-300 shadow-none md:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-                  >
-                    {data.vizyon.ctaText}
-                  </a>
-                  <a
-                    href="#iletisim"
-                    className="group flex items-center gap-2 py-2 whitespace-nowrap text-xs font-bold text-white/65 hover:text-amber-500 uppercase tracking-[0.2em] transition-colors"
-                  >
-                    Kahve Ismarla ☕
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2.5}
-                      stroke="currentColor"
-                      className="w-4 h-4 group-hover:translate-x-1 transition-transform transform-gpu"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                      />
-                    </svg>
-                  </a>
-                </div>
               </motion.div>
             </div>
 
             {/* SAĞ BÖLÜM: Fotoğraf */}
-            <div className="w-full md:w-2/5 h-[600px] relative mt-16 md:mt-0 flex justify-center items-center pointer-events-none">
+            <div className="w-full md:w-2/5 h-[340px] sm:h-[460px] md:h-[600px] relative mt-10 md:mt-0 flex justify-center items-center pointer-events-none">
               {/* Animasyonlara donanım ivmesi eklendi */}
               <motion.div
                 animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
@@ -153,7 +217,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                     delay: 1.5,
                   },
                 }}
-                className="relative w-[320px] md:w-[450px] aspect-square z-10 flex items-center justify-center transform-gpu will-change-transform"
+                className="relative w-[280px] sm:w-[360px] md:w-[450px] aspect-square z-10 flex items-center justify-center transform-gpu will-change-transform"
               >
                 <img
                   src={data.vizyon.image}
@@ -216,13 +280,31 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                 <p className="text-[#9CA3AF] text-lg font-light leading-relaxed max-w-xl mb-10">
                   {data.bento.description}
                 </p>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                   <a
                     href="#projeler"
-                    className="px-8 py-4 rounded-full bg-[#F8F9FA] text-[#0A0A0F] text-sm font-semibold tracking-wide hover:scale-105 transition-transform duration-300"
+                    className="px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#F8F9FA] text-[#0A0A0F] text-sm font-semibold tracking-wide hover:scale-105 transition-transform duration-300"
                   >
                     {data.bento.ctaText}
                   </a>
+                  {cvUrl && (
+                    <>
+                      <a
+                        href={cvUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3.5 sm:py-4 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold tracking-wide hover:border-amber-500/50 hover:text-amber-400 transition-colors"
+                      >
+                        CV (PDF)
+                      </a>
+                      <a
+                        href="#iletisim"
+                        className="px-2 py-3 text-xs font-bold text-white/70 hover:text-amber-500 uppercase tracking-[0.2em] transition-colors"
+                      >
+                        İletişim
+                      </a>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -285,53 +367,88 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
               </div>
             </motion.div>
 
-            {/* ALT ORTA: Kahve */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-              className="col-span-1 md:col-span-4 bg-gradient-to-br from-[#111] md:from-white/[0.03] to-transparent backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors transform-gpu"
-            >
+            {/* ALT ORTA: Öne çıkan işler (CV'si olan profil) ya da kahve kartı */}
+            {featured.length > 0 ? (
               <motion.div
-                animate={{ y: [-5, 5, -5] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-xl shadow-none md:shadow-inner mb-6 relative z-10 transform-gpu will-change-transform"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] border border-white/[0.05] rounded-[2.5rem] p-8 flex flex-col justify-center relative overflow-hidden transform-gpu"
               >
-                ☕
+                <p className="text-[0.65rem] font-bold text-[#9CA3AF] tracking-[0.2em] uppercase mb-4">
+                  Öne Çıkan İşler
+                </p>
+                <ul className="space-y-1">
+                  {featured.map((p) => (
+                    <li key={p.slug}>
+                      <Link
+                        to={projectHref(p.slug)}
+                        className="group flex items-center justify-between gap-3 py-2 border-b border-white/5"
+                      >
+                        <span className="min-w-0">
+                          <span className="block text-sm font-semibold text-white group-hover:text-amber-400 transition-colors">
+                            {p.title}
+                          </span>
+                          {p.kind && (
+                            <span className="block text-[0.7rem] text-white/60">
+                              {p.kind}
+                            </span>
+                          )}
+                        </span>
+                        <ArrowIcon className="w-3.5 h-3.5 shrink-0 text-white/50 group-hover:text-amber-500 transition-colors" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
-              <div className="relative z-10">
-                <p className="text-[0.65rem] font-bold tracking-[0.2em] text-[#9CA3AF] mb-1 uppercase">
-                  Sıvı Yakıt
-                </p>
-                <p className="text-lg font-medium text-[#F8F9FA]">
-                  Kritik Seviyede
-                </p>
-                <a
-                  href="#iletisim"
-                  className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-amber-500/70 hover:text-amber-500 uppercase tracking-[0.1em] transition-colors"
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                className="col-span-1 md:col-span-4 bg-gradient-to-br from-[#111] md:from-white/[0.03] to-transparent backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors transform-gpu"
+              >
+                <motion.div
+                  animate={{ y: [-5, 5, -5] }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-xl shadow-none md:shadow-inner mb-6 relative z-10 transform-gpu will-change-transform"
                 >
-                  Kahve Ismarla
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}
-                    stroke="currentColor"
-                    className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  ☕
+                </motion.div>
+                <div className="relative z-10">
+                  <p className="text-[0.65rem] font-bold tracking-[0.2em] text-[#9CA3AF] mb-1 uppercase">
+                    Sıvı Yakıt
+                  </p>
+                  <p className="text-lg font-medium text-[#F8F9FA]">
+                    Kritik Seviyede
+                  </p>
+                  <a
+                    href="#iletisim"
+                    className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-amber-500/70 hover:text-amber-500 uppercase tracking-[0.1em] transition-colors"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                    />
-                  </svg>
-                </a>
-              </div>
-            </motion.div>
+                    Kahve Ismarla
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2.5}
+                      stroke="currentColor"
+                      className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+            )}
           </motion.div>
         )}
 
@@ -384,7 +501,47 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                       {data.zen.ctaText}
                       <span className="absolute left-0 -bottom-2 w-0 h-[1px] bg-amber-400 transition-all duration-500 group-hover:w-full"></span>
                     </a>
+                    {cvUrl && (
+                      <>
+                        <a
+                          href={cvUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-8 text-xs tracking-[0.6em] text-white/60 hover:text-amber-400 transition-colors duration-500 uppercase"
+                        >
+                          CV
+                        </a>
+                        <a
+                          href="#iletisim"
+                          className="ml-8 text-xs tracking-[0.6em] text-white/60 hover:text-amber-400 transition-colors duration-500 uppercase"
+                        >
+                          İletişim
+                        </a>
+                      </>
+                    )}
                   </motion.div>
+
+                  {featured.length > 0 && (
+                    <ul className="mt-12 space-y-3">
+                      {featured.map((p) => (
+                        <li key={p.slug}>
+                          <Link
+                            to={projectHref(p.slug)}
+                            className="group inline-flex items-baseline gap-3 text-white/60 hover:text-white transition-colors"
+                          >
+                            <span className="text-lg font-light tracking-wide">
+                              {p.title}
+                            </span>
+                            {p.kind && (
+                              <span className="text-[0.65rem] tracking-[0.3em] uppercase text-white/45 group-hover:text-amber-400 transition-colors">
+                                {p.kind}
+                              </span>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </motion.div>
               </div>
 

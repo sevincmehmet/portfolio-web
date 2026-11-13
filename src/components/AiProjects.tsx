@@ -2,17 +2,19 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useView } from "../context/useView";
 import type { Project, ProfileId } from "../data/projectsData";
-import { projectImages } from "../data/projectImages";
+import { coverOf } from "../data/projectMeta";
+import { MetaTags } from "./ProjectBits";
 
 interface AiProjectsProps {
   data: Project[];
   profileId: ProfileId;
 }
 
-const steps = [
+// Geliştirirken: Claude Code ile çalışma şekli
+const buildSteps = [
   {
     title: "Planla",
-    desc: "Kapsamı ve adımları netleştiririm.",
+    desc: "Kapsamı, kabul kriterlerini ve adımları netleştiririm.",
   },
   {
     title: "Paralel parçalara böl",
@@ -24,9 +26,74 @@ const steps = [
   },
   {
     title: "Test et & birleştir",
-    desc: "Testler, gözden geçirme ve entegrasyon.",
+    desc: "Testler, kod okuma ve entegrasyon. Son karar bende.",
   },
 ];
+
+// Üründe: AI'ı işe bağlarken uyduğum kurallar
+const productRules = [
+  {
+    title: "Tek görevli küçük ajanlar",
+    desc: "Bir ajan bir işi yapar. Org Tree Asistanı'nda yönetici, çalışan ve triyaj ajanları ayrı.",
+  },
+  {
+    title: "Sınırlı araç ve yetki",
+    desc: "Her ajan yalnızca kendi araçlarını çağırabilir; yetki kontrolü prompt'ta değil kodda.",
+  },
+  {
+    title: "Kritik işlem insan onayında",
+    desc: "Ekip taşıma, talep gönderme gibi yazma işlemleri onay olmadan çalışmaz, geri alınabilir.",
+  },
+  {
+    title: "Ölç ve düzelt",
+    desc: "Küçük eval'lerle modelin sızdırdığı ya da uydurduğu yeri bulur, aracı düzeltirim.",
+  },
+];
+
+type Mode = "vizyon" | "bento" | "zen";
+
+const StepList = ({
+  items,
+  numbered,
+  accent,
+  mode,
+}: {
+  items: { title: string; desc: string }[];
+  numbered: boolean;
+  accent: string;
+  mode: Mode;
+}) => {
+  const stepCard =
+    mode === "zen"
+      ? "border-t border-white/5 px-0"
+      : mode === "bento"
+        ? "bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-2xl"
+        : "bg-white/[0.02] border border-white/10 rounded-[1.5rem]";
+  return (
+    <ol className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+      {items.map((step, i) => (
+        <li key={step.title} className={`relative flex gap-4 p-5 ${stepCard}`}>
+          <span
+            aria-hidden
+            className={`shrink-0 text-xs font-black tracking-widest ${accent} ${mode === "zen" ? "opacity-70" : ""}`}
+          >
+            {numbered ? String(i + 1).padStart(2, "0") : "●"}
+          </span>
+          <div className="min-w-0">
+            <p
+              className={`text-sm ${mode === "zen" ? "font-light text-white/75" : "font-bold text-white"}`}
+            >
+              {step.title}
+            </p>
+            <p className="mt-1 text-xs text-white/65 font-light leading-relaxed">
+              {step.desc}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+};
 
 export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
   const { viewMode } = useView();
@@ -41,10 +108,12 @@ export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
         ? "border-t border-white/5 rounded-none"
         : "bg-white/[0.02] border border-white/10 rounded-[2rem] md:rounded-[2.5rem] hover:border-amber-500/30 shadow-lg md:shadow-2xl";
 
+  const groupLabel = `mb-5 text-center md:text-left text-[0.65rem] uppercase ${viewMode === "zen" ? "text-white/55 tracking-[0.5em] font-medium" : "text-amber-500 tracking-[0.2em] font-bold"}`;
+
   return (
     <section
       id="ai-projeler"
-      className="relative bg-[#0A0A0F] py-24 md:py-32 px-6 overflow-hidden transform-gpu"
+      className="relative bg-[#0A0A0F] py-24 md:py-32 px-4 sm:px-6 overflow-hidden transform-gpu"
     >
       <div className="max-w-7xl mx-auto">
         {/* BÖLÜM BAŞLIĞI */}
@@ -59,75 +128,51 @@ export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
               viewMode === "zen" ? "font-thin opacity-60" : "font-bold"
             }`}
           >
-            Yapay Zeka ile{" "}
+            AI ile{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-cyan-400 italic">
-              Geliştirilenler.
+              Nasıl Çalışıyorum.
             </span>
           </h2>
           <p
-            className={`mt-6 max-w-2xl mx-auto md:mx-0 text-base md:text-lg font-light leading-relaxed ${viewMode === "zen" ? "text-white/60" : "text-gray-400"}`}
+            className={`mt-6 max-w-3xl mx-auto md:mx-0 text-base md:text-lg font-light leading-relaxed ${viewMode === "zen" ? "text-white/60" : "text-gray-400"}`}
           >
-            Son projelerimi Claude Code ile geliştiriyorum. İşi önce planlayıp
-            birbirinden bağımsız parçalara bölüyorum; her parçayı ayrı bir
-            Claude Code ajanına paralel olarak yazdırıp test ederek
-            birleştiriyorum. Bu ajanları yönetmek için Pano&apos;yu geliştirdim.
+            AI'ı iki yerde kullanıyorum: geliştirirken (Claude Code ile) ve
+            ürünün içinde (ajanlar). İkisinde de kural aynı: işi küçük parçalara
+            böl, her parçanın yetkisini sınırla, sonucu test et, kritik kararı
+            insana bırak.
           </p>
         </motion.div>
 
-        {/* NASIL ÇALIŞIYORUM ŞERİDİ */}
-        <div className="mb-12 md:mb-16">
-          <p
-            className={`mb-5 text-center md:text-left text-[0.65rem] uppercase ${viewMode === "zen" ? "text-white/55 tracking-[0.5em] font-medium" : "text-amber-500 tracking-[0.2em] font-bold"}`}
-          >
-            Nasıl çalışıyorum
-          </p>
-          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {steps.map((step, i) => (
-              <li
-                key={step.title}
-                className={`relative flex gap-4 p-5 ${
-                  viewMode === "zen"
-                    ? "border-t border-white/5 px-0"
-                    : viewMode === "bento"
-                      ? "bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-2xl"
-                      : "bg-white/[0.02] border border-white/10 rounded-[1.5rem]"
-                }`}
-              >
-                <span
-                  className={`shrink-0 text-xs font-black tracking-widest ${i === 1 ? "text-cyan-400" : "text-amber-500"} ${viewMode === "zen" ? "opacity-70" : ""}`}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className="min-w-0">
-                  <p
-                    className={`text-sm ${viewMode === "zen" ? "font-light text-white/70" : "font-bold text-white"}`}
-                  >
-                    {step.title}
-                  </p>
-                  <p className="mt-1 text-xs text-white/60 font-light leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-                {i < steps.length - 1 && (
-                  <span
-                    aria-hidden
-                    className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 text-white/30 z-10"
-                  >
-                    →
-                  </span>
-                )}
-              </li>
-            ))}
-          </ol>
+        {/* İKİ ŞERİT: GELİŞTİRİRKEN / ÜRÜNDE */}
+        <div className="mb-12 md:mb-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
+          <div>
+            <p className={groupLabel}>Geliştirirken · Claude Code</p>
+            <StepList
+              items={buildSteps}
+              numbered
+              accent="text-amber-500"
+              mode={viewMode}
+            />
+          </div>
+          <div>
+            <p className={groupLabel}>Üründe · AI ajanları</p>
+            <StepList
+              items={productRules}
+              numbered={false}
+              accent="text-cyan-400"
+              mode={viewMode}
+            />
+          </div>
         </div>
 
         {/* PROJE KARTLARI */}
+        <p className={groupLabel}>Bu yaklaşımın görüldüğü projeler</p>
         {/* 3'ün katıysa geniş ekranda üçlü grid; tabletteki tek kalan kart tam satır */}
         <div
           className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 ${threeCol ? "lg:grid-cols-3" : ""}`}
         >
           {data.map((project, i) => {
-            const cover = projectImages[project.slug]?.[0];
+            const cover = coverOf(project.slug);
             return (
               <Link
                 key={project.slug}
@@ -140,7 +185,7 @@ export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
                       <>
                         <img
                           src={cover.src}
-                          alt={cover.caption || project.title}
+                          alt=""
                           loading="lazy"
                           decoding="async"
                           className="absolute inset-0 w-full h-full object-cover object-top opacity-75 group-hover:opacity-95 group-hover:scale-[1.02] transition-all duration-700 transform-gpu"
@@ -165,30 +210,27 @@ export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
                 <div
                   className={`flex-1 flex flex-col ${viewMode === "zen" ? "py-8" : "p-6 md:p-8"}`}
                 >
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <h3
-                      className={`text-2xl md:text-3xl tracking-tight mr-2 ${viewMode === "zen" ? "font-thin text-white/75 group-hover:text-white transition-colors" : "font-bold text-white"}`}
-                    >
-                      {project.title}
-                    </h3>
-                    {project.handBuilt && (
-                      <span className="px-2.5 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-[0.6rem] font-bold tracking-[0.15em] uppercase text-cyan-400">
-                        Elle başladı, AI ile devam
-                      </span>
-                    )}
+                  <div className="mb-3">
+                    <MetaTags project={project} />
                   </div>
+                  <h3
+                    className={`text-2xl md:text-3xl tracking-tight mb-3 ${viewMode === "zen" ? "font-thin text-white/75 group-hover:text-white transition-colors" : "font-bold text-white"}`}
+                  >
+                    {project.title}
+                  </h3>
                   {project.subtitle && (
-                    <p className="text-amber-500/80 text-sm font-medium mb-3">
+                    <p className="text-amber-400/90 text-sm font-medium mb-3">
                       {project.subtitle}
                     </p>
                   )}
-                  <p className="text-gray-400 text-sm md:text-base font-light leading-relaxed line-clamp-3">
+                  <p className="text-gray-400 text-sm md:text-base font-light leading-relaxed line-clamp-4">
                     {project.desc}
                   </p>
                   <div className="mt-auto pt-6 flex items-center justify-between gap-4">
                     <p
                       lang="en"
-                      className="min-w-0 text-[0.65rem] font-black tracking-widest uppercase text-white/55 leading-relaxed">
+                      className="min-w-0 text-[0.65rem] font-black tracking-widest uppercase text-white/55 leading-relaxed"
+                    >
                       {project.tech.slice(0, 4).join(" · ")}
                     </p>
                     <span className="shrink-0 text-[0.65rem] font-bold tracking-[0.2em] uppercase text-white/65 group-hover:text-amber-500 transition-colors">

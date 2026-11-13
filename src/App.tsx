@@ -299,7 +299,7 @@ const PortfolioLayout = () => {
       {isMas && (
         <>
           <AiProjects
-            data={projectsData.mas.filter((p) => p.aiBuilt)}
+            data={projectsData.mas.filter((p) => p.aiAgent)}
             profileId="mas"
           />
           <SectionDivider />

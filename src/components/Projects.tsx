@@ -3,26 +3,17 @@ import { Link } from "react-router-dom";
 import { useView } from "../context/useView";
 import {
   projectsData,
+  tierOf,
   type Project,
   type ProfileId,
 } from "../data/projectsData";
-import { projectImages } from "../data/projectImages";
+import { coverOf } from "../data/projectMeta";
+import { AiBadge, EvidenceRow, MetaTags } from "./ProjectBits";
 
 interface ProjectsProps {
   data?: Project[];
   profileId?: ProfileId;
 }
-
-// Küçük "AI" rozeti — yapay zeka ile geliştirilen projelerde görünür
-export const AiBadge = ({ className = "" }: { className?: string }) => (
-  <span
-    title="Yapay Zeka ile Geliştirildi"
-    className={`inline-flex items-center gap-1 shrink-0 px-2 py-0.5 rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-cyan-500/10 text-[0.6rem] font-black tracking-[0.2em] uppercase text-amber-400 ${className}`}
-  >
-    <span className="w-1 h-1 rounded-full bg-cyan-400" />
-    AI
-  </span>
-);
 
 export const Projects = ({
   data = projectsData["mas"],
@@ -31,7 +22,12 @@ export const Projects = ({
   const { viewMode } = useView();
 
   const projectHref = (slug: string) => `/${profileId}/proje/${slug}`;
-  const coverOf = (slug: string) => projectImages[slug]?.[0];
+
+  // Öne çıkanlar ve diğer işler mod tasarımıyla; eski ve öğrenme projeleri
+  // altta kompakt listede
+  const main = data.filter((p) => tierOf(p) !== "archive");
+  const archive = data.filter((p) => tierOf(p) === "archive");
+  const structured = main.some((p) => p.problem);
 
   const transition = { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const };
 
@@ -39,11 +35,10 @@ export const Projects = ({
   // tekrarlanır; son satır eksik kalırsa kartlar o satırı eşit paylaşır,
   // böylece proje sayısı değişse de gridde boşluk kalmaz.
   const bentoRows = [
-    [8, 4],
-    [4, 8],
+    [7, 5],
+    [5, 7],
     [6, 6],
     [4, 4, 4],
-    [7, 5],
   ];
   const spanClass: Record<number, string> = {
     4: "md:col-span-4",
@@ -56,9 +51,9 @@ export const Projects = ({
   const bentoSpans = (() => {
     const spans: string[] = [];
     let row = 0;
-    while (spans.length < data.length) {
+    while (spans.length < main.length) {
       const pattern = bentoRows[row % bentoRows.length];
-      const remaining = data.length - spans.length;
+      const remaining = main.length - spans.length;
       if (remaining >= pattern.length) {
         pattern.forEach((n) => spans.push(spanClass[n]));
       } else {
@@ -71,10 +66,13 @@ export const Projects = ({
     return spans;
   })();
 
+  const labelCls =
+    "text-[0.6rem] font-black tracking-[0.2em] uppercase text-amber-500/90";
+
   return (
     <section
       id="projeler"
-      className="relative min-h-screen bg-[#0A0A0F] py-32 px-6 overflow-hidden transform-gpu"
+      className="relative min-h-screen bg-[#0A0A0F] py-24 md:py-32 px-4 sm:px-6 overflow-hidden transform-gpu"
     >
       <div className="max-w-7xl mx-auto">
         {/* BÖLÜM BAŞLIĞI */}
@@ -82,7 +80,7 @@ export const Projects = ({
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-14 md:mb-20 text-center md:text-left transform-gpu"
+          className="mb-12 md:mb-20 text-center md:text-left transform-gpu"
         >
           <h2
             className={`text-5xl md:text-7xl font-bold tracking-tighter text-white ${
@@ -91,6 +89,13 @@ export const Projects = ({
           >
             Seçili <span className="text-amber-500 italic">İşler.</span>
           </h2>
+          {structured && (
+            <p className="mt-5 max-w-2xl mx-auto md:mx-0 text-base md:text-lg font-light leading-relaxed text-gray-400">
+              Önce kurumsal paneller ve AI ajanları. Her projede çözülen
+              problem, benim yaptığım kısım, kullanılan teknolojiler ve kanıtı
+              (kod, canlı site, ekran görüntüsü) var.
+            </p>
+          )}
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -104,87 +109,117 @@ export const Projects = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={transition}
-              className="space-y-20 md:space-y-32"
+              className="space-y-20 md:space-y-28"
             >
-              {data.map((project, i) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  // Kaydırırken takılmamaları için transform-gpu
-                  className={`flex flex-col ${
-                    i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  } items-center gap-8 md:gap-16 group transform-gpu`}
-                >
-                  {/* Görsel Alanı (Glassmorphism) */}
-                  <Link
-                    to={projectHref(project.slug)}
-                    aria-label={`${project.title} detayları`}
-                    // shadow-2xl mobilde çok yorar, md:shadow-2xl yapıldı
-                    className="w-full md:w-3/5 aspect-video bg-white/[0.02] border border-white/10 rounded-[2rem] md:rounded-[3rem] relative overflow-hidden group-hover:border-amber-500/30 transition-all duration-700 shadow-lg md:shadow-2xl cursor-pointer block transform-gpu"
+              {main.map((project, i) => {
+                const cover = coverOf(project.slug);
+                return (
+                  <motion.article
+                    key={project.id}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    // Kaydırırken takılmamaları için transform-gpu
+                    className={`flex flex-col ${
+                      i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    } items-center gap-8 md:gap-14 group transform-gpu`}
                   >
-                    {coverOf(project.slug) ? (
-                      <>
-                        <img
-                          src={coverOf(project.slug)!.src}
-                          alt={coverOf(project.slug)!.caption || project.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="absolute inset-0 w-full h-full object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700 transform-gpu"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/70 via-[#0A0A0F]/10 to-transparent" />
-                      </>
-                    ) : (
-                      <>
-                        <div
-                          className={`absolute inset-0 bg-gradient-to-br ${project.color} to-transparent opacity-30 group-hover:opacity-50 transition-opacity`}
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-white/5 text-8xl md:text-9xl font-black">
-                            {project.title.substring(0, 2).toUpperCase()}
-                          </span>
-                        </div>
-                      </>
-                    )}
-                    {project.aiBuilt && (
-                      <AiBadge className="absolute top-5 left-5 md:top-8 md:left-8 bg-black/40" />
-                    )}
-                  </Link>
-                  {/* Detay Alanı */}
-                  <div className="w-full md:w-2/5 space-y-6">
-                    <Link to={projectHref(project.slug)} className="block">
-                      <h3 className="text-3xl md:text-4xl font-bold text-white tracking-tight group-hover:text-amber-50 transition-colors">
-                        {project.title}
-                      </h3>
-                      {project.subtitle && (
-                        <p className="mt-2 text-amber-500/80 text-sm font-medium">
-                          {project.subtitle}
-                        </p>
-                      )}
-                    </Link>
-                    <p className="text-gray-400 text-base md:text-lg font-light leading-relaxed">
-                      {project.desc}
-                    </p>
-                    <div lang="en" className="flex flex-wrap gap-3">
-                      {project.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="text-[0.65rem] font-bold tracking-[0.2em] text-amber-400 uppercase px-3 py-1 bg-amber-500/5 border border-amber-500/20 rounded-full"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    {/* Görsel Alanı (Glassmorphism) */}
                     <Link
                       to={projectHref(project.slug)}
-                      className="inline-flex items-center gap-2 py-2 text-[0.7rem] font-black tracking-[0.25em] uppercase text-white/70 hover:text-amber-500 transition-colors"
+                      aria-label={`${project.title} detayları`}
+                      // shadow-2xl mobilde çok yorar, md:shadow-2xl yapıldı
+                      className="w-full md:w-1/2 aspect-video bg-white/[0.02] border border-white/10 rounded-[2rem] md:rounded-[3rem] relative overflow-hidden group-hover:border-amber-500/30 transition-all duration-700 shadow-lg md:shadow-2xl cursor-pointer block transform-gpu"
                     >
-                      Detayları İncele <span aria-hidden>→</span>
+                      {cover ? (
+                        <>
+                          <img
+                            src={cover.src}
+                            alt={cover.caption || project.title}
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 w-full h-full object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700 transform-gpu"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/70 via-[#0A0A0F]/10 to-transparent" />
+                        </>
+                      ) : (
+                        <>
+                          <div
+                            className={`absolute inset-0 bg-gradient-to-br ${project.color} to-transparent opacity-30 group-hover:opacity-50 transition-opacity`}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-white/5 text-8xl md:text-9xl font-black">
+                              {project.title.substring(0, 2).toUpperCase()}
+                            </span>
+                          </div>
+                          {project.internal && (
+                            <span className="absolute inset-x-0 bottom-5 md:bottom-8 text-center text-[0.65rem] font-bold tracking-[0.2em] uppercase text-white/55">
+                              Şirket içi proje · görsel paylaşılamıyor
+                            </span>
+                          )}
+                        </>
+                      )}
+                      {project.aiBuilt && (
+                        <AiBadge className="absolute top-5 left-5 md:top-8 md:left-8 bg-black/40" />
+                      )}
                     </Link>
-                  </div>
-                </motion.div>
-              ))}
+
+                    {/* Detay Alanı: problem → ne yaptım → teknoloji → kanıt */}
+                    <div className="w-full md:w-1/2 space-y-5">
+                      <MetaTags project={project} />
+                      <Link to={projectHref(project.slug)} className="block">
+                        <h3 className="text-3xl md:text-4xl font-bold text-white tracking-tight group-hover:text-amber-50 transition-colors">
+                          {project.title}
+                        </h3>
+                        {project.subtitle && (
+                          <p className="mt-2 text-amber-400/90 text-sm font-medium">
+                            {project.subtitle}
+                          </p>
+                        )}
+                      </Link>
+                      {project.problem ? (
+                        <dl className="space-y-4">
+                          <div>
+                            <dt className={labelCls}>Problem</dt>
+                            <dd className="mt-1 text-gray-400 text-sm md:text-base font-light leading-relaxed">
+                              {project.problem}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt className={labelCls}>Ne yaptım</dt>
+                            <dd className="mt-1 text-gray-300 text-sm md:text-base font-light leading-relaxed">
+                              {project.desc}
+                            </dd>
+                          </div>
+                        </dl>
+                      ) : (
+                        <p className="text-gray-400 text-base md:text-lg font-light leading-relaxed">
+                          {project.desc}
+                        </p>
+                      )}
+                      <div lang="en" className="flex flex-wrap gap-2">
+                        {project.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="text-[0.65rem] font-bold tracking-[0.15em] text-amber-400 uppercase px-3 py-1 bg-amber-500/5 border border-amber-500/20 rounded-full"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 pt-1">
+                        <EvidenceRow project={project} linked />
+                        <Link
+                          to={projectHref(project.slug)}
+                          className="inline-flex items-center gap-2 py-2 text-[0.7rem] font-black tracking-[0.25em] uppercase text-white/70 hover:text-amber-500 transition-colors"
+                        >
+                          Detaylar <span aria-hidden>→</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.article>
+                );
+              })}
             </motion.div>
           )}
 
@@ -198,57 +233,67 @@ export const Projects = ({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={transition}
-              className="grid grid-cols-1 md:grid-cols-12 auto-rows-[minmax(260px,auto)] md:auto-rows-[300px] gap-4 md:gap-6"
+              className="grid grid-cols-1 md:grid-cols-12 auto-rows-[minmax(260px,auto)] md:auto-rows-[minmax(320px,auto)] gap-4 md:gap-6"
             >
-              {data.map((project, i) => {
+              {main.map((project, i) => {
                 const cover = coverOf(project.slug);
                 return (
                   <Link
                     to={projectHref(project.slug)}
                     key={project.id}
                     // Grid itemları için donanım hızlandırma
-                    className={`${bentoSpans[i]} bg-white/[0.02] border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 md:p-10 flex flex-col justify-between group hover:bg-white/[0.04] hover:border-white/10 transition-all relative overflow-hidden cursor-pointer transform-gpu`}
+                    className={`${bentoSpans[i]} bg-white/[0.02] border ${tierOf(project) === "featured" ? "border-amber-500/20" : "border-white/5"} rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 md:p-10 flex flex-col justify-between group hover:bg-white/[0.04] hover:border-white/15 transition-all relative overflow-hidden cursor-pointer transform-gpu`}
                   >
                     {cover && (
                       <>
                         <img
                           src={cover.src}
-                          alt={cover.caption || project.title}
+                          alt=""
                           loading="lazy"
                           decoding="async"
-                          className="absolute inset-0 w-full h-full object-cover object-top opacity-60 group-hover:opacity-75 group-hover:scale-[1.03] transition-all duration-700 transform-gpu"
+                          className="absolute inset-0 w-full h-full object-cover object-top opacity-50 group-hover:opacity-65 group-hover:scale-[1.03] transition-all duration-700 transform-gpu"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/85 to-[#0A0A0F]/40" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/90 to-[#0A0A0F]/50" />
                       </>
                     )}
-                    <div className="relative z-10">
-                      <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="relative z-10 space-y-3">
+                      <MetaTags project={project} />
+                      <div className="flex items-start justify-between gap-3">
                         <h3 className="text-2xl font-bold text-white">
                           {project.title}
                         </h3>
                         {project.aiBuilt && <AiBadge className="mt-1.5" />}
                       </div>
-                      <p
-                        className={`text-sm font-light max-w-sm line-clamp-4 ${cover ? "text-gray-300" : "text-gray-400"}`}
-                      >
+                      {project.problem && (
+                        <p className="text-sm font-light text-gray-400 max-w-xl line-clamp-2">
+                          <span className="font-semibold text-white/75">
+                            Problem:{" "}
+                          </span>
+                          {project.problem}
+                        </p>
+                      )}
+                      <p className="text-sm font-light max-w-xl line-clamp-3 text-gray-300">
                         {project.desc}
                       </p>
                     </div>
-                    <div
-                      lang="en"
-                      className="flex flex-wrap gap-2 relative z-10 mt-4"
-                    >
-                      {project.tech.map((t) => (
-                        <span
-                          key={t}
-                          className={`text-[0.65rem] font-black tracking-widest uppercase ${cover ? "text-white/65" : "text-white/55"}`}
-                        >
-                          {t}
-                        </span>
-                      ))}
+                    <div className="relative z-10 mt-5 space-y-3">
+                      <div lang="en" className="flex flex-wrap gap-x-3 gap-y-1">
+                        {project.tech.slice(0, 6).map((t) => (
+                          <span
+                            key={t}
+                            className="text-[0.65rem] font-black tracking-widest uppercase text-white/60"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                      <EvidenceRow project={project} linked={false} />
                     </div>
                     {/* Arka plan dekorasyonu */}
-                    <div className="absolute -bottom-10 -right-10 text-9xl font-black text-white/[0.01] group-hover:text-amber-500/[0.03] transition-colors select-none">
+                    <div
+                      aria-hidden
+                      className="absolute -bottom-10 -right-10 text-9xl font-black text-white/[0.01] group-hover:text-amber-500/[0.03] transition-colors select-none"
+                    >
                       {String(i + 1).padStart(2, "0")}
                     </div>
                   </Link>
@@ -269,14 +314,14 @@ export const Projects = ({
               transition={transition}
               className="max-w-5xl mx-auto space-y-1"
             >
-              {data.map((project) => (
+              {main.map((project) => (
                 <Link
                   to={projectHref(project.slug)}
                   key={project.id}
                   className="group border-b border-white/5 py-8 md:py-12 flex items-center justify-between gap-6 md:hover:px-8 transition-all duration-700 cursor-pointer transform-gpu"
                 >
-                  <div className="space-y-2 min-w-0">
-                    <h3 className="text-3xl md:text-5xl font-thin text-white/70 group-hover:text-white transition-colors break-words">
+                  <div className="space-y-3 min-w-0">
+                    <h3 className="text-3xl md:text-5xl font-thin text-white/75 group-hover:text-white transition-colors break-words">
                       {project.title}
                       {project.aiBuilt && (
                         <sup className="ml-2 text-[0.65rem] md:text-xs font-medium tracking-[0.3em] text-amber-500/80 align-super">
@@ -284,6 +329,18 @@ export const Projects = ({
                         </sup>
                       )}
                     </h3>
+                    {(project.kind || project.status) && (
+                      <p className="text-[0.65rem] tracking-[0.35em] uppercase text-white/55">
+                        {[project.kind, project.status]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </p>
+                    )}
+                    {project.problem && (
+                      <p className="max-w-2xl text-sm md:text-base font-light leading-relaxed text-white/60">
+                        {project.desc}
+                      </p>
+                    )}
                     <p
                       lang="en"
                       className="text-gray-400 text-xs md:text-sm uppercase tracking-[0.3em] md:tracking-[0.4em] font-medium md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100 transition-opacity duration-700"
@@ -301,6 +358,63 @@ export const Projects = ({
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* =========================================
+             ARŞİV: ESKİ VE ÖĞRENME PROJELERİ (tüm modlarda kompakt)
+             ========================================= */}
+        {archive.length > 0 && (
+          <div
+            className={`mt-24 md:mt-32 ${viewMode === "zen" ? "max-w-5xl mx-auto" : ""}`}
+          >
+            <h3
+              className={`text-2xl md:text-3xl tracking-tight ${viewMode === "zen" ? "font-thin text-white/70" : "font-bold text-white"}`}
+            >
+              Diğer ve öğrenme projeleri
+            </h3>
+            <p className="mt-2 text-sm text-white/60 font-light">
+              Daha eski işler ve bir konuyu öğrenmek için yaptığım projeler.
+            </p>
+            <ul
+              className={`mt-8 grid grid-cols-1 md:grid-cols-2 ${viewMode === "zen" ? "gap-x-10" : "gap-3 md:gap-4"}`}
+            >
+              {archive.map((project) => (
+                <li key={project.slug}>
+                  <Link
+                    to={projectHref(project.slug)}
+                    className={`group h-full flex flex-col gap-2 transition-colors ${
+                      viewMode === "zen"
+                        ? "py-6 border-b border-white/5"
+                        : viewMode === "bento"
+                          ? "p-5 md:p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/15"
+                          : "p-5 md:p-6 rounded-[1.5rem] bg-white/[0.02] border border-white/10 hover:border-amber-500/30"
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                      <span
+                        className={`text-lg group-hover:text-amber-400 transition-colors ${viewMode === "zen" ? "font-light text-white/75" : "font-semibold text-white"}`}
+                      >
+                        {project.title}
+                      </span>
+                      {project.kind && (
+                        <span className="text-[0.6rem] font-bold tracking-[0.15em] uppercase text-white/55">
+                          {project.kind}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-400 font-light leading-relaxed line-clamp-2">
+                      {project.desc}
+                    </p>
+                    <EvidenceRow
+                      project={project}
+                      linked={false}
+                      className="mt-auto pt-1"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );
