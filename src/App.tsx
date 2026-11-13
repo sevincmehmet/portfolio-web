@@ -123,7 +123,7 @@ const DynamicTitle = () => {
 const LandingNavbar = () => {
   return (
     <nav className="absolute top-0 w-full z-50 flex justify-center pt-8 px-4 pointer-events-none">
-      <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 flex gap-8 items-center pointer-events-auto shadow-2xl transform-gpu">
+      <div className="bg-white/[0.03] md:backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 flex gap-8 items-center pointer-events-auto shadow-2xl transform-gpu">
         <span
           lang="en"
           className="font-bold text-sm tracking-widest text-amber-500 uppercase"
@@ -151,7 +151,7 @@ const LandingPage = () => {
         <motion.img
           src={twinPic}
           alt="DAS ve MAS"
-          className={`absolute inset-0 w-full h-full object-cover object-[center_bottom] transition-opacity duration-1000 transform-gpu will-change-[opacity]
+          className={`absolute inset-0 w-full h-full object-cover object-[center_bottom] transition-opacity duration-1000 transform-gpu
             ${viewMode === "zen" ? "opacity-20" : "opacity-85"}
           `}
         />
@@ -176,7 +176,7 @@ const LandingPage = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="flex flex-col items-center transform-gpu will-change-transform"
+              className="flex flex-col items-center transform-gpu"
             >
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 md:bg-white/5 border border-white/10 w-fit mb-4 md:backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-none md:shadow-[0_0_10px_rgba(245,158,11,0.6)]"></span>
@@ -205,7 +205,7 @@ const LandingPage = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="bg-black/80 md:bg-black/40 border border-white/10 rounded-[2rem] p-6 md:p-8 md:backdrop-blur-xl shadow-none md:shadow-2xl flex flex-col items-center max-w-2xl mx-auto transform-gpu will-change-transform"
+              className="bg-black/80 md:bg-black/40 border border-white/10 rounded-[2rem] p-6 md:p-8 md:backdrop-blur-xl shadow-none md:shadow-2xl flex flex-col items-center max-w-2xl mx-auto transform-gpu"
             >
               <p className="text-[0.6rem] font-bold tracking-[0.2em] text-[#9CA3AF] uppercase mb-3">
                 Sistem Yapılandırması
@@ -229,7 +229,7 @@ const LandingPage = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1 }}
-              className="flex flex-col items-center mt-2 md:mt-4 transform-gpu will-change-transform"
+              className="flex flex-col items-center mt-2 md:mt-4 transform-gpu"
             >
               <h1 className="text-[12vw] md:text-[9rem] font-extralight tracking-[-0.05em] text-white/90 leading-none md:drop-shadow-2xl">
                 Birlik.

@@ -7,7 +7,7 @@ import {
   type Project,
   type ProfileId,
 } from "../data/projectsData";
-import { coverOf } from "../data/projectMeta";
+import { coverOf, responsiveImg } from "../data/projectMeta";
 import { AiBadge, EvidenceRow, MetaTags } from "./ProjectBits";
 import { SectionHeader } from "./SectionHeader";
 
@@ -143,7 +143,7 @@ export const Projects = ({
                       {cover ? (
                         <>
                           <img
-                            src={cover.src}
+                            {...responsiveImg(cover.src)}
                             alt={cover.caption || project.title}
                             loading="lazy"
                             decoding="async"
@@ -256,7 +256,7 @@ export const Projects = ({
                     {cover && (
                       <>
                         <img
-                          src={cover.src}
+                          {...responsiveImg(cover.src)}
                           alt=""
                           loading="lazy"
                           decoding="async"

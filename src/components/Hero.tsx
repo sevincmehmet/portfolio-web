@@ -45,12 +45,12 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
       <motion.div
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="hidden md:block absolute top-[-10%] left-[-5%] w-[40vw] h-[40vw] bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none transform-gpu will-change-transform"
+        className="hidden md:block absolute top-[-10%] left-[-5%] w-[40vw] h-[40vw] bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none transform-gpu"
       />
       <motion.div
         animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="hidden md:block absolute bottom-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-amber-600/10 rounded-full blur-[150px] pointer-events-none transform-gpu will-change-transform"
+        className="hidden md:block absolute bottom-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-amber-600/10 rounded-full blur-[150px] pointer-events-none transform-gpu"
       />
 
       {/* --- TASARIM GEÇİŞ ALANI --- */}
@@ -208,19 +208,19 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] aspect-square bg-gradient-to-tr from-amber-500/10 to-cyan-500/10 rounded-full blur-[80px] z-0 transform-gpu will-change-transform"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] aspect-square bg-gradient-to-tr from-amber-500/10 to-cyan-500/10 rounded-full blur-[80px] z-0 transform-gpu"
               />
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] aspect-square border border-white/[0.03] rounded-full z-0 transform-gpu will-change-transform"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] aspect-square border border-white/[0.03] rounded-full z-0 transform-gpu"
               >
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-amber-500/50 rounded-full shadow-none md:shadow-[0_0_10px_rgba(245,158,11,0.8)]"></div>
               </motion.div>
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] aspect-square border border-white/[0.02] rounded-full z-0 transform-gpu will-change-transform"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] aspect-square border border-white/[0.02] rounded-full z-0 transform-gpu"
               >
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-cyan-500/40 rounded-full shadow-none md:shadow-[0_0_12px_rgba(6,182,212,0.8)]"></div>
               </motion.div>
@@ -237,7 +237,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                     delay: 1.5,
                   },
                 }}
-                className="relative w-[280px] sm:w-[360px] md:w-[450px] aspect-square z-10 flex items-center justify-center transform-gpu will-change-transform"
+                className="relative w-[280px] sm:w-[360px] md:w-[450px] aspect-square z-10 flex items-center justify-center transform-gpu"
               >
                 <img
                   src={data.vizyon.image}
@@ -273,7 +273,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-              className="col-span-1 md:col-span-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 md:p-14 flex flex-col justify-center relative overflow-hidden group hover:border-white/10 hover:bg-white/[0.04] transition-all duration-700 shadow-xl md:shadow-2xl transform-gpu"
+              className="col-span-1 md:col-span-8 bg-[#111] md:bg-white/[0.02] md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 md:p-14 flex flex-col justify-center relative overflow-hidden group hover:border-white/10 hover:bg-white/[0.04] transition-all duration-700 shadow-xl md:shadow-2xl transform-gpu"
             >
               <div
                 className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none hidden md:block"
@@ -344,18 +344,18 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 border-[2px] border-dashed border-white/10 rounded-full scale-[1.35] opacity-50 group-hover:border-amber-500/30 transition-colors duration-700 transform-gpu will-change-transform"
+                className="absolute inset-0 border-[2px] border-dashed border-white/10 rounded-full scale-[1.35] opacity-50 group-hover:border-amber-500/30 transition-colors duration-700 transform-gpu"
               />
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 border-[1px] border-solid border-cyan-500/20 rounded-full scale-[1.5] opacity-30 transform-gpu will-change-transform"
+                className="absolute inset-0 border-[1px] border-solid border-cyan-500/20 rounded-full scale-[1.5] opacity-30 transform-gpu"
               />
-              <div className="relative w-full h-full bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-2xl border border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-none md:shadow-[0_0_40px_rgba(0,0,0,0.5)] z-10">
+              <div className="relative w-full h-full bg-[#111] md:bg-white/[0.02] md:backdrop-blur-2xl border border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-none md:shadow-[0_0_40px_rgba(0,0,0,0.5)] z-10">
                 <img
                   src={data.bento.image}
                   alt={ownerName}
-                  className="w-full h-full object-cover object-center transform group-hover:scale-110 transition-transform duration-1000 ease-out will-change-transform"
+                  className="w-full h-full object-cover object-center transform group-hover:scale-110 transition-transform duration-1000 ease-out"
                 />
                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/50 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 z-20">
@@ -374,7 +374,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-8 flex flex-col justify-center relative overflow-hidden group hover:bg-white/[0.04] transition-colors transform-gpu"
+              className="col-span-1 md:col-span-4 bg-[#111] md:bg-white/[0.02] md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-8 flex flex-col justify-center relative overflow-hidden group hover:bg-white/[0.04] transition-colors transform-gpu"
             >
               <div className="absolute right-[-10%] top-[-10%] w-32 h-32 bg-cyan-500/10 rounded-full blur-[40px] pointer-events-none hidden md:block"></div>
               <p className="text-[0.65rem] font-bold text-[#9CA3AF] tracking-[0.2em] uppercase mb-6">
@@ -431,7 +431,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-                className="col-span-1 md:col-span-4 bg-gradient-to-br from-[#111] md:from-white/[0.03] to-transparent backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors transform-gpu"
+                className="col-span-1 md:col-span-4 bg-gradient-to-br from-[#111] md:from-white/[0.03] to-transparent md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-white/10 transition-colors transform-gpu"
               >
                 <motion.div
                   animate={{ y: [-5, 5, -5] }}
@@ -440,7 +440,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-xl shadow-none md:shadow-inner mb-6 relative z-10 transform-gpu will-change-transform"
+                  className="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-xl shadow-none md:shadow-inner mb-6 relative z-10 transform-gpu"
                 >
                   ☕
                 </motion.div>
@@ -486,7 +486,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.6 }}
             className="max-w-7xl w-full mx-auto flex flex-col items-center justify-center relative z-10 py-10 transform-gpu"
           >
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none hidden md:flex">
@@ -499,7 +499,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                 <motion.div
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 1 }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
                   className="transform-gpu"
                 >
                   <h1 className="text-[14vw] lg:text-[11rem] font-extralight tracking-[-0.08em] text-white leading-none mb-2">
@@ -516,7 +516,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
+                    transition={{ delay: 0.4 }}
                     className="mt-14 transform-gpu"
                   >
                     <a
@@ -581,7 +581,7 @@ export default function Hero({ data = heroContent["mas"] }: HeroProps) {
                     ease: "easeInOut",
                   }}
                   style={{ transformStyle: "preserve-3d" }}
-                  className="relative w-72 md:w-[26rem] aspect-[3/4] z-10 group transform-gpu will-change-transform"
+                  className="relative w-72 md:w-[26rem] aspect-[3/4] z-10 group transform-gpu"
                 >
                   <div className="absolute inset-0 bg-white/[0.02] md:backdrop-blur-[4px] border border-white/10 rounded-[2.5rem] shadow-xl md:shadow-[0_0_60px_rgba(0,0,0,0.6)] z-20"></div>
                   <img

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { startTransition, useState } from "react";
 import { ViewContext, type ViewMode } from "./viewContextBase";
 
 export const ViewProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -20,7 +20,9 @@ export const ViewProvider: React.FC<{ children: React.ReactNode }> = ({
     return "vizyon";
   });
   const setViewMode = (mode: ViewMode) => {
-    setMode(mode);
+    // Mod değişimi tüm sayfayı yeniden çizer; geçiş (transition) olarak
+    // işaretlenince React işi parçalara böler, dokunma tepkisi bloke olmaz
+    startTransition(() => setMode(mode));
     try {
       localStorage.setItem("gorunum-modu", mode);
     } catch {

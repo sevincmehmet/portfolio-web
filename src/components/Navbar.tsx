@@ -95,7 +95,9 @@ export default function Navbar() {
     // Zen'de de hafif zemin: kaydırınca metin menünün altından okunur kalsın
     if (viewMode === "zen") return "rgba(10,10,15,0.88)";
     if (viewMode === "bento") return "rgba(17,17,17,0.98)";
-    return "rgba(255,255,255,0.03)";
+    // Vizyon: mobilde blur yok, bu yüzden zemin biraz daha koyu (cam hissi
+    // masaüstünde md:backdrop-blur ile)
+    return "rgba(14,14,20,0.82)";
   };
 
   const getNavBorder = () => {
@@ -112,11 +114,10 @@ export default function Navbar() {
             backgroundColor: getNavBg(),
             borderColor: getNavBorder(),
             // Mobilde daha az blur kullanarak performans artışı
-            backdropFilter: viewMode === "zen" ? "blur(0px)" : "blur(16px)",
             borderRadius: viewMode === "bento" ? "20px" : "9999px",
           }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-center gap-2 md:gap-4 px-4 md:px-8 py-1.5 md:py-3 border shadow-2xl pointer-events-auto transition-colors duration-700 w-full transform-gpu"
+          className={`relative flex items-center gap-2 md:gap-4 px-4 md:px-8 py-1.5 md:py-3 border shadow-2xl pointer-events-auto transition-colors duration-700 w-full transform-gpu ${viewMode === "zen" ? "" : "md:backdrop-blur-lg"}`}
         >
           {/* --- LOGO ALANI --- */}
           <Link
@@ -263,7 +264,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className={`lg:hidden absolute top-[calc(100%+16px)] left-0 w-full pointer-events-auto border overflow-hidden backdrop-blur-xl shadow-2xl transition-colors duration-700 bg-[#111111]/95 border-white/10 transform-gpu ${viewMode === "bento" ? "rounded-2xl" : "rounded-3xl"}`}
+              className={`lg:hidden absolute top-[calc(100%+16px)] left-0 w-full pointer-events-auto border overflow-hidden md:backdrop-blur-xl shadow-2xl transition-colors duration-700 bg-[#111111]/95 border-white/10 transform-gpu ${viewMode === "bento" ? "rounded-2xl" : "rounded-3xl"}`}
             >
               <ul className="flex flex-col py-4 px-6 gap-2">
                 {navLinks.map((link, i) => (

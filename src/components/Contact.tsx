@@ -335,7 +335,7 @@ export const Contact = () => {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    className="text-5xl md:text-6xl filter drop-shadow-2xl transform-gpu will-change-transform"
+                    className="text-5xl md:text-6xl filter drop-shadow-2xl transform-gpu"
                   >
                     ☕
                   </motion.div>
@@ -371,7 +371,7 @@ export const Contact = () => {
             <motion.div
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="mb-10 md:mb-16 flex justify-center text-white/5 transform-gpu will-change-transform"
+              className="mb-10 md:mb-16 flex justify-center text-white/5 transform-gpu"
             >
               <svg
                 width="60"

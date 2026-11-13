@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useView } from "../context/useView";
+import { responsiveImg } from "../data/projectMeta";
 import type { Project, ProfileId } from "../data/projectsData";
 import { SectionHeader } from "./SectionHeader";
 import { ExternalIcon } from "./ProjectBits";
@@ -81,7 +82,7 @@ export const LiveProjects = ({
                   </div>
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <img
-                      src={live.image}
+                      {...responsiveImg(live.image)}
                       alt={`${project.title} canlı sitesinin ekran görüntüsü`}
                       loading="lazy"
                       decoding="async"

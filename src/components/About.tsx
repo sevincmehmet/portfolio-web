@@ -87,14 +87,14 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
                     ease: "linear",
                   }}
                   // Sürekli dönen animasyon GPU'ya atandı
-                  className="absolute inset-0 border border-white/[0.05] rounded-full transform-gpu will-change-transform"
+                  className="absolute inset-0 border border-white/[0.05] rounded-full transform-gpu"
                 />
-                <div className="absolute inset-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/10 rounded-full flex items-center justify-center overflow-hidden group transform-gpu">
+                <div className="absolute inset-8 bg-[#111] md:bg-white/[0.02] md:backdrop-blur-3xl border border-white/10 rounded-full flex items-center justify-center overflow-hidden group transform-gpu">
                   <div className="text-center p-12">
                     <motion.div
                       animate={{ y: [-10, 10, -10] }}
                       transition={{ duration: 4, repeat: Infinity }}
-                      className="text-6xl mb-6 transform-gpu will-change-transform"
+                      className="text-6xl mb-6 transform-gpu"
                     >
                       🌱
                     </motion.div>
@@ -122,7 +122,7 @@ export const About = ({ data = aboutData["mas"] }: AboutProps) => {
             className="max-w-[75rem] w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10 transform-gpu"
           >
             {/* İŞ DENEYİMİ */}
-            <div className="col-span-1 md:col-span-8 bg-[#111] md:bg-white/[0.02] backdrop-blur-xl md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 flex flex-col group hover:border-white/10 transition-all duration-700 transform-gpu">
+            <div className="col-span-1 md:col-span-8 bg-[#111] md:bg-white/[0.02] md:backdrop-blur-3xl border border-white/[0.05] rounded-[2.5rem] p-10 flex flex-col group hover:border-white/10 transition-all duration-700 transform-gpu">
               <h3 className="text-amber-500 font-bold tracking-[0.2em] text-[0.65rem] uppercase mb-8">
                 {data.bento.experience.title}
               </h3>

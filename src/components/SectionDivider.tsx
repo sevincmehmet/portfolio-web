@@ -19,8 +19,8 @@ export const SectionDivider = () => {
           <motion.div
             animate={{ x: ["-100%", "100%"] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            // Sürekli akan gradyan için will-change eklendi
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 transform-gpu will-change-transform"
+            // Sürekli akan gradyan: transform-gpu ile ayrı katmanda
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 transform-gpu"
           />
         </motion.div>
       )}

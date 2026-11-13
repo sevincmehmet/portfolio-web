@@ -33,7 +33,7 @@ export const TechMarquee = () => {
         animate={{ x: [0, -1000] }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         // KRİTİK: Sonsuz animasyonlar için donanım hızlandırma şart
-        className="flex gap-20 items-center px-10 transform-gpu will-change-transform"
+        className="flex gap-20 items-center px-10 transform-gpu"
       >
         {[...tech, ...tech].map((item, i) => (
           <span

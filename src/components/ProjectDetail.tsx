@@ -7,6 +7,7 @@ import { ModeSwitcher } from "./ModeSwitcher";
 import { MobileTabBar } from "./MobileTabBar";
 import { SectionDivider } from "./SectionDivider";
 import { useView } from "../context/useView";
+import { responsiveImg } from "../data/projectMeta";
 import {
   getProject,
   isProfileId,
@@ -229,7 +230,7 @@ const OtherProjectCard = ({
           {cover ? (
             <>
               <img
-                src={cover.src}
+                {...responsiveImg(cover.src, "(min-width: 768px) 33vw, 100vw")}
                 alt={cover.caption || project.title}
                 loading="lazy"
                 decoding="async"

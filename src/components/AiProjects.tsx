@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useView } from "../context/useView";
 import type { Project, ProfileId } from "../data/projectsData";
-import { coverOf } from "../data/projectMeta";
+import { coverOf, responsiveImg } from "../data/projectMeta";
 import { MetaTags } from "./ProjectBits";
 import { SectionHeader } from "./SectionHeader";
 
@@ -165,7 +165,10 @@ export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
                     {cover ? (
                       <>
                         <img
-                          src={cover.src}
+                          {...responsiveImg(
+                            cover.src,
+                            "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
+                          )}
                           alt=""
                           loading="lazy"
                           decoding="async"

@@ -210,7 +210,7 @@ export const Footer = () => {
                     repeat: Infinity,
                     ease: "linear",
                   }}
-                  className="w-10 h-10 md:w-12 md:h-12 border border-white/5 rounded-full flex items-center justify-center transform-gpu will-change-transform"
+                  className="w-10 h-10 md:w-12 md:h-12 border border-white/5 rounded-full flex items-center justify-center transform-gpu"
                 >
                   <div className="w-1 h-1 bg-amber-500 rounded-full"></div>
                 </motion.div>

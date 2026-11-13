@@ -1,5 +1,4 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { useView } from "../context/useView";
 
@@ -81,109 +80,113 @@ const tabs = [
 
 const tabIds = tabs.map((t) => t.id);
 
-// Ekranın ortasından geçen bölümü bulur
+// Ekranın ortasından geçen bölümü IntersectionObserver ile bulur: kaydırma
+// dinleyicisi ve getBoundingClientRect yok, ana iş parçacığı boş kalır
 const useActiveSection = (ids: readonly string[], enabled: boolean) => {
   const [active, setActive] = useState<string | null>(null);
   useEffect(() => {
     if (!enabled) return;
-    const onScroll = () => {
-      const mid = window.innerHeight * 0.45;
-      let current: string | null = null;
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const r = el.getBoundingClientRect();
-        if (r.top <= mid && r.bottom > mid) current = id;
-      }
-      setActive(current);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const visible = new Set<string>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.add(e.target.id);
+          else visible.delete(e.target.id);
+        }
+        // Ekranın %45'indeki ince şeridi kesen bölüm aktif
+        setActive(ids.find((id) => visible.has(id)) ?? null);
+      },
+      { rootMargin: "-45% 0px -54% 0px" },
+    );
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    }
+    return () => io.disconnect();
   }, [ids, enabled]);
   return active;
 };
+
+type Mode = "vizyon" | "bento" | "zen";
+
+// Her modun kabuğu ayrı bir katman; mod değişince yalnızca opaklıkla
+// çapraz geçiş yapılır (radius / renk / gölge animasyonu yok, compositor'da kalır)
+const shellLayer: Record<Mode, string> = {
+  // Vizyon: koyu cam hissi; mobilde blur yerine yarı saydam düz renk + amber parıltı
+  vizyon:
+    "inset-0 rounded-t-[22px] bg-[#0b0b11]/95 border-t border-white/10 shadow-[0_-10px_40px_rgba(245,158,11,0.10)]",
+  // Bento: yüzen ada
+  bento:
+    "inset-x-2 top-0 bottom-[calc(env(safe-area-inset-bottom)+4px)] rounded-[22px] bg-[#111] border border-white/[0.12] shadow-[0_18px_40px_rgba(0,0,0,0.55)]",
+  // Zen: ince üst çizgi
+  zen: "inset-0 bg-[#0A0A0F]/[0.97] border-t border-white/[0.06]",
+};
+
+// Aktif gösterge her modda farklı; hepsi aynı satırda, yalnızca transform ile kayar
+const indicator: Record<Mode, string> = {
+  vizyon:
+    "after:absolute after:top-1.5 after:left-1/2 after:-ml-[22px] after:w-11 after:h-7 after:rounded-full after:bg-amber-500/15 after:shadow-[0_0_18px_rgba(245,158,11,0.35)]",
+  bento:
+    "after:absolute after:inset-1 after:rounded-[16px] after:bg-white/[0.07] after:border after:border-white/10",
+  zen: "after:absolute after:bottom-1.5 after:left-1/2 after:-ml-[3px] after:w-1.5 after:h-1.5 after:rounded-full after:bg-amber-400",
+};
+
+const modes: Mode[] = ["vizyon", "bento", "zen"];
 
 export const MobileTabBar = ({ profileId }: { profileId: string }) => {
   const { viewMode } = useView();
   const { pathname } = useLocation();
   const isHome = pathname === `/${profileId}`;
   const active = useActiveSection(tabIds, isHome);
-
-  // Her mod kendi dilinde: Vizyon cam + parıltı, Bento yüzen ada,
-  // Zen ince çizgi ve sadece ikon. Kabuk mod değişince yumuşakça dönüşür;
-  // aktif gösterge sekmeler (ve modlar) arasında layoutId ile kayar.
+  const activeIndex = tabIds.indexOf(active as (typeof tabIds)[number]);
   const zen = viewMode === "zen";
-  const bento = viewMode === "bento";
-  const shell = {
-    vizyon: {
-      backgroundColor: "rgba(10,10,15,0.82)",
-      borderColor: "rgba(255,255,255,0.10)",
-      borderRadius: "22px 22px 0px 0px",
-      boxShadow: "0 -10px 40px rgba(245,158,11,0.10)",
-    },
-    bento: {
-      backgroundColor: "rgba(17,17,17,0.97)",
-      borderColor: "rgba(255,255,255,0.12)",
-      borderRadius: "24px 24px 24px 24px",
-      boxShadow: "0 18px 40px rgba(0,0,0,0.55)",
-    },
-    zen: {
-      backgroundColor: "rgba(10,10,15,0.96)",
-      borderColor: "rgba(255,255,255,0.06)",
-      borderRadius: "0px 0px 0px 0px",
-      boxShadow: "0 0 0 rgba(0,0,0,0)",
-    },
-  }[viewMode];
 
   return (
     <nav
       aria-label="Bölümler"
-      className={`md:hidden fixed inset-x-0 bottom-0 z-[998] transition-[padding] duration-500 ${bento ? "px-3" : "px-0"}`}
-      style={{
-        paddingBottom: bento
-          ? "calc(env(safe-area-inset-bottom) + 10px)"
-          : "env(safe-area-inset-bottom)",
-      }}
+      className="md:hidden fixed inset-x-0 bottom-0 z-[998] px-2 pt-1"
+      style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)" }}
     >
-      <motion.div
-        initial={false}
-        animate={shell}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className={`border ${zen ? "border-x-0 border-b-0" : bento ? "" : "border-x-0 border-b-0"} ${viewMode === "vizyon" ? "backdrop-blur-md" : ""}`}
-      >
-        <ul className={`grid grid-cols-5 ${bento ? "p-1.5 gap-1" : ""}`}>
+      {modes.map((m) => (
+        <div
+          key={m}
+          aria-hidden
+          className={`absolute pointer-events-none transition-opacity duration-300 ${shellLayer[m]} ${viewMode === m ? "opacity-100" : "opacity-0"}`}
+        />
+      ))}
+
+      <div className="relative">
+        {/* Aktif göstergeler: bir sekme genişliğinde, translateX ile kayar */}
+        {modes.map((m) => (
+          <span
+            key={m}
+            aria-hidden
+            className={`absolute inset-y-0 left-0 w-1/5 pointer-events-none transition-[transform,opacity] duration-300 ease-out ${indicator[m]} ${viewMode === m && activeIndex >= 0 ? "opacity-100" : "opacity-0"}`}
+            style={{
+              transform: `translateX(${Math.max(activeIndex, 0) * 100}%)`,
+            }}
+          />
+        ))}
+
+        <ul className="relative grid grid-cols-5">
           {tabs.map((tab) => {
             const isActive = active === tab.id;
-            const cls = `relative flex flex-col items-center justify-center gap-1 ${zen ? "min-h-[58px]" : "min-h-[56px]"} px-1 text-[0.68rem] font-semibold tracking-wide transition-colors active:scale-95 ${
+            const cls = `relative flex flex-col items-center justify-center gap-1 min-h-[56px] px-1 text-[0.68rem] font-semibold tracking-wide transition-colors duration-300 active:scale-95 ${
               isActive
                 ? zen
                   ? "text-white"
                   : "text-amber-400"
-                : zen
-                  ? "text-white/55"
-                  : "text-white/60"
+                : "text-white/60"
             }`;
             const content = (
               <>
-                {isActive && (
-                  <motion.span
-                    layoutId="tab-indicator"
-                    aria-hidden
-                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                    className={
-                      zen
-                        ? "absolute bottom-2 left-1/2 -ml-[3px] w-1.5 h-1.5 rounded-full bg-amber-400"
-                        : bento
-                          ? "absolute inset-0 rounded-[18px] bg-white/[0.07] border border-white/10"
-                          : "absolute top-1.5 left-1/2 -ml-[22px] w-11 h-7 rounded-full bg-amber-500/15 shadow-[0_0_18px_rgba(245,158,11,0.35)]"
-                    }
-                  />
-                )}
                 <span className="relative z-10 flex items-center justify-center w-11 h-7">
                   {tab.icon}
                 </span>
-                <span className={`relative z-10 ${zen ? "sr-only" : ""}`}>
+                {/* Zen'de etiket görünmez (yer tutar, düzen kaymaz) */}
+                <span
+                  className={`relative z-10 transition-opacity duration-300 ${zen ? "opacity-0" : "opacity-100"}`}
+                >
                   {tab.label}
                 </span>
               </>
@@ -212,7 +215,7 @@ export const MobileTabBar = ({ profileId }: { profileId: string }) => {
             );
           })}
         </ul>
-      </motion.div>
+      </div>
     </nav>
   );
 };
