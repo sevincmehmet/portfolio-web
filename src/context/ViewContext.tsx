@@ -6,6 +6,10 @@ export const ViewProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   // Seçili mod sayfa yenilense de korunsun (tarayıcı izin vermezse varsayılan)
   const [viewMode, setMode] = useState<ViewMode>(() => {
+    // ?mod=bento gibi bir bağlantı modu doğrudan açar (paylaşım ve ölçüm için)
+    const fromUrl = new URLSearchParams(window.location.search).get("mod");
+    if (fromUrl === "vizyon" || fromUrl === "bento" || fromUrl === "zen")
+      return fromUrl;
     try {
       const saved = localStorage.getItem("gorunum-modu");
       if (saved === "vizyon" || saved === "bento" || saved === "zen")
