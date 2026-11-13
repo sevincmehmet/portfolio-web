@@ -7,4 +7,6 @@ export interface ViewContextType {
   setViewMode: (mode: ViewMode) => void;
 }
 
-export const ViewContext = createContext<ViewContextType | undefined>(undefined);
+export const ViewContext = createContext<ViewContextType | undefined>(
+  undefined,
+);

@@ -22,6 +22,7 @@ import { AiProjects } from "./components/AiProjects";
 import { LiveProjects } from "./components/LiveProjects";
 import { Experience } from "./components/Experience";
 import { ArchiveProjects } from "./components/ArchiveProjects";
+import { MobileTabBar } from "./components/MobileTabBar";
 import { ViewProvider } from "./context/ViewContext";
 import { useView } from "./context/useView";
 
@@ -359,6 +360,7 @@ const PortfolioLayout = () => {
       <Footer />
 
       <ModeSwitcher />
+      {isMas && <MobileTabBar profileId="mas" />}
 
       <div className="fixed inset-0 pointer-events-none z-0 hidden md:block">
         <div className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] bg-amber-500/[0.02] blur-[120px] rounded-full transform-gpu" />

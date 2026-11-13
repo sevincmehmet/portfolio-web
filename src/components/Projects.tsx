@@ -190,13 +190,13 @@ export const Projects = ({
                         <dl className="space-y-4">
                           <div>
                             <dt className={labelCls}>Problem</dt>
-                            <dd className="mt-1 text-gray-400 text-sm md:text-base font-light leading-relaxed">
+                            <dd className="mt-1 text-gray-400 text-base font-light leading-relaxed">
                               {project.problem}
                             </dd>
                           </div>
                           <div>
                             <dt className={labelCls}>Ne yaptım</dt>
-                            <dd className="mt-1 text-gray-300 text-sm md:text-base font-light leading-relaxed">
+                            <dd className="mt-1 text-gray-300 text-base font-light leading-relaxed">
                               {project.desc}
                             </dd>
                           </div>
@@ -281,7 +281,7 @@ export const Projects = ({
                           {project.problem}
                         </p>
                       )}
-                      <p className="text-sm font-light max-w-xl line-clamp-3 text-gray-300">
+                      <p className="text-base md:text-sm font-light max-w-xl line-clamp-4 md:line-clamp-3 text-gray-300">
                         {project.desc}
                       </p>
                     </div>

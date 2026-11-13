@@ -4,6 +4,7 @@ import { useView } from "../context/useView";
 import type { Project, ProfileId } from "../data/projectsData";
 import { SectionHeader } from "./SectionHeader";
 import { ExternalIcon } from "./ProjectBits";
+import { themeOf } from "../theme/modeTheme";
 
 // Canlıda gezilebilen işler: tarayıcı çerçevesinde güncel ekran görüntüsü ve
 // siteye giden net bir buton
@@ -19,11 +20,8 @@ export const LiveProjects = ({
   const zen = viewMode === "zen";
   const bento = viewMode === "bento";
 
-  const card = zen
-    ? "border-t border-white/10 pt-8"
-    : bento
-      ? "bg-[#111] md:bg-white/[0.02] border border-white/[0.06] rounded-[1.75rem] p-4 md:p-5"
-      : "bg-white/[0.02] border border-white/10 rounded-[2rem] p-4 md:p-5 shadow-lg md:shadow-2xl";
+  const t = themeOf(viewMode);
+  const card = zen ? `${t.card} pt-8` : `${t.card} p-4 md:p-5`;
 
   return (
     <section
@@ -41,7 +39,13 @@ export const LiveProjects = ({
           intro="Şu an yayında olan, tarayıcıdan gezebileceğiniz işler. Görseller sitelerin güncel ana sayfalarından alındı."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
+        <div
+          className={
+            zen
+              ? "grid grid-cols-1 gap-12"
+              : "grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6"
+          }
+        >
           {data.map((project, i) => {
             const live = project.live!;
             return (
@@ -51,7 +55,7 @@ export const LiveProjects = ({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.6, delay: i * 0.08 }}
-                className={`flex flex-col transform-gpu ${card}`}
+                className={`transform-gpu ${card} ${zen ? "grid grid-cols-1 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 md:gap-10" : "flex flex-col"}`}
               >
                 {/* Tarayıcı çerçevesi */}
                 <a
@@ -92,19 +96,27 @@ export const LiveProjects = ({
                   <p className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-white/60">
                     {project.role ?? project.kind}
                   </p>
+                  {live.years && (
+                    <p
+                      className={`mt-3 inline-flex w-fit items-center gap-2 text-[0.68rem] font-bold tracking-[0.12em] uppercase ${zen ? "text-white/60" : `px-2.5 py-1 ${t.badgeShape} ${bento ? "bg-white/5 border border-white/10 text-white/80" : "bg-amber-500/10 border border-amber-500/25 text-amber-300"}`}`}
+                    >
+                      <span className="sr-only">Yapım yılı: </span>
+                      {live.years}
+                    </p>
+                  )}
                   <h3
                     className={`mt-2 text-2xl md:text-3xl tracking-tight text-white ${zen ? "font-light" : "font-bold"}`}
                   >
                     {project.title}
                   </h3>
-                  <p className="mt-3 text-sm md:text-base text-gray-300 font-light leading-relaxed">
+                  <p className="mt-3 text-base text-gray-300 font-light leading-relaxed">
                     {project.desc}
                   </p>
                   <ul className="mt-4 space-y-1.5">
                     {project.features.slice(0, 3).map((f) => (
                       <li
                         key={f}
-                        className="flex gap-2.5 text-sm text-gray-400 font-light leading-relaxed"
+                        className="flex gap-2.5 text-[0.95rem] md:text-sm text-gray-400 font-light leading-relaxed"
                       >
                         <span
                           aria-hidden
@@ -119,14 +131,14 @@ export const LiveProjects = ({
                       href={live.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-2 text-sm font-semibold transition-colors ${zen ? "py-2 border-b border-amber-400/50 text-white hover:text-amber-400" : `px-5 py-3 ${bento ? "rounded-xl" : "rounded-full"} bg-amber-500 text-black hover:bg-amber-400`}`}
+                      className={`inline-flex items-center gap-2 min-h-[44px] text-sm transition-colors ${t.btnPrimary}`}
                     >
                       Siteyi aç
                       <ExternalIcon size={14} />
                     </a>
                     <Link
                       to={`/${profileId}/proje/${project.slug}`}
-                      className={`inline-flex items-center gap-2 text-sm font-semibold transition-colors ${zen ? "ml-4 py-2 text-white/65 hover:text-white" : `px-5 py-3 ${bento ? "rounded-xl" : "rounded-full"} border border-white/15 text-white/85 hover:border-amber-500/50`}`}
+                      className={`inline-flex items-center gap-2 min-h-[44px] text-sm transition-colors ${zen ? "ml-4 " : ""}${t.btnSecondary}`}
                     >
                       Proje detayı →
                     </Link>

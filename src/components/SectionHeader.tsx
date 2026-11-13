@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useView } from "../context/useView";
+import { themeOf } from "../theme/modeTheme";
 
 // Bölüm başlıkları için ortak yapı: küçük üst etiket (numara + ad), başlık ve
 // tek paragraflık giriş. Üç mod aynı hiyerarşiyi kendi tonunda gösterir;
@@ -32,9 +33,7 @@ export const SectionHeader = ({
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="mb-10 md:mb-14 transform-gpu"
     >
-      <p
-        className={`flex items-center gap-3 text-[0.68rem] uppercase ${zen ? "tracking-[0.5em] text-white/55 font-medium" : "tracking-[0.22em] font-bold text-amber-400"}`}
-      >
+      <p className={`flex items-center gap-3 ${themeOf(viewMode).label}`}>
         <span className={zen ? "text-white/40" : "text-white/45"}>{index}</span>
         <span
           aria-hidden

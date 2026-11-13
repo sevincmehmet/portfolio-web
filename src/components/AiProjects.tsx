@@ -85,7 +85,7 @@ const StepList = ({
             >
               {step.title}
             </p>
-            <p className="mt-1 text-xs text-white/65 font-light leading-relaxed">
+            <p className="mt-1 text-sm md:text-xs text-white/65 font-light leading-relaxed">
               {step.desc}
             </p>
           </div>
@@ -204,7 +204,7 @@ export const AiProjects = ({ data, profileId }: AiProjectsProps) => {
                       {project.subtitle}
                     </p>
                   )}
-                  <p className="text-gray-400 text-sm md:text-base font-light leading-relaxed line-clamp-4">
+                  <p className="text-gray-400 text-base font-light leading-relaxed line-clamp-4">
                     {project.desc}
                   </p>
                   <div className="mt-auto pt-6 flex items-center justify-between gap-4">

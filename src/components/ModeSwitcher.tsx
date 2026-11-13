@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 import { useView } from "../context/useView";
 
 // Aşağı kaydırırken gizlenir (içeriğin üstüne binmesin), yukarı kaydırınca,
@@ -30,7 +31,7 @@ const useHideOnScrollDown = () => {
 
 // --- PREMİUM SVG İKONLAR ---
 // Vizyon: Akışkanlığı ve parlamayı temsil eden 'Sparkles' tarzı bir ikon
-const VisionIcon = () => (
+export const VisionIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -47,7 +48,7 @@ const VisionIcon = () => (
 );
 
 // Bento: Kusursuz sistematiği temsil eden 'Grid/Kutu' ikonu
-const BentoIcon = () => (
+export const BentoIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -67,7 +68,7 @@ const BentoIcon = () => (
 );
 
 // Zen: Doğallığı ve hafifliği temsil eden 'Yaprak/Tüy' ikonu
-const ZenIcon = () => (
+export const ZenIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -87,6 +88,9 @@ const ZenIcon = () => (
 export const ModeSwitcher = () => {
   const { viewMode, setViewMode } = useView();
   const hidden = useHideOnScrollDown();
+  // MAS'ta mobilde mod seçimi üst çubukta; altta sekme çubuğu var
+  const { profileId } = useParams();
+  const mobileHidden = profileId === "mas" ? "hidden md:block" : "";
 
   const modes = [
     { id: "vizyon", label: "VİZYON", icon: <VisionIcon /> },
@@ -108,7 +112,7 @@ export const ModeSwitcher = () => {
       data-mode-switcher
       // Gizliyken klavye/ekran okuyucu odağı da almasın
       inert={hidden}
-      className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-[999]"
+      className={`fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-[999] ${mobileHidden}`}
     >
       {/* --- DİKKAT ÇEKİCİ DIŞ PARLAMA (GLOW) --- */}
       <div className="absolute -inset-4 bg-amber-500/20 blur-2xl rounded-full pointer-events-none animate-pulse" />

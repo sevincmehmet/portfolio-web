@@ -4,6 +4,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import { Footer } from "./Footer";
 import { ModeSwitcher } from "./ModeSwitcher";
+import { MobileTabBar } from "./MobileTabBar";
 import { SectionDivider } from "./SectionDivider";
 import { useView } from "../context/useView";
 import {
@@ -16,27 +17,25 @@ import {
 } from "../data/projectsData";
 import { projectImages, type ProjectImage } from "../data/projectImages";
 import { profiles } from "../data/profiles";
+import { modeTheme } from "../theme/modeTheme";
 
 type Mode = "vizyon" | "bento" | "zen";
 
-// Mod farkı bilinçli olarak basit: tipografi ve kart stili
+// Kart, başlık ve etiket stilleri modun tasarım dilinden (theme/modeTheme)
 const cardClass: Record<Mode, string> = {
-  vizyon:
-    "bg-white/[0.02] border border-white/10 rounded-[2rem] md:backdrop-blur-xl shadow-lg md:shadow-2xl",
-  bento: "bg-[#111] md:bg-white/[0.02] border border-white/5 rounded-[1.5rem]",
-  zen: "border-t border-white/5 rounded-none",
+  vizyon: `${modeTheme.vizyon.card} md:backdrop-blur-xl`,
+  bento: modeTheme.bento.card,
+  zen: modeTheme.zen.card,
 };
-
 const titleClass: Record<Mode, string> = {
-  vizyon: "font-semibold tracking-tighter text-[#F8F9FA]",
-  bento: "font-bold tracking-tighter text-[#F8F9FA]",
-  zen: "font-extralight tracking-[-0.03em] text-white/90",
+  vizyon: modeTheme.vizyon.title,
+  bento: modeTheme.bento.title,
+  zen: modeTheme.zen.title,
 };
-
 const labelClass: Record<Mode, string> = {
-  vizyon: "text-amber-500 font-bold tracking-[0.2em] text-[0.65rem] uppercase",
-  bento: "text-amber-500 font-black tracking-widest text-[0.65rem] uppercase",
-  zen: "text-white/55 font-medium tracking-[0.5em] text-[0.65rem] uppercase",
+  vizyon: modeTheme.vizyon.label,
+  bento: modeTheme.bento.label,
+  zen: modeTheme.zen.label,
 };
 
 const ArrowLeftIcon = () => (
@@ -672,6 +671,7 @@ export const ProjectDetail = () => {
       <SectionDivider />
       <Footer />
       <ModeSwitcher />
+      {profileId === "mas" && <MobileTabBar profileId="mas" />}
 
       <div className="fixed inset-0 pointer-events-none z-0 hidden md:block">
         <div className="absolute top-[10%] right-[-10%] w-[40vw] h-[40vw] bg-amber-500/[0.03] blur-[120px] rounded-full transform-gpu" />

@@ -57,7 +57,7 @@ export const ArchiveProjects = ({
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-gray-400 font-light leading-relaxed">
+                <p className="text-base md:text-sm text-gray-400 font-light leading-relaxed">
                   {project.desc}
                 </p>
                 <EvidenceRow

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useView } from "../context/useView";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { profiles } from "../data/profiles";
+import { BentoIcon, VisionIcon, ZenIcon } from "./ModeSwitcher";
 
 const MenuIcon = () => (
   <svg
@@ -66,7 +67,7 @@ const SectionLink = ({
   );
 
 export default function Navbar() {
-  const { viewMode } = useView();
+  const { viewMode, setViewMode } = useView();
   const { pathname } = useLocation();
   const { profileId = "mas" } = useParams();
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
@@ -91,13 +92,14 @@ export default function Navbar() {
       ];
 
   const getNavBg = () => {
-    if (viewMode === "zen") return "rgba(0,0,0,0)";
+    // Zen'de de hafif zemin: kaydırınca metin menünün altından okunur kalsın
+    if (viewMode === "zen") return "rgba(10,10,15,0.88)";
     if (viewMode === "bento") return "rgba(17,17,17,0.98)";
     return "rgba(255,255,255,0.03)";
   };
 
   const getNavBorder = () => {
-    if (viewMode === "zen") return "rgba(255,255,255,0)";
+    if (viewMode === "zen") return "rgba(255,255,255,0.05)";
     if (viewMode === "bento") return "rgba(255,255,255,0.08)";
     return "rgba(255,255,255,0.15)";
   };
@@ -195,8 +197,37 @@ export default function Navbar() {
             </a>
           )}
 
+          {/* --- MOBİL MOD SEÇİMİ (MAS): bölümler alttaki sekme çubuğunda --- */}
+          {isMas && (
+            <div
+              role="group"
+              aria-label="Görünüm modu"
+              className="md:hidden flex items-center border-l border-white/10 pl-1 ml-1"
+            >
+              {(
+                [
+                  { id: "vizyon", label: "Vizyon", icon: <VisionIcon /> },
+                  { id: "bento", label: "Bento", icon: <BentoIcon /> },
+                  { id: "zen", label: "Zen", icon: <ZenIcon /> },
+                ] as const
+              ).map((m) => (
+                <button
+                  key={m.id}
+                  onClick={() => setViewMode(m.id)}
+                  aria-label={`${m.label} görünümü`}
+                  aria-pressed={viewMode === m.id}
+                  className={`w-10 h-11 flex items-center justify-center rounded-full transition-colors ${viewMode === m.id ? (viewMode === "zen" ? "text-white" : "text-amber-400") : "text-white/45"}`}
+                >
+                  {m.icon}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* --- MOBİL MENÜ BUTONU --- */}
-          <div className="lg:hidden flex items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-2">
+          <div
+            className={`${isMas ? "hidden md:flex" : "flex"} lg:hidden items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-2`}
+          >
             <motion.button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               animate={{

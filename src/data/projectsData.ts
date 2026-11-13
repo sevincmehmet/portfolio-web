@@ -49,7 +49,11 @@ export interface Project {
    */
   company?: string;
   /** Canlıda gezilebilen iş: "Canlıdaki Projeler" bölümünde gösterilir */
-  live?: { url: string; host: string; image: string };
+  /**
+   * Canlıda gezilebilen iş: "Canlıdaki Projeler" bölümünde gösterilir.
+   * years: git geçmişinden (ilk/son commit), uydurma değil
+   */
+  live?: { url: string; host: string; image: string; years?: string };
 }
 
 export type ProfileId = "mas" | "das";
@@ -70,6 +74,8 @@ export const projectsData: Record<ProfileId, Project[]> = {
         url: "https://jollin.com.tr/",
         host: "jollin.com.tr",
         image: "/projects/canli/jollin.webp",
+        // web-app: ilk commit Ocak 2026, sürüyor; organizatör paneli Ağustos 2026'dan beri
+        years: "2026 – devam ediyor",
       },
       problem:
         "Etkinlik, deneyim ve kulüpler farklı yerlere dağılmış durumda; kullanıcı keşfedip bilet alacağı tek bir yer, organizatör de etkinliğini yöneteceği bir panel istiyor.",
@@ -287,6 +293,8 @@ export const projectsData: Record<ProfileId, Project[]> = {
         url: "https://www.sarissabisiklet.com/",
         host: "sarissabisiklet.com",
         image: "/projects/canli/sarissa.webp",
+        // sarrissa-web: commit'lerin çoğu Haziran–Kasım 2025, 2026'da küçük güncellemeler
+        years: "2025 – 2026",
       },
       problem:
         "Bir bisiklet markası hem son kullanıcıya hem bayilerine satış yapıyor; ödeme almak, bayiye özel fiyat vermek ve stokları pazaryerleriyle senkron tutmak istiyordu.",

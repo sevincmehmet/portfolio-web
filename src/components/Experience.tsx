@@ -10,6 +10,7 @@ import {
 } from "../data/experienceData";
 import { SectionHeader } from "./SectionHeader";
 import { ExternalIcon } from "./ProjectBits";
+import { themeOf } from "../theme/modeTheme";
 
 type Mode = "vizyon" | "bento" | "zen";
 
@@ -27,19 +28,13 @@ const EntryItems = ({
     {entry.items.map((item) => (
       <li
         key={item.title}
-        className={
-          mode === "zen"
-            ? "py-4 border-t border-white/5"
-            : mode === "bento"
-              ? "p-4 md:p-5 rounded-xl bg-white/[0.03] border border-white/[0.06]"
-              : "p-4 md:p-5 rounded-2xl bg-white/[0.025] border border-white/[0.08]"
-        }
+        className={`${themeOf(mode).subCard} ${mode === "zen" ? "py-4" : "p-4 md:p-5"}`}
       >
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           {item.slug ? (
             <Link
               to={`/${profileId}/proje/${item.slug}`}
-              className={`text-base md:text-lg text-white hover:text-amber-400 transition-colors ${mode === "zen" ? "font-light" : "font-semibold"}`}
+              className={`inline-flex items-center min-h-[44px] md:min-h-0 text-base md:text-lg text-white hover:text-amber-400 transition-colors ${mode === "zen" ? "font-light" : "font-semibold"}`}
             >
               {item.title}{" "}
               <span aria-hidden className="text-amber-500">
@@ -64,14 +59,14 @@ const EntryItems = ({
                 href={item.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[0.6rem] font-bold tracking-[0.12em] uppercase text-emerald-400 hover:text-emerald-300"
+                className="inline-flex items-center gap-1 min-h-[44px] md:min-h-0 text-[0.65rem] font-bold tracking-[0.12em] uppercase text-emerald-400 hover:text-emerald-300"
               >
                 Canlı site <ExternalIcon size={10} />
               </a>
             )}
           </span>
         </div>
-        <p className="mt-2 text-sm md:text-[0.95rem] text-gray-400 font-light leading-relaxed">
+        <p className="mt-2 text-base md:text-[0.95rem] text-gray-400 font-light leading-relaxed">
           {item.desc}
         </p>
       </li>
@@ -118,7 +113,7 @@ export const Experience = ({ profileId }: { profileId: ProfileId }) => {
               transition={{ duration: 0.6, delay: i * 0.05 }}
               className={`relative grid grid-cols-1 lg:grid-cols-[17rem_1fr] gap-6 lg:gap-10 transform-gpu ${
                 viewMode === "bento"
-                  ? "bg-[#111] md:bg-white/[0.02] border border-white/[0.06] rounded-[1.75rem] p-5 md:p-8"
+                  ? `${themeOf("bento").card} p-5 md:p-8`
                   : viewMode === "zen"
                     ? "border-t border-white/10 pt-10"
                     : ""
@@ -157,7 +152,7 @@ export const Experience = ({ profileId }: { profileId: ProfileId }) => {
                 >
                   {entry.role}
                 </p>
-                <p className="mt-4 text-sm text-gray-400 font-light leading-relaxed">
+                <p className="mt-4 text-base md:text-sm text-gray-400 font-light leading-relaxed">
                   {entry.summary}
                 </p>
                 <p

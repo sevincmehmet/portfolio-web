@@ -83,7 +83,7 @@ export const EvidenceRow = ({
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 py-1 font-semibold text-amber-400 hover:text-amber-300 underline decoration-amber-500/30 underline-offset-4 transition-colors"
+              className="inline-flex items-center gap-1.5 min-h-[44px] md:min-h-0 py-1 text-sm md:text-xs font-semibold text-amber-400 hover:text-amber-300 underline decoration-amber-500/30 underline-offset-4 transition-colors"
             >
               {item.label}
               <ExternalIcon />
