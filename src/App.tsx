@@ -55,9 +55,8 @@ const DynamicTitle = () => {
 
     // Normal durum başlıkları
     let originalTitle = "Twin_Core | Dijital Mimari";
-    if (isMas)
-      originalTitle = "Mehmet Ali Sevinç | Frontend & Product Engineer";
-    if (isDas) originalTitle = "DAS. | UI/UX Tasarımcı";
+    if (isMas) originalTitle = "Mehmet Ali Sevinç | Software Developer";
+    if (isDas) originalTitle = "Dursun Ali Sevinç | Software Developer";
 
     // Proje detay sayfası: "<Proje> | MAS."
     const detailMatch = matchPath("/:profileId/proje/:slug", pathname);
@@ -79,7 +78,7 @@ const DynamicTitle = () => {
     if (meta) {
       if (!meta.dataset.default) meta.dataset.default = meta.content;
       meta.content = isMas
-        ? "Mehmet Ali Sevinç, Frontend & Product Engineer: UI/UX, kurumsal paneller ve AI agent'lar. React, Next.js ve TypeScript ile kurumsal paneller geliştiriyor, Claude Code ile uçtan uca ürün çıkarıyor. Jollin, Mini-ERP ve Org Tree Asistanı projeleri."
+        ? "Mehmet Ali Sevinç, Software Developer: UI/UX, kurumsal paneller ve AI agent'lar. React, Next.js ve TypeScript ile kurumsal paneller geliştiriyor, Claude Code ile uçtan uca ürün çıkarıyor. Jollin, Mini-ERP ve Org Tree Asistanı projeleri."
         : meta.dataset.default;
     }
 
@@ -87,7 +86,7 @@ const DynamicTitle = () => {
       if (document.hidden) {
         // Sekmeden çıkılınca
         if (isMas) {
-          document.title = "Tasarımı DAS'a mı bıraktın? 🎨";
+          document.title = "DAS'a mı bakacaksın? 👀";
         } else if (isDas) {
           document.title = "MAS kodu mu bozdu? 💻";
         } else {
@@ -98,7 +97,7 @@ const DynamicTitle = () => {
         if (isMas) {
           document.title = "MAS Kontrolü Devraldı ⚡";
         } else if (isDas) {
-          document.title = "DAS Pikselleri Hizalıyor 🪄";
+          document.title = "DAS Kontrolü Devraldı ⚡";
         } else {
           document.title = "Bağlantı Kuruldu 🚀";
         }
@@ -192,8 +191,8 @@ const LandingPage = () => {
                 </span>
               </h1>
               <p className="text-sm md:text-base text-white/60 font-light max-w-xl mx-auto md:drop-shadow-lg">
-                Yazılımın mimarisi ve tasarımın estetiği bu çatıda birleşiyor.
-                Beraber kurguluyor, ayrı alanlarda ustalaşıyoruz.
+                İki geliştirici, tek çatı. Beraber kurguluyor, kendi
+                projelerimizde derinleşiyoruz.
               </p>
             </motion.div>
           )}
@@ -216,8 +215,8 @@ const LandingPage = () => {
                 Farklı Disiplinler.
               </h1>
               <p className="text-white/50 font-light text-xs md:text-sm max-w-md">
-                DAS Designer ve MAS Developer loglarıyla kodlanmış, uçtan uca
-                kusursuz çalışan iki farklı sistem paneli.
+                DAS ve MAS: iki yazılım geliştirici, iki ayrı portfolyo. Kimin
+                neyi yaptığı projelerde.
               </p>
             </motion.div>
           )}
@@ -350,17 +349,24 @@ const PortfolioLayout = () => {
         <>
           <Projects data={projectsData[profile]} profileId={profile} />
           <SectionDivider />
+          <LiveProjects
+            data={projectsData[profile].filter((p) => p.live)}
+            profileId={profile}
+          />
+          <SectionDivider />
+          <Experience profileId="das" />
+          <SectionDivider />
         </>
       )}
       <About data={aboutData[profile]} />
-      {/* MAS Vizyon'da Hakkımda gösterilmiyor; çift ayraç olmasın */}
-      {!(isMas && viewMode === "vizyon") && <SectionDivider />}
+      {/* Vizyon'da Hakkımda gösterilmiyor (yerini Kariyer Geçmişi alır); çift ayraç olmasın */}
+      {viewMode !== "vizyon" && <SectionDivider />}
       <Contact />
       <SectionDivider />
       <Footer />
 
       <ModeSwitcher />
-      {isMas && <MobileTabBar profileId="mas" />}
+      <MobileTabBar profileId={profile} />
 
       <div className="fixed inset-0 pointer-events-none z-0 hidden md:block">
         <div className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] bg-amber-500/[0.02] blur-[120px] rounded-full transform-gpu" />

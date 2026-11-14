@@ -25,7 +25,7 @@ export const profiles: Record<ProfileId, ProfileInfo> = {
   mas: {
     shortName: "MAS.",
     fullName: "Mehmet Ali Sevinç",
-    role: "Frontend & Product Engineer",
+    role: "Software Developer",
     tagline: "UI/UX · Kurumsal paneller · AI agent'lar",
     email: "sevincmehmetali716@gmail.com",
     linkedin: "https://linkedin.com/in/mehmet-ali-sevinç-2a8521254",
@@ -41,11 +41,14 @@ export const profiles: Record<ProfileId, ProfileInfo> = {
   das: {
     shortName: "DAS.",
     fullName: "Dursun Ali Sevinç",
-    role: "UI/UX Tasarımcı",
+    role: "Software Developer",
+    tagline: "React · Next.js · React Native",
     email: "sevincdursunali61@gmail.com",
     phone: "0535 329 67 13",
     linkedin: "https://linkedin.com/in/dursun-ali-sevinç-18a466280",
     github: "https://github.com/dursunalisevinc",
+    cvUrl: "/cv/Dursun_Ali_Sevinc_CV.pdf",
+    location: "Sivas, Türkiye",
   },
 };
 

@@ -88,9 +88,9 @@ export const ZenIcon = () => (
 export const ModeSwitcher = () => {
   const { viewMode, setViewMode } = useView();
   const hidden = useHideOnScrollDown();
-  // MAS'ta mobilde mod seçimi üst çubukta; altta sekme çubuğu var
+  // Profil sayfalarında mobilde mod seçimi üst çubukta; altta sekme çubuğu var
   const { profileId } = useParams();
-  const mobileHidden = profileId === "mas" ? "hidden md:block" : "";
+  const mobileHidden = profileId ? "hidden md:block" : "";
 
   const modes = [
     { id: "vizyon", label: "VİZYON", icon: <VisionIcon /> },

@@ -88,8 +88,8 @@ export const experienceData: Partial<Record<ProfileId, ExperienceEntry[]>> = {
           internal: true,
         },
         {
-          title: "Mobil uygulamalar ve Entegra arayüzleri",
-          desc: "React Native (Expo) ile iOS / Android uygulamalar ve Entegra pazaryeri entegrasyonu arayüzleri.",
+          title: "Mobil uygulamalar",
+          desc: "React Native (Expo) ile iOS / Android uygulamalar.",
           internal: true,
         },
       ],
@@ -101,13 +101,94 @@ export const experienceData: Partial<Record<ProfileId, ExperienceEntry[]>> = {
       type: "Serbest çalışma",
       link: "https://www.sarissabisiklet.com/",
       summary:
-        "Bir bisiklet markası için B2C / B2B e-ticaret platformu. Site canlıda.",
+        "Bir bisiklet markası için B2C / B2B e-ticaret platformu. Arayüzü ben geliştirdim, backend'i ikizim Dursun Ali yazdı. Site canlıda.",
       tech: ["React", "JavaScript", "Tailwind", "iyzico API", "Entegra API"],
       items: [
         {
           title: "E-ticaret platformu: müşteri, admin ve bayi panelleri",
-          desc: "3 bağımsız panel ve her bayiye özel dinamik fiyatlandırma; iyzico ödeme entegrasyonu; Entegra API ile Hepsiburada gibi pazaryerleriyle çift yönlü anlık stok senkronizasyonu.",
+          desc: "3 bağımsız panelin arayüzü ve her bayiye özel dinamik fiyatlandırma ekranları; iyzico ödeme akışı ve pazaryeri stok senkronizasyonuyla çalışan yönetim ekranları.",
           slug: "sarissa-bisiklet",
+          liveUrl: "https://www.sarissabisiklet.com/",
+        },
+      ],
+    },
+  ],
+  das: [
+    {
+      company: "Artersoft",
+      role: "Software Developer",
+      period: "Ocak 2026 – Halen",
+      type: "Tam zamanlı",
+      link: "https://www.linkedin.com/company/artersoft/",
+      summary:
+        "Next.js, TypeScript ve Zustand/Redux ile ölçeklenebilir, performans odaklı arayüzler geliştiriyorum; tasarımları birebir (pixel-perfect) hayata geçiriyorum.",
+      tech: [
+        "Next.js",
+        "TypeScript",
+        "Zustand / Redux",
+        "Tailwind",
+        "Swift (temel)",
+      ],
+      items: [
+        {
+          title: "Swift ile temel düzey iOS",
+          desc: "Belirli projeleri Swift ile klonlayarak temel düzeyde iOS geliştirme çalışmaları.",
+          internal: true,
+        },
+      ],
+    },
+    {
+      company: "Detaysoft",
+      role: "Software Developer",
+      period: "Ocak 2021 – Ocak 2026",
+      duration: "5 yıl",
+      type: "Tam zamanlı · eğitimle birlikte",
+      link: "https://www.linkedin.com/company/detaysoft/",
+      summary:
+        "React ve React Native ile web ve mobil platformlarda sıfırdan çok sayıda canlı proje geliştirdim; Node.js ile temel düzeyde backend projeleri de yaptım.",
+      tech: [
+        "React",
+        "React Native (CLI)",
+        "TypeScript",
+        "Redux Toolkit",
+        "Zustand",
+        "Node.js",
+      ],
+      items: [
+        {
+          title: "IoT ve fatura terminalleri veri sistemi",
+          desc: "Sahadaki IoT cihazları ve fatura kesim terminallerinden gelen anlık verilerin işlendiği kurumsal sistem; saniyelik veri akışında render darboğazlarını önlemek için Zustand ve Redux Toolkit ile state yönetimini optimize ettim.",
+          slug: "iot-fatura-gercek-zamanli-veri-terminalleri",
+          internal: true,
+        },
+        {
+          title: "Ortak auth / login paketi (NPM)",
+          desc: "Üç projenin kimlik doğrulamasını tek merkezden yöneten, NPM'de yayınlanan login paketi: token yönetimi ve güvenlik parametreleri paket içinde.",
+          slug: "npm-core-ortak-auth-login-kutuphanesi",
+          internal: true,
+        },
+        {
+          title: "Dijital kurumsal kartvizit",
+          desc: "Çalışanların kurumsal kimliklerini hızlıca paylaştığı, mobil uyumlu kartvizit uygulamasının arayüzü.",
+          slug: "dijital-kurumsal-kartvizit-platformu",
+          internal: true,
+        },
+      ],
+    },
+    {
+      company: "Sarissa Bisiklet",
+      role: "Freelance Developer",
+      period: "Freelance",
+      type: "Serbest çalışma · ikizim Mehmet Ali ile",
+      link: "https://www.sarissabisiklet.com/",
+      summary:
+        "Bir bisiklet markası için B2C / B2B e-ticaret platformu. Backend'i ben yazdım, arayüzü ikizim Mehmet Ali geliştirdi. Site canlıda.",
+      tech: ["Node.js", "Entegra API", "iyzico"],
+      items: [
+        {
+          title: "E-ticaret backend'i ve entegrasyonlar",
+          desc: "Entegra API'den gelen verileri veritabanı kayıtlarıyla birleştiren süreçler, Hepsiburada ile stok senkronizasyonu ve iyzico ödeme altyapısı.",
+          slug: "sarissa-bisiklet-e-ticaret-ekosistemi",
           liveUrl: "https://www.sarissabisiklet.com/",
         },
       ],
@@ -120,5 +201,7 @@ export const educationLine =
 
 // Vizyon ve Zen'de "Hakkımda" kartları olmadığından gönüllülük burada da
 // kısa bir satır olarak yer alır (kaynak: CV)
-export const volunteeringLine =
-  "Toplum Gönüllüleri Vakfı · 2021–2024: engelli bireyler için erişilebilir parkur projesini yürüttüm; okullarda kütüphane kurulumu ve köy çocuklarına yönelik etkinliklerde görev aldım. Vakıf tarafından teşekkür belgesi aldım.";
+export const volunteeringLine: Record<ProfileId, string> = {
+  mas: "Toplum Gönüllüleri Vakfı · 2021–2024: engelli bireyler için erişilebilir parkur projesini yürüttüm; okullarda kütüphane kurulumu ve köy çocuklarına yönelik etkinliklerde görev aldım. Vakıf tarafından teşekkür belgesi aldım.",
+  das: "Toplum Gönüllüleri Vakfı · saha organizatörü ve gönüllü: köy okullarında sıva, boya ve kütüphane kurulumu; özel eğitim öğrencileriyle etkinlikler ve engelli parkurları; kış aylarında sokak hayvanları için barınak inşası.",
+};

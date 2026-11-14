@@ -672,7 +672,7 @@ export const ProjectDetail = () => {
       <SectionDivider />
       <Footer />
       <ModeSwitcher />
-      {profileId === "mas" && <MobileTabBar profileId="mas" />}
+      <MobileTabBar profileId={profileId} />
 
       <div className="fixed inset-0 pointer-events-none z-0 hidden md:block">
         <div className="absolute top-[10%] right-[-10%] w-[40vw] h-[40vw] bg-amber-500/[0.03] blur-[120px] rounded-full transform-gpu" />

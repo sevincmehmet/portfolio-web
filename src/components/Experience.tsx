@@ -171,19 +171,21 @@ export const Experience = ({ profileId }: { profileId: ProfileId }) => {
                 </p>
               </div>
 
-              {/* Orada yaptıklarım */}
-              <div>
-                <p
-                  className={`mb-3 text-[0.65rem] uppercase ${viewMode === "zen" ? "tracking-[0.4em] text-white/50" : "tracking-[0.2em] font-bold text-white/60"}`}
-                >
-                  Orada yaptıklarım
-                </p>
-                <EntryItems
-                  entry={entry}
-                  profileId={profileId}
-                  mode={viewMode}
-                />
-              </div>
+              {/* Orada yaptıklarım (madde yoksa boş başlık gösterilmez) */}
+              {entry.items.length > 0 && (
+                <div>
+                  <p
+                    className={`mb-3 text-[0.65rem] uppercase ${viewMode === "zen" ? "tracking-[0.4em] text-white/50" : "tracking-[0.2em] font-bold text-white/60"}`}
+                  >
+                    Orada yaptıklarım
+                  </p>
+                  <EntryItems
+                    entry={entry}
+                    profileId={profileId}
+                    mode={viewMode}
+                  />
+                </div>
+              )}
             </motion.li>
           ))}
         </ol>
@@ -201,7 +203,7 @@ export const Experience = ({ profileId }: { profileId: ProfileId }) => {
             <span className="mr-3 text-[0.65rem] font-bold tracking-[0.2em] uppercase text-amber-400">
               Gönüllülük
             </span>
-            {volunteeringLine}
+            {volunteeringLine[profileId]}
           </p>
         )}
       </div>

@@ -77,19 +77,14 @@ export default function Navbar() {
   // Profil ana sayfasında değilsek (ör. proje detay) bölüm linkleri ana sayfaya gider
   const isProfileHome = pathname === `/${profileId}`;
 
-  const navLinks = isMas
-    ? [
-        { name: "Projeler", hash: "#projeler" },
-        { name: "Canlıdakiler", hash: "#canli" },
-        { name: "Kariyer Geçmişi", hash: "#kariyer" },
-        { name: "AI", hash: "#ai-projeler" },
-        { name: "İletişim", hash: "#iletisim" },
-      ]
-    : [
-        { name: "Projeler", hash: "#projeler" },
-        { name: "Hakkımda", hash: "#hakkimda" },
-        { name: "İletişim", hash: "#iletisim" },
-      ];
+  // İki profilde aynı menü; DAS'ta AI bölümü olmadığı için o link yok
+  const navLinks = [
+    { name: "Projeler", hash: "#projeler" },
+    { name: "Canlıdakiler", hash: "#canli" },
+    { name: "Kariyer Geçmişi", hash: "#kariyer" },
+    ...(isMas ? [{ name: "AI", hash: "#ai-projeler" }] : []),
+    { name: "İletişim", hash: "#iletisim" },
+  ];
 
   const getNavBg = () => {
     // Zen'de de hafif zemin: kaydırınca metin menünün altından okunur kalsın
@@ -198,36 +193,34 @@ export default function Navbar() {
             </a>
           )}
 
-          {/* --- MOBİL MOD SEÇİMİ (MAS): bölümler alttaki sekme çubuğunda --- */}
-          {isMas && (
-            <div
-              role="group"
-              aria-label="Görünüm modu"
-              className="md:hidden flex items-center border-l border-white/10 pl-1 ml-1"
-            >
-              {(
-                [
-                  { id: "vizyon", label: "Vizyon", icon: <VisionIcon /> },
-                  { id: "bento", label: "Bento", icon: <BentoIcon /> },
-                  { id: "zen", label: "Zen", icon: <ZenIcon /> },
-                ] as const
-              ).map((m) => (
-                <button
-                  key={m.id}
-                  onClick={() => setViewMode(m.id)}
-                  aria-label={`${m.label} görünümü`}
-                  aria-pressed={viewMode === m.id}
-                  className={`w-10 h-11 flex items-center justify-center rounded-full transition-colors ${viewMode === m.id ? (viewMode === "zen" ? "text-white" : "text-amber-400") : "text-white/45"}`}
-                >
-                  {m.icon}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* --- MOBİL MOD SEÇİMİ: bölümler alttaki sekme çubuğunda --- */}
+          <div
+            role="group"
+            aria-label="Görünüm modu"
+            className="md:hidden flex items-center border-l border-white/10 pl-1 ml-1"
+          >
+            {(
+              [
+                { id: "vizyon", label: "Vizyon", icon: <VisionIcon /> },
+                { id: "bento", label: "Bento", icon: <BentoIcon /> },
+                { id: "zen", label: "Zen", icon: <ZenIcon /> },
+              ] as const
+            ).map((m) => (
+              <button
+                key={m.id}
+                onClick={() => setViewMode(m.id)}
+                aria-label={`${m.label} görünümü`}
+                aria-pressed={viewMode === m.id}
+                className={`w-10 h-11 flex items-center justify-center rounded-full transition-colors ${viewMode === m.id ? (viewMode === "zen" ? "text-white" : "text-amber-400") : "text-white/45"}`}
+              >
+                {m.icon}
+              </button>
+            ))}
+          </div>
 
           {/* --- MOBİL MENÜ BUTONU --- */}
           <div
-            className={`${isMas ? "hidden md:flex" : "flex"} lg:hidden items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-2`}
+            className={`hidden md:flex lg:hidden items-center gap-1 border-l border-white/10 pl-3 transition-colors duration-700 ml-2`}
           >
             <motion.button
               onClick={() => setIsMobileOpen(!isMobileOpen)}

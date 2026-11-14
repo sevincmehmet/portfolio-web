@@ -17,12 +17,12 @@ const buildSteps = [
     desc: "Kapsamı, kabul kriterlerini ve adımları netleştiririm.",
   },
   {
-    title: "Paralel parçalara böl",
-    desc: "Birbirini etkilemeyen işler, ortak sözleşmeler.",
+    title: "Küçük parçalara böl",
+    desc: "Her adım tek başına test edilebilir olsun.",
   },
   {
-    title: "Ajanlara yazdır",
-    desc: "Her parça ayrı bir Claude Code ajanında; Pano ile tek pencereden.",
+    title: "Claude Code'a yazdır",
+    desc: "Her parçayı Claude Code ile yazdırır, çıktıyı okurum.",
   },
   {
     title: "Test et & birleştir",

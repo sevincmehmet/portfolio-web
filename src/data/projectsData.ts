@@ -112,9 +112,9 @@ export const projectsData: Record<ProfileId, Project[]> = {
       tier: "featured",
       problem:
         "Birden fazla şirketi olan işletmelerde personel, vardiya, puantaj, izin ve bordro çoğu zaman dağınık Excel dosyalarında tutuluyor; şirketler arası tutarlı ve denetlenebilir bir görünüm olmuyor.",
-      desc: "Personel, vardiya, puantaj, izin, Türk bordrosu, cari hesap ve gelir-gideri tek masaüstü uygulamada topladım. Ürünü, ekranları ve kapsamı ben tasarladım; işi parçalara bölüp kodu (.NET backend dahil) Claude Code ajanlarına yazdırdım, her parçayı testlerle doğrulayıp birleştirdim.",
+      desc: "Personel, vardiya, puantaj, izin, Türk bordrosu, cari hesap ve gelir-gideri tek masaüstü uygulamada topladım. Ürünü, ekranları ve kapsamı ben tasarladım; işi küçük parçalara bölüp kodu (.NET backend dahil) Claude Code'a yazdırdım, her parçayı testlerle doğrulayıp birleştirdim.",
       longDesc:
-        "Birden fazla şirketi tek uygulamadan yöneten, Electron tabanlı bir masaüstü ERP. İK tarafında personel, vardiya planlama, puantaj ve izin yönetimini; finans tarafında kıst gün dahil Türk bordro hesaplamasını, cari hesapları ve gelir-gideri kapsıyor. Her şirketin verisi birbirinden izole (testlerle doğrulanmış multi-tenant yapı); istenirse tüm şirketler konsolide görünümde izlenebiliyor. Backend .NET Clean Architecture ile, Claude Code ajanlarına yazdırıldı. Çok kullanıcılı sürüm için Docker ve Caddy ile hazır bir sunucu kurulumu, demo için ise sunucusuz, tek tık kurulan bir paket var. Benim işim ürünü ve ekranları tasarlamak, geliştirmeyi planlayıp birbirinden bağımsız parçalara bölmek, her parçayı ayrı bir Claude Code ajanına yazdırmak, çıktıyı Vitest ve xUnit testleriyle doğrulayıp birleştirmekti.",
+        "Birden fazla şirketi tek uygulamadan yöneten, Electron tabanlı bir masaüstü ERP. İK tarafında personel, vardiya planlama, puantaj ve izin yönetimini; finans tarafında kıst gün dahil Türk bordro hesaplamasını, cari hesapları ve gelir-gideri kapsıyor. Her şirketin verisi birbirinden izole (testlerle doğrulanmış multi-tenant yapı); istenirse tüm şirketler konsolide görünümde izlenebiliyor. Backend .NET Clean Architecture ile, Claude Code'a yazdırıldı. Çok kullanıcılı sürüm için Docker ve Caddy ile hazır bir sunucu kurulumu, demo için ise sunucusuz, tek tık kurulan bir paket var. Benim işim ürünü ve ekranları tasarlamak, geliştirmeyi planlayıp küçük parçalara bölmek, her parçayı Claude Code ile yazdırmak, çıktıyı Vitest ve xUnit testleriyle doğrulayıp birleştirmekti.",
       features: [
         "Personel (İK), vardiya planlama, puantaj ve izin yönetimi; izin talepleri için onay akışı",
         "Kıst gün dahil Türk bordro hesaplaması",
@@ -145,7 +145,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
         },
       ],
       color: "from-amber-500/20",
-      role: "Ürün tasarımı, planlama ve doğrulama · kod Claude Code ajanlarıyla · kişisel proje",
+      role: "Ürün tasarımı, planlama ve doğrulama · kod Claude Code ile · kişisel proje",
       aiBuilt: true,
     },
     {
@@ -261,13 +261,12 @@ export const projectsData: Record<ProfileId, Project[]> = {
       company: "detaysoft",
       problem:
         "Veri yoğun yönetim ekranlarında kullanıcıların sayfayı yenilemeden anlık mesajları ve güncellemeleri görmesi gerekiyordu.",
-      desc: "Microsoft SignalR ile gerçek zamanlı mesajlaşma altyapısının arayüzünü, dinamik ihale sayfalarını, Entegra süreç ekranlarını ve veri yoğun yönetim panellerini geliştirdim.",
+      desc: "Microsoft SignalR ile gerçek zamanlı mesajlaşma altyapısının arayüzünü, dinamik ihale sayfalarını ve veri yoğun yönetim panellerini geliştirdim.",
       longDesc:
-        "Detaysoft bünyesinde geliştirilen gerçek zamanlı kurumsal paneller. Microsoft SignalR ile çalışan zengin bir mesajlaşma altyapısının arayüzünü, dinamik ihale sayfalarını, Entegra pazaryeri süreç ekranlarını ve veri yoğun yönetim ekranlarını geliştirdim.",
+        "Detaysoft bünyesinde geliştirilen gerçek zamanlı kurumsal paneller. Microsoft SignalR ile çalışan zengin bir mesajlaşma altyapısının arayüzünü, dinamik ihale sayfalarını ve veri yoğun yönetim ekranlarını geliştirdim.",
       features: [
         "SignalR ile gerçek zamanlı zengin mesajlaşma",
         "Dinamik ihale sayfaları",
-        "Entegra pazaryeri süreç ekranları",
         "Veri yoğun kurumsal yönetim panelleri",
       ],
       tech: ["React", "TypeScript", "SignalR", "Radix UI / MUI"],
@@ -321,14 +320,14 @@ export const projectsData: Record<ProfileId, Project[]> = {
       },
       problem:
         "Bir bisiklet markası hem son kullanıcıya hem bayilerine satış yapıyor; ödeme almak, bayiye özel fiyat vermek ve stokları pazaryerleriyle senkron tutmak istiyordu.",
-      desc: "Müşteri, admin ve bayi olmak üzere 3 ayrı panele sahip e-ticaret sitesini geliştirdim: iyzico ödeme, Entegra ile Hepsiburada gibi pazaryerleriyle çift yönlü stok senkronizasyonu ve bayiye özel dinamik fiyatlandırma.",
+      desc: "Müşteri, admin ve bayi olmak üzere 3 ayrı panele sahip e-ticaret sitesinin arayüzünü geliştirdim: ödeme akışı, bayiye özel fiyatlandırma ekranları ve pazaryeri stok senkronizasyonuyla çalışan paneller. Backend'i ikizim Dursun Ali yazdı.",
       longDesc:
-        "Bir bisiklet markası için React ile geliştirdiğim B2C/B2B e-ticaret sitesi. Ödemeler iyzico üzerinden alınıyor; Entegra entegrasyonu sayesinde Hepsiburada gibi pazaryerleriyle stoklar çift yönlü ve anlık olarak senkronize ediliyor. Sistem müşteri, admin ve bayi olmak üzere üç ayrı panelden oluşuyor; bayi panelinde her bayiye özel dinamik fiyatlandırma uygulanıyor.",
+        "Bir bisiklet markası için geliştirdiğimiz B2C/B2B e-ticaret sitesi: arayüzü React ile ben geliştirdim, backend'i (Node.js, entegrasyonlar) ikizim Dursun Ali yazdı. Ödemeler iyzico üzerinden alınıyor; Entegra entegrasyonu sayesinde Hepsiburada gibi pazaryerleriyle stoklar çift yönlü ve anlık olarak senkronize ediliyor. Sistem müşteri, admin ve bayi olmak üzere üç ayrı panelden oluşuyor; bayi panelinde her bayiye özel dinamik fiyatlandırma uygulanıyor.",
       features: [
-        "iyzico ödeme entegrasyonu",
-        "Entegra ile Hepsiburada gibi pazaryerleriyle çift yönlü anlık stok senkronizasyonu",
-        "Müşteri, Admin ve Bayi olmak üzere 3 bağımsız panel",
-        "Her bayiye özel dinamik fiyatlandırma",
+        "Müşteri, Admin ve Bayi olmak üzere 3 bağımsız panelin arayüzü",
+        "Her bayiye özel dinamik fiyatlandırma ekranları",
+        "iyzico ödeme akışının arayüz tarafı",
+        "Pazaryeri stok senkronizasyonuyla çalışan yönetim ekranları (backend: Dursun Ali)",
       ],
       tech: ["React", "JavaScript", "Tailwind", "iyzico API", "Entegra API"],
       links: [{ label: "Canlı Site", url: "https://www.sarissabisiklet.com/" }],
@@ -374,7 +373,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
       kind: "Backend · öğrenme",
       tier: "archive",
       problem:
-        "Frontend ağırlıklı çalışırken backend tarafını, yetkilendirme ve katmanlı mimariyi uygulayarak öğrenmek istedim.",
+        "Backend tarafını, yetkilendirme ve katmanlı mimariyi uygulayarak öğrenmek istedim.",
       desc: "Shopier modelinde, birden fazla satıcının ürün satabildiği bir REST API. Katmanlı mimari, JWT ve izin tabanlı yetki içeriyor.",
       longDesc:
         "Backend tarafını öğrenmek için geliştirdiğim, temel seviyede bir API projesi. Shopier modelinde, birden fazla satıcının ürün satabildiği bir e-ticaret altyapısı kurguladım. Proje katmanlı (N-Tier) mimariyle ve Dependency Injection ile yapılandırıldı. IAuthorizationPolicyProvider ile dinamik yetkilendirme ve özel middleware kurarak yetkisiz istekleri controller'a ulaşmadan 403 ile reddettim; IDOR açığını önlemek için kullanıcı kimliğini yalnızca JWT claim'lerinden okudum.",
@@ -539,16 +538,23 @@ export const projectsData: Record<ProfileId, Project[]> = {
       id: 1,
       slug: "sarissa-bisiklet-e-ticaret-ekosistemi",
       title: "Sarissa Bisiklet E-Ticaret Ekosistemi",
-      desc: "React ve Node.js mimarisiyle uçtan uca geliştirdiğim, performans odaklı devasa bir e-ticaret ekosistemi. Backend süreçlerini derinlemesine kurgulayarak; Entegra API'den gelen verilerle veritabanı (DB) kayıtlarını milisaniyeler içinde kusursuzca birleştirdim. Hepsiburada çift taraflı anlık stok senkronizasyonu, Iyzico ödeme altyapısı ve Müşteri, Admin, Bayi olmak üzere 3 farklı bağımsız dinamik fiyatlandırma panelinin sıfırdan inşası.",
+      live: {
+        url: "https://www.sarissabisiklet.com/",
+        host: "sarissabisiklet.com",
+        image: "/projects/canli/sarissa.webp",
+        years: "2025 – 2026",
+      },
+      desc: "Bir bisiklet markası için B2C / B2B e-ticaret platformunun backend'ini Node.js ile yazdım (arayüz: ikizim Mehmet Ali). Entegra API verilerini veritabanı kayıtlarıyla birleştiren süreçler, Hepsiburada ile stok senkronizasyonu ve iyzico ödeme altyapısı.",
       longDesc:
-        "React ve Node.js ile uçtan uca geliştirdiğim, performans odaklı bir e-ticaret sistemi. Backend tarafında Entegra API'den gelen verileri veritabanı kayıtlarıyla birleştiren süreçleri kurguladım. Sistem; Hepsiburada ile çift taraflı anlık stok senkronizasyonu, iyzico ödeme altyapısı ve müşteri, admin, bayi olmak üzere üç ayrı panel içeriyor.",
+        "Bir bisiklet markası için geliştirdiğimiz B2C / B2B e-ticaret sistemi: backend'i Node.js ile ben yazdım, arayüzü ikizim Mehmet Ali geliştirdi. Backend tarafında Entegra API'den gelen verileri veritabanı kayıtlarıyla birleştiren süreçleri kurguladım. Sistem; Hepsiburada ile çift taraflı anlık stok senkronizasyonu, iyzico ödeme altyapısı ve müşteri, admin, bayi olmak üzere üç ayrı panel içeriyor.",
       features: [
         "Entegra API verilerinin veritabanı kayıtlarıyla birleştirilmesi",
         "Hepsiburada ile çift taraflı anlık stok senkronizasyonu",
         "iyzico ödeme altyapısı",
         "Müşteri, Admin ve Bayi olmak üzere 3 bağımsız panel ve dinamik fiyatlandırma",
       ],
-      tech: ["React (JSX)", "Node.js", "Entegra API", "iyzico", "Tailwind"],
+      tech: ["Node.js", "Entegra API", "iyzico", "React (arayüz)"],
+      role: "Freelance Developer (backend)",
       links: [{ label: "Canlı Site", url: "https://www.sarissabisiklet.com/" }],
       color: "from-cyan-500/20",
     },
@@ -556,7 +562,7 @@ export const projectsData: Record<ProfileId, Project[]> = {
       id: 2,
       slug: "npm-core-ortak-auth-login-kutuphanesi",
       title: "NPM Core: Ortak Auth & Login Kütüphanesi",
-      desc: "Üç farklı büyük ölçekli projenin kimlik doğrulama altyapısını tek merkezden yönetmek amacıyla sıfırdan kurgulayıp NPM üzerinde yayınladığım ortak login paketi. Tüm güvenlik parametrelerini, token yönetimini ve kullanıcı verilerini yüksek hassasiyetle işleyerek sistemler arası kusursuz bir entegrasyon sağladım.",
+      desc: "Detaysoft bünyesinde, üç projenin kimlik doğrulamasını tek merkezden yönetmek için kurgulayıp NPM'de yayınladığım ortak login paketi. Token yönetimi, güvenlik parametreleri ve kullanıcı verileri paket içinde ele alınarak projeler arası tutarlı bir entegrasyon sağlandı.",
       longDesc:
         "Üç farklı projenin kimlik doğrulama altyapısını tek merkezden yönetmek için sıfırdan kurgulayıp NPM üzerinde yayınladığım ortak login paketi. Güvenlik parametreleri, token yönetimi ve kullanıcı verileri paket içinde ele alınarak projeler arası tutarlı bir entegrasyon sağlandı.",
       features: [
@@ -572,9 +578,9 @@ export const projectsData: Record<ProfileId, Project[]> = {
       id: 3,
       slug: "iot-fatura-gercek-zamanli-veri-terminalleri",
       title: "IoT Fatura & Gerçek Zamanlı Veri Terminalleri",
-      desc: "Şirket Bünyesinde — Sahadaki IoT cihazlarından ve fatura kesim terminallerinden akan anlık verilerin (Real-time) işlendiği kurumsal veri yönetim sistemi. Saniyelik veri akışlarında render darboğazlarını önlemek için Zustand ve Redux Toolkit gibi state management yapılarını mikro düzeyde optimize ederek maksimum hız ve performans elde ettim.",
+      desc: "Detaysoft bünyesinde, sahadaki IoT cihazları ve fatura kesim terminallerinden gelen anlık verilerin işlendiği kurumsal veri sistemi. Saniyelik veri akışında render darboğazlarını önlemek için Zustand ve Redux Toolkit ile state yönetimini optimize ettim.",
       longDesc:
-        "Şirket bünyesinde geliştirilen, sahadaki IoT cihazlarından ve fatura kesim terminallerinden gelen anlık verilerin işlendiği kurumsal bir veri yönetim sistemi. Saniyelik veri akışlarında render darboğazlarını önlemek için Zustand ve Redux Toolkit ile state yönetimini optimize ettim.",
+        "Detaysoft bünyesinde geliştirilen, sahadaki IoT cihazlarından ve fatura kesim terminallerinden gelen anlık verilerin işlendiği kurumsal bir veri yönetim sistemi. Saniyelik veri akışlarında render darboğazlarını önlemek için Zustand ve Redux Toolkit ile state yönetimini optimize ettim.",
       features: [
         "IoT cihazları ve fatura terminallerinden gerçek zamanlı veri akışı",
         "Zustand ve Redux Toolkit ile state yönetimi optimizasyonu",
@@ -589,9 +595,9 @@ export const projectsData: Record<ProfileId, Project[]> = {
       id: 4,
       slug: "dijital-kurumsal-kartvizit-platformu",
       title: "Dijital Kurumsal Kartvizit Platformu",
-      desc: "Şirket Bünyesinde — Modern web teknolojileri kullanılarak geliştirilmiş kurumsal dijital kartvizit uygulaması. Şirket içi kullanıcıların kurumsal kimliklerini hızlı ve prestijli bir şekilde paylaşabilmesi için sıfır gecikmeli, mobil uyumlu ve yüksek UX standartlarına sahip şık bir arayüz inşa ettim.",
+      desc: "Detaysoft bünyesinde geliştirilen kurumsal dijital kartvizit uygulaması. Çalışanların kurumsal kimliklerini hızlıca paylaşabilmesi için mobil uyumlu, sade bir arayüz tasarlayıp geliştirdim.",
       longDesc:
-        "Şirket bünyesinde geliştirilen kurumsal dijital kartvizit uygulaması. Çalışanların kurumsal kimliklerini hızlıca paylaşabilmesi için mobil uyumlu ve sade bir arayüz tasarladım.",
+        "Detaysoft bünyesinde geliştirilen kurumsal dijital kartvizit uygulaması. Çalışanların kurumsal kimliklerini hızlıca paylaşabilmesi için mobil uyumlu ve sade bir arayüz tasarladım.",
       features: [
         "Kurumsal dijital kartvizit paylaşımı",
         "Mobil uyumlu arayüz",

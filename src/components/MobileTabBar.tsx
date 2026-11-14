@@ -78,7 +78,9 @@ const tabs = [
   },
 ] as const;
 
-const tabIds = tabs.map((t) => t.id);
+const allTabIds = tabs.map((t) => t.id);
+// DAS'ta AI bölümü yok
+const dasTabIds = allTabIds.filter((id) => id !== "ai-projeler");
 
 // Ekranın ortasından geçen bölümü IntersectionObserver ile bulur: kaydırma
 // dinleyicisi ve getBoundingClientRect yok, ana iş parçacığı boş kalır
@@ -137,6 +139,8 @@ export const MobileTabBar = ({ profileId }: { profileId: string }) => {
   const { viewMode } = useView();
   const { pathname } = useLocation();
   const isHome = pathname === `/${profileId}`;
+  const tabIds = profileId === "das" ? dasTabIds : allTabIds;
+  const visibleTabs = tabs.filter((t) => tabIds.includes(t.id));
   const active = useActiveSection(tabIds, isHome);
   const activeIndex = tabIds.indexOf(active as (typeof tabIds)[number]);
   const zen = viewMode === "zen";
@@ -161,15 +165,17 @@ export const MobileTabBar = ({ profileId }: { profileId: string }) => {
           <span
             key={m}
             aria-hidden
-            className={`absolute inset-y-0 left-0 w-1/5 pointer-events-none transition-[transform,opacity] duration-300 ease-out ${indicator[m]} ${viewMode === m && activeIndex >= 0 ? "opacity-100" : "opacity-0"}`}
+            className={`absolute inset-y-0 left-0 ${visibleTabs.length === 4 ? "w-1/4" : "w-1/5"} pointer-events-none transition-[transform,opacity] duration-300 ease-out ${indicator[m]} ${viewMode === m && activeIndex >= 0 ? "opacity-100" : "opacity-0"}`}
             style={{
               transform: `translateX(${Math.max(activeIndex, 0) * 100}%)`,
             }}
           />
         ))}
 
-        <ul className="relative grid grid-cols-5">
-          {tabs.map((tab) => {
+        <ul
+          className={`relative grid ${visibleTabs.length === 4 ? "grid-cols-4" : "grid-cols-5"}`}
+        >
+          {visibleTabs.map((tab) => {
             const isActive = active === tab.id;
             const cls = `relative flex flex-col items-center justify-center gap-1 min-h-[56px] px-1 text-[0.68rem] font-semibold tracking-wide transition-colors duration-300 active:scale-95 ${
               isActive

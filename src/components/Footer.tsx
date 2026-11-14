@@ -32,13 +32,13 @@ export const Footer = () => {
     mas: {
       shortName: "MAS.",
       fullName: "Mehmet Ali Sevinç",
-      role: "Frontend & Product Engineer · UI/UX · Kurumsal paneller · AI agent'lar",
+      role: "Software Developer · UI/UX · Kurumsal paneller · AI agent'lar",
       brand: "MAS. 2026",
     },
     das: {
       shortName: "DAS.",
       fullName: "Dursun Ali Sevinç",
-      role: "Dijital Mimar & UI/UX Tasarımcı",
+      role: "Software Developer · React, Next.js, React Native, Node.js",
       brand: "DAS. 2026",
     },
   };
